@@ -1,21 +1,31 @@
 <template>
   <div class="home-contain" @click="homeBtn">
+    <!-- 房子间彭碰撞出现的线条 -->
+    <div
+      class="shineCopy"
+      ref="lineref"
+      v-if="isshowshinecopy"
+      :style="{ width: linefailwidth, height: linefailheihgt }"
+    ></div>
+
+    <!--  -->
     <div class="test" ref="bigbox">
-      <!-- {{this.scoreNUm}} -->
       <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
       <div class="box-content" ref="box">
+        <img src="~assets/logo.png" alt="" style="height:100%;width:100%" />
         <!-- <div v-if="isshowfailline"></div> -->
       </div>
     </div>
 
-    <!-- <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum, officia?
-    </div> -->
-    <div class="tests" ref="house">
+    <!-- 下部真实堆积的房子 -->
+    <div class="real-house-contain" ref="house">
+      <!--  -->
       <div class="house">
         房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子
       </div>
     </div>
+
+    <!-- 房子的最高高度的参照 -->
     <div class="font-content" ref="footH">底部房子的最高高度</div>
   </div>
 </template>
@@ -35,67 +45,73 @@ export default {
       num: true,
       isshowline: false,
       lineClass: null,
-      houseFirstNode: null,
       oldwidth: null,
+      isshowshinecopy: true,
+      linefailwidth: null,
+      linefailheihgt: null,
+      // 下落动画结束
+      downAnimationEnd: null,
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.$refs.house.addEventListener("transitionend", this.s);
+  },
   methods: {
+    s() {
+      console.log(222);
+      this.cloneBox.style.top = 0;
+      this.cloneBox.style.animationPlayState = "running";
+      this.bigbox.appendChild(this.cloneBox);
+      this.isshowline = true;
+      this.lineClass = this.house.firstElementChild.clientWidth + "px";
+      this.num = true;
+    },
     marginedit() {
+      // 两个房子碰撞判断
       if (this.house.clientHeight > this.footH.clientHeight) {
+        // 偏移的bottom
         this.house.style.bottom =
           -(this.house.clientHeight - this.footH.clientHeight) + "px";
       }
+      // 把偏移的bottom进行保存,当
       this.bottom = this.house.style.bottom;
 
       this.$nextTick(() => {
         //   进行添加新的模块
-
         setTimeout(() => {
-          console.log(32222222);
-
           this.cloneBox.style.top = 0;
           this.cloneBox.style.animationPlayState = "running";
-          // this.cloneBox.top="0";
-          // this.cloneBox.top="0";
-          this.$refs.bigbox.appendChild(this.cloneBox);
+          this.bigbox.appendChild(this.cloneBox);
           this.isshowline = true;
           this.lineClass = this.house.firstElementChild.clientWidth + "px";
           this.num = true;
-          console.log(this.cloneBox);
-          console.log(this.footH.clientHeight);
-          console.log(this.house.clientHeight);
-        }, 2000);
+        }, 1000);
       });
     },
     homeBtn() {
+      // 出现上部房子才可点击下落的事件
       if (this.num) {
-        this.isshowline = false;
-        this.num = false;
-        let house = this.$refs.house;
-        this.house = this.$refs.house;
-
-        let footH = this.$refs.footH;
-        this.footH = this.$refs.footH;
-
-        let bigbox = this.$refs.bigbox;
-        this.bigbox = this.$refs.bigbox;
-        //   let box = this.$refs.box;
+        // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
         let box = document.querySelector(".box-content");
-
-        let top = box.getBoundingClientRect().top;
+        // 停止顶部房子变化，要开始下落
         box.style.animationPlayState = "paused";
-        console.log(getComputedStyle(box).marginTop);
+        // 点击 线条进行隐藏
+        this.isshowline = false;
+        // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
+        this.num = false;
+        this.house = this.$refs.house;
+        this.footH = this.$refs.footH;
+        this.bigbox = this.$refs.bigbox;
+
         this.$nextTick(() => {
+          let top = box.getBoundingClientRect().top;
           let w = box.getBoundingClientRect().width;
           let h = box.getBoundingClientRect().height;
-          console.log(w, h);
           let houseH = getComputedStyle(this.house).height;
           let bodyH = getComputedStyle(document.querySelector(".home-contain"))
             .height;
-          // console.log(top, h, houseH, bodyH);
-          //该判断是要减去下面房子的高度所减去的bottom。
+          //该判断是要减去下面房子的高度所偏移的bottom。这样才可以进行滑道啊正确的房子底部
           if (this.bottom) {
             this.totalH =
               bodyH.split("p")[0] -
@@ -106,101 +122,51 @@ export default {
           } else {
             this.totalH = bodyH.split("p")[0] - houseH.split("p")[0] - top - h;
           }
-
-          //   bigbox.style.position = "static";
-          //   box.style.marginLeft = "auto";
-          //   box.style.marginRight = "auto";
-          //   box.style.marginTop = 0;
-          //   box.style.marginBottom= 0;
-          //   box.style.margin = "0 auto";
-
+          // 下滑的top值
           box.style.top = this.totalH + "px";
 
-          // 判断是否游戏失败！
-          console.log(h);
-          //   if (this.houseFirstNode) {
-          //     this.oldwidth = getComputedStyle(this.houseFirstNode).width;
-          //     if (this.oldwidth.split("p")[0] < w) {
-          //       //   console.log("defeat");
-          //       //   console.log(+5);
-
-          //       //   console.log(box);
-          //       setTimeout(() => {
-          //         console.log(122222);
-          //         console.log(w,h);
-          //         // console.log(getComputedStyle(box).height);
-          //         // console.log(getComputedStyle(box).width);
-
-          //         // this.houseFirstNode.appendChild(div);
-          //         // let div = document.createElement("div");
-          //         // div.style.position = "absolute";
-          //         // div.style.top = 0;
-          //         // div.style.bottom = 0;
-          //         // div.style.right = 0;
-          //         // div.style.left = 0;
-          //         // div.style.width = "100px";
-          //         // div.style.height = "100px";
-          //         // div.style.margin = "auto";
-          //         // div.style.borderLeft = "1px dotted #000";
-          //         // div.style.borderRight = "1px dotted #000";
-          //       }, 1000);
-          //       console.log("defaat");
-          //       return;
-          //     }
-          //   }
-
-          //   if()
-
-          //   box.style.marginRight = auto;
-
-          //   bigbox.style.top = 0;
-
+          // 克隆一个房子，递归到顶部
           this.cloneBox = box.cloneNode();
-          //   console.log(this.cloneBox);
+
           setTimeout(() => {
+            // 将下落的房子append到底部房子上，之后顶部房子会
             box.style.top = 0;
-            box.style.leboxt = 0;
+            box.style.left = 0;
             box.style.width = w + "px";
             box.style.height = h + "px";
-            // box.style.zIndex = 1004;
             box.style.position = "relative";
             box.style.margin = "auto";
-            box.style.background = "yellow";
-            console.log(house, box);
-            let t = house.firstElementChild;
-            house.insertBefore(box, house.firstElementChild);
-            this.houseFirstNode = house.firstElementChild;
-
+            box.style.background = "#f40";
+            //每次插入新的房子前，把原来的第一个房子dom获取
+            let oldFirstNode = this.house.firstElementChild;
+            this.house.insertBefore(box, oldFirstNode);
             this.scoreNUm = ++this.scoreNUm;
-            // box.style.display = "none";
-            console.log(house.firstElementChild);
-            if (
-              getComputedStyle(house.firstElementChild).width.split("p")[0] >
-              getComputedStyle(t).width.split("p")[0]
-            ) {
-              let div = document.createElement("div");
-              div.style.position = "absolute";
-              div.style.zIndex = 1309;
-              //   div.sclass = 1309;
 
-              div.style.top = 0;
-              div.style.bottom = 0;
-              div.style.right = 0;
-              div.style.left = 0;
-              //   div.style.background = "#f40";
-
-              div.style.width = getComputedStyle(t).width;
-              div.style.height = h + 40 + "px";
-              div.style.margin = "auto";
-              //   div.style.borderLeft = "2px dotted red";
-              //   div.style.borderRight = "2px dotted red";
-              house.firstElementChild.appendChild(div);
-              div.classList.add("shine");
-
+            if (w > getComputedStyle(oldFirstNode).width.split("p")[0]) {
+              // let div = document.createElement("div");
+              // div.style.position = "absolute";
+              // div.style.zIndex = 1309;
+              // div.style.top = 0;
+              // div.style.bottom = 0;
+              // div.style.right = 0;
+              // div.style.left = 0;
+              // div.style.background = "#f40";
+              // div.style.width = getComputedStyle(t).width;
+              // div.style.height = h + 40 + "px";
+              // div.style.margin = "auto";
+              // div.style.borderLeft = "2px dotted #000";
+              // div.style.borderRight = "2px dotted #000";
+              // div.classList.add("shine");
+              // 比较两个房子的时候，出现线条时的动态宽高
+              this.linefailwidth = getComputedStyle(oldFirstNode).width;
+              this.linefailheihgt = h + 40 + "px";
+              this.$refs.lineref.style.display = "block";
+              box.appendChild(this.$refs.lineref);
               return;
+            } else {
+              // 没有出现房子碰撞，可能会下移
+              this.marginedit();
             }
-
-            this.marginedit();
           }, 1000);
           //   console.log(house.clientHeight);
         });
@@ -209,59 +175,97 @@ export default {
       }
     },
   },
-  //   computed:{
-  //       lineClass(){
-  //           this
-  //       }
-  //   }
+  watch: {
+    downAnimationEnd() {},
+  },
 };
 </script>
 
 <style  lang="scss" >
 .home-contain {
+  .shineCopy {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 1010;
+    margin: auto;
+
+    display: none;
+    border: 0px solid red;
+    animation: myfirst2 2s ease 0s infinite normal;
+  }
   @keyframes myfirst2 {
     0% {
-      //   background: red;
-      //    width: 50px;
-      //   height: 50px;
-      border-left: 2px dotted #fff;
-      border-right: 2px dotted #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
     }
-    // 10% {
-    //   border-left: none;
-    //   border-right: none;
-    // }
     25% {
-      //   border-left: 2px dotted #fff;
       border-left: none;
       border-right: none;
-      //   border-right: 2px dotted #fff;
     }
-    // 30% {
-    //   border-left: 2px dotted #fff;
-    //   border-right: 2px dotted #fff;
-    // }
     50% {
-      //   background: #fff;
-      /* padding: -100px 100px 100px -100px; */
-      /* width: 100px;
-                height: 100px; */
-      border-left: 2px dotted #fff;
-      border-right: 2px dotted #fff;
-      //   border-left: none;
-      //   border-right: none;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
     }
-    // 70% {
-    //   border-left: 2px dotted #fff;
-    //   border-right: 2px dotted #fff;
-    // }
     75% {
       border-left: none;
       border-right: none;
     }
     100% {
-      border-left: 2px dotted #fff;
-      border-right: 2px dotted #fff;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+  }
+  @-webkit-keyframes myfirst2 {
+    0% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+    25% {
+      border-left: none;
+      border-right: none;
+    }
+    50% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+    75% {
+      border-left: none;
+      border-right: none;
+    }
+    100% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+      //   background: red;
+
+      /* padding: -200px 200px 200px -200px; */
+
+      /* width: 200px;
+                height: 200px; */
+    }
+  }
+  @-moz-keyframes myfirst2 {
+    0% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+    25% {
+      border-left: none;
+      border-right: none;
+    }
+    50% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
+    }
+    75% {
+      border-left: none;
+      border-right: none;
+    }
+    100% {
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
       //   background: red;
 
       /* padding: -200px 200px 200px -200px; */
@@ -271,7 +275,11 @@ export default {
     }
   }
   .shine {
-    animation: myfirst2 8s ease 0s infinite alternate;
+    animation: myfirst2 2s ease 0s infinite normal;
+    -webkit-animation: myfirst2 2s ease 0s infinite normal;
+
+    // // -o-animation: myfirst2 8s ease 0s infinite alternate;
+    // // -ms-animation: myfirst2 8s ease 0s infinite alternate;
   }
   position: fixed;
   top: 0;
@@ -294,10 +302,14 @@ export default {
       width: 40px;
       height: 40px;
       background: yellow;
-      transition: all 1s;
+      transition: top 1s;
+      // -webkit-transition: all 1s;
       position: relative;
       z-index: 100;
       animation: myfirst 1s ease 0s infinite alternate;
+      // background-image: url(~assets/home.png) ;
+      background-size:cover;
+      img{}
       .line-fail {
         position: absolute;
         top: 0;
@@ -376,11 +388,10 @@ export default {
     }
   }
 
-  .tests {
+  .real-house-contain {
     position: fixed;
     // height: 20vh;
-    transition: all 3s;
-
+    transition: all 1s;
     // background: rgb(31, 165, 76);
     width: 100vw;
     bottom: 0;
@@ -388,11 +399,6 @@ export default {
     .house {
       bottom: 0;
       border: 1px solid orange;
-      //   width: 100vw;
-      transition: all 1s;
-
-      // width: 100%;
-      // height:;
     }
   }
   .font-content {

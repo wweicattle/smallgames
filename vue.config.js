@@ -13,6 +13,8 @@ module.exports = {
     }
   },
   devServer: {
+    port: 3333, // 端口号
+
     proxy: {
       '/api': {
         target: 'http://oa.wuwei.kooboo.site'
