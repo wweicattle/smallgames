@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+
+        }
+
+        .contain {
+            width: 100px;
+            height: 100px;
+            background: #f40;
+            margin: auto;
+            margin-top: 150px;
+            transition: all 1s;
+            perspective: 400px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* transform: rotateX(0deg); */
+
+        }
+
+        .containss {
+            /* transform: rotateZ(180deg); */
+            /* transform:translate3d(100px,100px,50px); */
+            animation: myfirst2 1s ease 0s 1 normal;
+        }
+
+        @keyframes myfirst2 {
+            0% {
+                /* transform: translate(150px,150px) ; */
+            }
+
+            20% {
+                /* transform: scale(1, 1); */
+                top: 100px;
+                left: 100px;
+
+                /* transform: scale(2) */
+            }
+
+            30% {
+
+                top: 100px;
+                left: 100px;
+                transform: scale(2.3, 2.3)
+            }
+
+            45% {
+                top: 100px;
+                left: 100px;
+                transform: scale(2)
+            }
+
+            60% {
+                top: 100px;
+                left: 100px;
+                transform: scale(2.3, 2.3)
+            }
+
+            75% {
+                top: 100px;
+                left: 100px;
+
+                transform: scale(2)
+            }
+
+            90% {
+                top: 100px;
+                left: 100px;
+
+
+                transform: scale(2.3, 2.3)
+            }
+
+            100% {
+                top: 100px;
+                left: 100px;
+
+                transform: scale(2, 2)
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="contain" id="contains">
+
+    </div>
+    <div class="tests">wukai</div>
+
+
+    <script>
+        var sum = 0;
+        for (i = 0; i < 2000; i++) {
+            let div = document.createElement("div");
+            div.classList.add("tests")
+            div.innerText = "lorem";
+            document.body.appendChild(div)
+            console.log(1);
+        }
+        console.log(3333);
+
+        Promise.resolve(33333).then(da => {
+            console.log(da);
+            console.log(this.sum);
+        })
+
+        contains.onclick = function () {
+            contains.style.background = "#000";
+            contains.classList.add("containss");
+            Array.from(document.querySelectorAll(".tests")).forEach(val => {
+                console.log(2);
+                // setTimeout(() => {
+                    val.childNodes[0].nodeValue = "nishuodeshishenmeane"
+
+                // })
+            });
+            console.log(1111);
+            // for (var i in contains) {
+
+            // };
+            // contain.style.animationPlayState = "paused";
+            console.log("进行执行新的数据");
+        }
+        document.body.ondblclick=function(){
+            Array.from(document.querySelectorAll(".tests")).forEach(val => {
+                console.log(2);
+                    val.childNodes[0].nodeValue = "zegiyuzhengbiyue"
+
+                // })
+            });
+        }
+    </script>
+</body>
+
+</html>

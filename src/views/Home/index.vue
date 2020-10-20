@@ -1,5 +1,7 @@
 <template>
   <div class="home-contain" @click="homeBtn">
+    <!-- <div class="yis"><img src="static/img/house7.png" alt="" /></div> -->
+
     <!-- 房子间彭碰撞出现的线条 -->
     <div
       class="shineCopy"
@@ -12,7 +14,7 @@
     <div class="test" ref="bigbox">
       <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
       <div class="box-content" ref="box">
-        <img src="~assets/logo.png" alt="" style="height:100%;width:100%" />
+        <img src="static/img/house7.png" style="height: 100%; width: 100%" />
         <!-- <div v-if="isshowfailline"></div> -->
       </div>
     </div>
@@ -21,7 +23,7 @@
     <div class="real-house-contain" ref="house">
       <!--  -->
       <div class="house">
-        房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子房子
+        <img src="~assets/IMG/HOME/ee.png" alt="" />
       </div>
     </div>
 
@@ -51,6 +53,7 @@ export default {
       linefailheihgt: null,
       // 下落动画结束
       downAnimationEnd: null,
+      imgarr: 1,
     };
   },
   created() {},
@@ -58,15 +61,16 @@ export default {
     this.$refs.house.addEventListener("transitionend", this.s);
   },
   methods: {
-    s() {
-      console.log(222);
-      this.cloneBox.style.top = 0;
-      this.cloneBox.style.animationPlayState = "running";
-      this.bigbox.appendChild(this.cloneBox);
-      this.isshowline = true;
-      this.lineClass = this.house.firstElementChild.clientWidth + "px";
-      this.num = true;
-    },
+    // s() {
+    //   console.log(222);
+    //   this.cloneBox.style.top = 0;
+    //   this.cloneBox.style.animationPlayState = "running";
+
+    //   this.bigbox.appendChild(this.cloneBox);
+    //   this.isshowline = true;
+    //   this.lineClass = this.house.firstElementChild.clientWidth + "px";
+    //   this.num = true;
+    // },
     marginedit() {
       // 两个房子碰撞判断
       if (this.house.clientHeight > this.footH.clientHeight) {
@@ -82,6 +86,16 @@ export default {
         setTimeout(() => {
           this.cloneBox.style.top = 0;
           this.cloneBox.style.animationPlayState = "running";
+          this.cloneBox.display = "block";
+          this.cloneBox.children[0].style.display = "block";
+
+          if (this.imgarr == 1) {
+            this.cloneBox.children[0].src = "static/img/house2.png";
+            this.imgarr = 2;
+          } else {
+            this.cloneBox.children[0].src = "static/img/house1.png";
+            this.imgarr = 1;
+          }
           this.bigbox.appendChild(this.cloneBox);
           this.isshowline = true;
           this.lineClass = this.house.firstElementChild.clientWidth + "px";
@@ -126,7 +140,7 @@ export default {
           box.style.top = this.totalH + "px";
 
           // 克隆一个房子，递归到顶部
-          this.cloneBox = box.cloneNode();
+          this.cloneBox = box.cloneNode(true);
 
           setTimeout(() => {
             // 将下落的房子append到底部房子上，之后顶部房子会
@@ -136,7 +150,7 @@ export default {
             box.style.height = h + "px";
             box.style.position = "relative";
             box.style.margin = "auto";
-            box.style.background = "#f40";
+            // box.style.background = "#f40";
             //每次插入新的房子前，把原来的第一个房子dom获取
             let oldFirstNode = this.house.firstElementChild;
             this.house.insertBefore(box, oldFirstNode);
@@ -175,14 +189,27 @@ export default {
       }
     },
   },
-  watch: {
-    downAnimationEnd() {},
-  },
+  watch: {},
 };
 </script>
 
 <style  lang="scss" >
 .home-contain {
+  // .yis {
+  //   margin-left: 50px;
+  //   margin-top: 100px;
+  //   width: 60px;
+  //   height: 30px;
+  //   animation: myfirst 1s ease 0s infinite alternate;
+  //   img {
+  //     width: 100%;
+  //   }
+  // }
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
   .shineCopy {
     position: absolute;
     left: 0;
@@ -191,7 +218,6 @@ export default {
     top: 0;
     z-index: 1010;
     margin: auto;
-
     display: none;
     border: 0px solid red;
     animation: myfirst2 2s ease 0s infinite normal;
@@ -277,16 +303,8 @@ export default {
   .shine {
     animation: myfirst2 2s ease 0s infinite normal;
     -webkit-animation: myfirst2 2s ease 0s infinite normal;
-
-    // // -o-animation: myfirst2 8s ease 0s infinite alternate;
-    // // -ms-animation: myfirst2 8s ease 0s infinite alternate;
   }
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  //   background: #f40;
-  position: relative;
+
   .test {
     border: 1px solid #eee;
     height: 180px;
@@ -296,20 +314,24 @@ export default {
     position: relative;
 
     .box-content {
+      overflow: hidden;
       left: 50%;
-      margin-left: -20px;
+      margin-left: -140px;
       top: 0;
-      width: 40px;
-      height: 40px;
-      background: yellow;
+      width: 280px;
+      // background: yellow;
       transition: top 1s;
       // -webkit-transition: all 1s;
       position: relative;
       z-index: 100;
-      animation: myfirst 1s ease 0s infinite alternate;
+      animation: myfirst 1s linear 0s infinite alternate;
       // background-image: url(~assets/home.png) ;
-      background-size:cover;
-      img{}
+      background-size: cover;
+      display: block;
+
+      img {
+        display: block;
+      }
       .line-fail {
         position: absolute;
         top: 0;
@@ -323,17 +345,17 @@ export default {
       }
     }
     .line {
+      top: 50px;
       //   width: 120px;
-      height: 20px;
+      // padding-top: 70px;
+      height: 120px;
       position: absolute;
-      top: 0;
-      bottom: 0;
       left: 0;
       right: 0;
       margin: auto;
       //   background: red;
-      border-left: 1px dotted #000;
-      border-right: 1px dotted #000;
+      border-left: 1px solid #000;
+      border-right: 1px solid #000;
       z-index: 1001;
       animation: myfirst1 1s ease 0s infinite alternate;
     }
@@ -344,6 +366,7 @@ export default {
       //   background: red;
       //    width: 50px;
       //   height: 50px;
+      // transform: translateZ(0) scale(1);
     }
 
     50% {
@@ -360,7 +383,7 @@ export default {
 
       /* width: 200px;
                 height: 200px; */
-      transform: scale(5, 3);
+      transform: scale(0.25);
     }
   }
   @keyframes myfirst1 {
@@ -384,21 +407,29 @@ export default {
 
       /* width: 200px;
                 height: 200px; */
-      transform: scale(1, 5);
+      transform: scale(1, 0.2);
     }
   }
 
   .real-house-contain {
     position: fixed;
-    // height: 20vh;
     transition: all 1s;
-    // background: rgb(31, 165, 76);
     width: 100vw;
     bottom: 0;
     z-index: 1000;
     .house {
       bottom: 0;
-      border: 1px solid orange;
+      img {
+        width: 100%;
+        display: block;
+        &:after {
+          // content: ".";
+          // position: absolute;
+          // top: 50%;
+          // left: 50%;
+          // color: rgba(255, 102, 0, 0.1);
+        }
+      }
     }
   }
   .font-content {
