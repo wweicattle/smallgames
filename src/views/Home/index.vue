@@ -1,7 +1,7 @@
 <template>
-  <div class="home-contain" @click="homeBtn">
+  <div class="home-contain" @click="homeBtn" :key="index">
     <!-- <div class="yis"><img src="static/img/house7.png" alt="" /></div> -->
-
+    <!-- <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, cum.</div> -->
     <!-- 房子间彭碰撞出现的线条 -->
     <div
       class="shineCopy"
@@ -29,14 +29,39 @@
 
     <!-- 房子的最高高度的参照 -->
     <div class="font-content" ref="footH">底部房子的最高高度</div>
+
+    <!-- 挑战成功组件 -->
+    <change-success
+      v-if="isshowSucess"
+      @closeNum="num = false"
+    ></change-success>
+
+    <!-- 挑战失败组件 -->
+    <change-fail
+      v-if="isshowFail"
+      @refreshHome="
+        (index = ++index), (isshowFail = false), (isshowwRegular = true)
+      "
+    ></change-fail>
+
+    <!-- 显示规则组件 -->
+    <regular-page
+      v-if="isshowwRegular"
+      @closeRgular="regularBtn"
+    ></regular-page>
   </div>
 </template>
 
 <script>
+import ChangeSuccess from "./childComponet/ChangeSuccess";
+import ChangeFail from "./childComponet/ChangeFail";
+import RegularPage from "./childComponet/RegularPage";
+
 export default {
   data() {
     return {
-      scoreNUm: 0,
+      index: 1,
+      scoreNum: 0,
       cloneBox: null,
       house: null,
       footH: null,
@@ -54,13 +79,36 @@ export default {
       // 下落动画结束
       downAnimationEnd: null,
       imgarr: 1,
+      isshowSucess: false,
+      isshowFail: false,
+      isshowwRegular: false,
     };
   },
   created() {},
   mounted() {
-    this.$refs.house.addEventListener("transitionend", this.s);
+    // console.log(this.$refs.box);
+    // let s = document.querySelector(".real-house-contain");
+    // console.log(s);
+    // s.addEventListener("transitionend", () => {
+    //   console.log(22222222222222222222);
+    // });
+
+    // let ss = document.querySelector(".box-content");
+    // ss.addEventListener("transitionend", () => {
+    //   console.log(22222222222222222222);
+    // });
+    // ss.addEventListener("webkitTransitionEnd", () => {
+    //   console.log(22222222222222222222);
+    // });
   },
   methods: {
+    regularBtn() {
+      this.isshowwRegular = false;
+      this.scoreNum = 0;
+      setTimeout(() => {
+        this.num = true;
+      });
+    },
     // s() {
     //   console.log(222);
     //   this.cloneBox.style.top = 0;
@@ -72,40 +120,49 @@ export default {
     //   this.num = true;
     // },
     marginedit() {
-      // 两个房子碰撞判断
+      // 真实房子是否需要偏移
       if (this.house.clientHeight > this.footH.clientHeight) {
         // 偏移的bottom
         this.house.style.bottom =
-          -(this.house.clientHeight - this.footH.clientHeight) + "px";
-      }
-      // 把偏移的bottom进行保存,当
-      this.bottom = this.house.style.bottom;
-
-      this.$nextTick(() => {
-        //   进行添加新的模块
+          -(this.house.clientHeight - this.footH.clientHeight) + "px"; //   进行添加新的模块
+        // 把偏移的bottom进行保存,当
+        this.bottom = this.house.style.bottom;
         setTimeout(() => {
           this.cloneBox.style.top = 0;
           this.cloneBox.style.animationPlayState = "running";
           this.cloneBox.display = "block";
           this.cloneBox.children[0].style.display = "block";
-
-          if (this.imgarr == 1) {
-            this.cloneBox.children[0].src = "static/img/house2.png";
-            this.imgarr = 2;
-          } else {
-            this.cloneBox.children[0].src = "static/img/house1.png";
-            this.imgarr = 1;
-          }
+          this.cloneBox.children[0].src = "static/img/house2.png";
           this.bigbox.appendChild(this.cloneBox);
           this.isshowline = true;
           this.lineClass = this.house.firstElementChild.clientWidth + "px";
           this.num = true;
         }, 1000);
-      });
+      } else {
+        //   进行添加新的模块
+        this.cloneBox.style.top = 0;
+        this.cloneBox.style.animationPlayState = "running";
+        this.cloneBox.display = "block";
+        this.cloneBox.children[0].style.display = "block";
+        this.cloneBox.children[0].src = "static/img/house2.png";
+
+        // if (this.imgarr == 1) {
+        //   this.cloneBox.children[0].src = "static/img/house2.png";
+        //   this.imgarr = 2;
+        // } else {
+        //   this.cloneBox.children[0].src = "static/img/house1.png";
+        //   this.imgarr = 1;
+        // }
+        this.bigbox.appendChild(this.cloneBox);
+        this.isshowline = true;
+        this.lineClass = this.house.firstElementChild.clientWidth + "px";
+        this.num = true;
+      }
     },
     homeBtn() {
       // 出现上部房子才可点击下落的事件
       if (this.num) {
+        console.log(this.num);
         // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
         let box = document.querySelector(".box-content");
         // 停止顶部房子变化，要开始下落
@@ -136,6 +193,9 @@ export default {
           } else {
             this.totalH = bodyH.split("p")[0] - houseH.split("p")[0] - top - h;
           }
+          box.addEventListener("transitionend", () => {
+            console.log(22222222222222222222);
+          });
           // 下滑的top值
           box.style.top = this.totalH + "px";
 
@@ -143,19 +203,23 @@ export default {
           this.cloneBox = box.cloneNode(true);
 
           setTimeout(() => {
-            // 将下落的房子append到底部房子上，之后顶部房子会
+            // 将下落的房子append到底部房子上，之后顶部房子会下移
             box.style.top = 0;
             box.style.left = 0;
             box.style.width = w + "px";
             box.style.height = h + "px";
             box.style.position = "relative";
             box.style.margin = "auto";
+            // 设置img白边
+            box.children[0].style.display = "block";
+
             // box.style.background = "#f40";
             //每次插入新的房子前，把原来的第一个房子dom获取
             let oldFirstNode = this.house.firstElementChild;
             this.house.insertBefore(box, oldFirstNode);
-            this.scoreNUm = ++this.scoreNUm;
+            this.scoreNum = this.scoreNum + 10;
 
+            //是否有出现碰撞，之后进行比较线条
             if (w > getComputedStyle(oldFirstNode).width.split("p")[0]) {
               // let div = document.createElement("div");
               // div.style.position = "absolute";
@@ -176,6 +240,22 @@ export default {
               this.linefailheihgt = h + 40 + "px";
               this.$refs.lineref.style.display = "block";
               box.appendChild(this.$refs.lineref);
+
+              // 进行显示挑战成功或者失败页面
+              this.$toast.loading({
+                message: "加载中...",
+                forbidClick: true,
+                duration: 0, // 持续展示 toast
+              });
+              setTimeout(() => {
+                // 清除加载提示框
+                this.$toast.clear();
+                if (this.scoreNum >= 40) {
+                  this.isshowSucess = true;
+                } else {
+                  this.isshowFail = true;
+                }
+              }, 1500);
               return;
             } else {
               // 没有出现房子碰撞，可能会下移
@@ -190,6 +270,11 @@ export default {
     },
   },
   watch: {},
+  components: {
+    ChangeSuccess,
+    ChangeFail,
+    RegularPage,
+  },
 };
 </script>
 
@@ -292,12 +377,6 @@ export default {
     100% {
       border-left: 1px solid #fff;
       border-right: 1px solid #fff;
-      //   background: red;
-
-      /* padding: -200px 200px 200px -200px; */
-
-      /* width: 200px;
-                height: 200px; */
     }
   }
   .shine {
@@ -320,7 +399,7 @@ export default {
       top: 0;
       width: 280px;
       // background: yellow;
-      transition: top 1s;
+      transition: all 1s;
       // -webkit-transition: all 1s;
       position: relative;
       z-index: 100;
@@ -362,27 +441,9 @@ export default {
   }
 
   @keyframes myfirst {
-    0% {
-      //   background: red;
-      //    width: 50px;
-      //   height: 50px;
-      // transform: translateZ(0) scale(1);
+    from {
     }
-
-    50% {
-      //   background: red;
-      /* padding: -100px 100px 100px -100px; */
-      /* width: 100px;
-                height: 100px; */
-    }
-
-    100% {
-      //   background: red;
-
-      /* padding: -200px 200px 200px -200px; */
-
-      /* width: 200px;
-                height: 200px; */
+    to {
       transform: scale(0.25);
     }
   }
@@ -435,7 +496,7 @@ export default {
   .font-content {
     position: fixed;
     bottom: 0;
-    height: 50vh;
+    height: 40%;
     width: 100vw;
     // background: #000;
   }

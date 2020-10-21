@@ -1,11 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    @keyframes myfirst2 {
+        0% {
+            /* transform: translate(150px,150px) ; */
+            transform: scale(1.2)
+        }
+
+        20% {
+            /* transform: scale(1, 1); */
+            /* top: 100px;
+                left: 100px; */
+
+            transform: scale(1.5)
+        }
+
+        30% {
+
+            /* top: 100px;
+                left: 100px; */
+            transform: scale(1.7, 1.7)
+        }
+
+        45% {
+            /* top: 100px;
+                left: 100px; */
+            transform: scale(1.5)
+        }
+
+        60% {
+            /* top: 100px;
+                left: 100px; */
+            transform: scale(1.7, 1.7)
+        }
+
+        75% {
+            /* top: 100px;
+                left: 100px; */
+
+            transform: scale(1.5)
+        }
+
+        90% {
+            /* top: 100px;
+                left: 100px; */
+            transform: scale(1.7, 1.7)
+        }
+
+        100% {
+            /* top: 100px;
+                left: 100px; */
+            transform: scale(1.5)
+        }
+    }
+
+    img {
+        width: 70%;
+        left: 0;
+        right: 0;
+        top: 90px;
+        margin: auto;
+        position: absolute;
+    }
+
+    .test {
+        animation: myfirst2 1s ease 0s 1 normal forwards;
+    }
+</style>
+
 <body>
-    <img src="./house4.png" alt="">
+    <img src="./gift.png" alt="" id="img">
+    <script>
+      
+    </script>
 </body>
+
 </html>
