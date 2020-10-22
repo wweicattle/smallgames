@@ -1,8 +1,5 @@
 <template>
-  <div class="home-contain" @click="homeBtn" :key="index">
-    <!-- <div class="yis"><img src="static/img/house7.png" alt="" /></div> -->
-    <!-- <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis, cum.</div> -->
-    <!-- 房子间彭碰撞出现的线条 -->
+  <div class="home-contain" @click="homeBtn" :key="index" :style="{ 'background-image': 'url(' + backImage + ')' }">
     <div
       class="shineCopy"
       ref="lineref"
@@ -12,10 +9,15 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
+      <!-- 头像区域 -->
+      <div class="actar-contain">
+        <img src="~assets/avator.png" alt="" />
+        <span class="score-num">{{scoreNum}}</span>
+      </div>
+
       <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
       <div class="box-content" ref="box">
-        <img src="static/img/house7.png" style="height: 100%; width: 100%" />
-        <!-- <div v-if="isshowfailline"></div> -->
+        <img :src="houseImageArr[0]" style="width:100%" />
       </div>
     </div>
 
@@ -23,12 +25,12 @@
     <div class="real-house-contain" ref="house">
       <!--  -->
       <div class="house">
-        <img src="~assets/IMG/HOME/ee.png" alt="" />
+        <img :src="footerImage" alt="" />
       </div>
     </div>
 
     <!-- 房子的最高高度的参照 -->
-    <div class="font-content" ref="footH">底部房子的最高高度</div>
+    <div class="font-content" ref="footH"></div>
 
     <!-- 挑战成功组件 -->
     <change-success
@@ -48,6 +50,9 @@
     <regular-page
       v-if="isshowwRegular"
       @closeRgular="regularBtn"
+      :backImage="backImage"
+      :footerImage="footerImage"
+      :regularImg="houseImageArr[0]"
     ></regular-page>
   </div>
 </template>
@@ -58,6 +63,25 @@ import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 
 export default {
+  props: {
+    backImage: {
+      type: String,
+      default: "static/img/firstLevel/homeback.png",
+    },
+    footerImage: {
+      type: String,
+      default: `static/img/firstLevel/footerImg.png`,
+    },
+    houseImageArr: {
+      type: Array,
+      default() {
+        return [
+          "static/img/firstLevel/house1.png",
+          "static/img/firstLevel/house2.png",
+        ];
+      },
+    },
+  },
   data() {
     return {
       index: 1,
@@ -78,7 +102,7 @@ export default {
       linefailheihgt: null,
       // 下落动画结束
       downAnimationEnd: null,
-      imgarr: 1,
+      newimgindex: 0,
       isshowSucess: false,
       isshowFail: false,
       isshowwRegular: false,
@@ -86,6 +110,11 @@ export default {
   },
   created() {},
   mounted() {
+    // 这是设置动态背景的
+    let home = document.querySelector(".home-contain");
+    home.style.backgroundImage = `url(${this.backImage})`;
+    home.style.backgroundSize = `cover`;
+
     // console.log(this.$refs.box);
     // let s = document.querySelector(".real-house-contain");
     // console.log(s);
@@ -120,6 +149,9 @@ export default {
     //   this.num = true;
     // },
     marginedit() {
+      // 进行房子的高度进行替换
+      this.newimgindex = ++this.newimgindex;
+      if (this.newimgindex == this.houseImageArr.length) this.newimgindex = 0;
       // 真实房子是否需要偏移
       if (this.house.clientHeight > this.footH.clientHeight) {
         // 偏移的bottom
@@ -132,7 +164,7 @@ export default {
           this.cloneBox.style.animationPlayState = "running";
           this.cloneBox.display = "block";
           this.cloneBox.children[0].style.display = "block";
-          this.cloneBox.children[0].src = "static/img/house2.png";
+          this.cloneBox.children[0].src = this.houseImageArr[this.newimgindex];
           this.bigbox.appendChild(this.cloneBox);
           this.isshowline = true;
           this.lineClass = this.house.firstElementChild.clientWidth + "px";
@@ -144,15 +176,8 @@ export default {
         this.cloneBox.style.animationPlayState = "running";
         this.cloneBox.display = "block";
         this.cloneBox.children[0].style.display = "block";
-        this.cloneBox.children[0].src = "static/img/house2.png";
+        this.cloneBox.children[0].src = this.houseImageArr[this.newimgindex];
 
-        // if (this.imgarr == 1) {
-        //   this.cloneBox.children[0].src = "static/img/house2.png";
-        //   this.imgarr = 2;
-        // } else {
-        //   this.cloneBox.children[0].src = "static/img/house1.png";
-        //   this.imgarr = 1;
-        // }
         this.bigbox.appendChild(this.cloneBox);
         this.isshowline = true;
         this.lineClass = this.house.firstElementChild.clientWidth + "px";
@@ -280,21 +305,12 @@ export default {
 
 <style  lang="scss" >
 .home-contain {
-  // .yis {
-  //   margin-left: 50px;
-  //   margin-top: 100px;
-  //   width: 60px;
-  //   height: 30px;
-  //   animation: myfirst 1s ease 0s infinite alternate;
-  //   img {
-  //     width: 100%;
-  //   }
-  // }
   position: fixed;
   top: 0;
   width: 100%;
   height: 100%;
   position: relative;
+  background-size: cover;
   .shineCopy {
     position: absolute;
     left: 0;
@@ -387,20 +403,31 @@ export default {
   .test {
     border: 1px solid #eee;
     height: 180px;
-    // padding-left: 160px;
-    // 可以变化高度
     padding-top: 70px;
     position: relative;
-
+    .actar-contain {
+      top: 10px;
+      left: 10px;
+      position: absolute;
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+      .score-num {
+        font-size: 18px;
+        padding-left: 5px;
+        vertical-align: 5px;
+        color: #fff;
+      }
+    }
     .box-content {
       overflow: hidden;
       left: 50%;
       margin-left: -140px;
       top: 0;
       width: 280px;
-      // background: yellow;
       transition: all 1s;
-      // -webkit-transition: all 1s;
       position: relative;
       z-index: 100;
       animation: myfirst 1s linear 0s infinite alternate;
@@ -433,8 +460,8 @@ export default {
       right: 0;
       margin: auto;
       //   background: red;
-      border-left: 1px solid #000;
-      border-right: 1px solid #000;
+      border-left: 1px solid #fff;
+      border-right: 1px solid #fff;
       z-index: 1001;
       animation: myfirst1 1s ease 0s infinite alternate;
     }
@@ -483,13 +510,6 @@ export default {
       img {
         width: 100%;
         display: block;
-        &:after {
-          // content: ".";
-          // position: absolute;
-          // top: 50%;
-          // left: 50%;
-          // color: rgba(255, 102, 0, 0.1);
-        }
       }
     }
   }

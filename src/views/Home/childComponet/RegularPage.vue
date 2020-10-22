@@ -1,34 +1,111 @@
 <template>
-  <div @click="clickBtn">
-    这是一个规则的说Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    Suscipit hic officiis sapiente, reprehenderit qui porro. Placeat deserunt
-    architecto aut, vel minima facilis est sequi? Reiciendis vel cum impedit
-    natus animi eos. Fugit molestiae culpa expedita alias quod qui iusto, hic
-    quas magni soluta dicta laboriosam blanditiis nulla accusamus! Molestias
-    exercitationem nam nesciunt incidunt quasi, quidem assumenda eveniet harum
-    doloribus dolorem voluptas nulla ipsam esse et repudiandae. Sequi excepturi
-    quos laboriosam totam porro impedit perspiciatis aperiam dolor, officia
-    sapiente magni officiis eum. Dolores consequatur maiores quos totam
-    obcaecati ducimus adipisci quae vero, a rerum hic provident id officia
-    quidem velit saepe!
+  <div
+    @click="clickBtn"
+    class="regular-contain"
+    :style="{ 'background-image': 'url(' + backImage + ')' }"
+  >
+    <van-overlay :show="show" @click="show = false"> </van-overlay>
+    <div class="box-content" ref="box">
+      <img :src="regularImg" />
+    </div>
+    <div class="detail-content">
+      <!-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam accusamus
+      eius velit expedita libero dignissimos possimus officiis autem sint
+      consequatur? -->
+    </div>
+    <img :src="footerImage" alt="" />
+    <img class="regular-remind" src="static/img/gameRegular.png" alt="" />
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    backImage: {
+      type: String,
+    },
+    footerImage: {
+      type: String,
+    },
+    regularImg: {
+      type: String,
+    },
+  },
   data() {
-    return {};
+    return {
+      show: true,
+    };
   },
   created() {},
   mounted() {},
   methods: {
     clickBtn() {
-        // this.$emit("closeRgular")
-        window.location.href="/home"
-    }
+      // console.log(this.$route.path);
+      this.$emit("closeRgular")
+      // window.location.href =this.$route.path;
+    },
+  },
+  computed: {
+    
   },
 };
 </script>
 
-<style scoped lang="less">
+<style scoped lang="scss">
+.regular-contain {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1001;
+  // background-image: url("~assets/IMG/homeback.png");
+  background-size: cover;
+  .detail-content {
+    position: fixed;
+    z-index: 1;
+    color: #fff;
+  }
+  @keyframes myfirst {
+    from {
+    }
+    to {
+      transform: scale(0.25);
+    }
+  }
+
+  .box-content {
+    margin-top: 20px;
+    overflow: hidden;
+    left: 50%;
+    margin-left: -130px;
+    top: 0;
+    width: 260px;
+    height: 140px;
+    transition: all 1s;
+    position: relative;
+    z-index: 100;
+    animation: myfirst 1s linear 0s infinite alternate;
+    // background-image: url(~assets/home.png) ;
+    background-size: cover;
+    display: block;
+    animation: myfirst 1.5s linear 0s infinite alternate;
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+  img {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+  }
+  .regular-remind {
+    top: 30px;
+    z-index: 1;
+    width: 100%;
+    position: fixed;
+    // bottom: 10px;
+  }
+}
 </style>

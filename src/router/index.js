@@ -3,32 +3,51 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
-  {
+const routes = [{
     path: '/',
     name: 'index',
-    redirect:"/home"
+    redirect: "/checkoutpoint"
   },
   {
     path: '/home',
     name: 'home',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home')
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../views/Home')
   },
   {
     path: '/gift',
     name: 'gift',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/Home/childComponet/GiftPage')
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../views/Home/childComponet/GiftPage')
+  },
+  {
+    path: '/firstpage',
+    name: 'firstpage',
+    //   // this generates a separate chunk (about.[hash].js) for this route
+
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../components/FirstPage')
+  },
+  {
+    path: '/checkoutpoint',
+    name: 'checkoutpoint',
+    //   // this generates a separate chunk (about.[hash].js) for this route
+
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    component: () => import( /* webpackChunkName: "about" */ '../components/SelectCheckPoint')
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   // base: process.env.BASE_URL,
   routes
 })

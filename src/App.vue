@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="$store.state.pageReload" />
   </div>
 </template>
 <script>
@@ -8,7 +8,9 @@
 export default {
   name: "App",
   data: function () {
-    return {};
+    return {
+      
+    };
   },
   components: {},
 };
@@ -22,10 +24,7 @@ html,
   top: 0;
   left: 0;
   width: 100%;
-  background-image: url("~assets/IMG/HOME/homeback.png") ;
+  // background-image: url("~assets/IMG/HOME/homeback.png") ;
   background-size: contain;
 }
-
-
-
 </style>

@@ -5,8 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    pageReload:true
   },
   mutations: {
+    
   },
   actions: {
   },

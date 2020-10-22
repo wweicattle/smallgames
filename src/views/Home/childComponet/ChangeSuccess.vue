@@ -1,7 +1,7 @@
 <template>
   <div class="change-success">
     <van-popup v-model="show" :close-on-click-overlay="false">
-      <img src="/static/img/Winningpage/changesuccess/success.png" alt="" />
+      <img src="static/img/Winningpage/changesuccess/success.png" alt="" />
       <div class="text-cotnain">
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
@@ -24,7 +24,7 @@
       </div>
       <div class="button-content">
         <van-button round type="info" class="ranking-list">排行榜</van-button>
-        <van-button round type="info" class="return-home">返回首页</van-button>
+        <van-button round type="info" class="return-home" @click="$router.push('/')">返回关卡</van-button>
       </div>
     </van-popup>
 
