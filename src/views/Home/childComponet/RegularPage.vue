@@ -19,35 +19,53 @@
 </template>
 
 <script>
+import { eventBus } from "utils/eventbus";
+
 export default {
   props: {
-    backImage: {
-      type: String,
-    },
-    footerImage: {
-      type: String,
-    },
-    regularImg: {
-      type: String,
-    },
+    // backImage: {
+    //   type: String,
+    // },
+    // footerImage: {
+    //   type: String,
+    // },
+    // regularImg: {
+    //   type: String,
+    // },
   },
   data() {
     return {
       show: true,
+      backImage: null,
+      footerImage: null,
+      regularImg: null,
+      newRoute:null
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    let obj = JSON.parse(window.localStorage.getItem("obj"));
+      // eventBus.$on('editphoto',(obj)=>{
+    //   console.log(obj);
+    this.backImage = obj.backImage;
+    this.footerImage = obj.footerImage;
+    this.regularImg = obj.regularImg;
+    this.newRoute = obj.newRoute;
+
+    // })
+  },
   methods: {
     clickBtn() {
-      // console.log(this.$route.path);
-      this.$emit("closeRgular")
+      console.log(this.$route);
+      this.$router.push(this.newRoute)
+
+      // console.log(22);
+      // // console.log(this.$route.path);
+      // this.$emit("closeRgular");
       // window.location.href =this.$route.path;
     },
   },
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>
 

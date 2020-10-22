@@ -1,5 +1,10 @@
 <template>
-  <div class="home-contain" @click="homeBtn" :key="index" :style="{ 'background-image': 'url(' + backImage + ')' }">
+  <div
+    class="home-contain"
+    :key="index"
+    :style="{ 'background-image': 'url(' + backImage + ')' }"
+    v-if="isrepeatRender"
+  >
     <div
       class="shineCopy"
       ref="lineref"
@@ -12,12 +17,12 @@
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img src="~assets/avator.png" alt="" />
-        <span class="score-num">{{scoreNum}}</span>
+        <span class="score-num">{{ scoreNum }}</span>
       </div>
 
       <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
       <div class="box-content" ref="box">
-        <img :src="houseImageArr[0]" style="width:100%" />
+        <img :src="houseImageArr[0]" style="width: 100%" />
       </div>
     </div>
 
@@ -39,12 +44,7 @@
     ></change-success>
 
     <!-- 挑战失败组件 -->
-    <change-fail
-      v-if="isshowFail"
-      @refreshHome="
-        (index = ++index), (isshowFail = false), (isshowwRegular = true)
-      "
-    ></change-fail>
+    <change-fail v-if="isshowFail" @refreshHome="failBtn"></change-fail>
 
     <!-- 显示规则组件 -->
     <regular-page
@@ -61,7 +61,7 @@
 import ChangeSuccess from "./childComponet/ChangeSuccess";
 import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
-
+import { eventBus } from "utils/eventbus";
 export default {
   props: {
     backImage: {
@@ -84,6 +84,7 @@ export default {
   },
   data() {
     return {
+      isrepeatRender: true,
       index: 1,
       scoreNum: 0,
       cloneBox: null,
@@ -110,6 +111,19 @@ export default {
   },
   created() {},
   mounted() {
+    const debounce = (fn, wait) => {
+      let timer = null;
+      return function () {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fn.apply(this, arguments);
+        }, wait);
+      };
+    };
+    const fn = debounce((e) => {
+      this.homeBtn();
+    }, 70);
+    document.querySelector(".home-contain").addEventListener("click", fn);
     // 这是设置动态背景的
     let home = document.querySelector(".home-contain");
     home.style.backgroundImage = `url(${this.backImage})`;
@@ -131,12 +145,28 @@ export default {
     // });
   },
   methods: {
+    failBtn() {
+      let obj = {
+        backImage: this.backImage,
+        footerImage: this.footerImage,
+        regularImg: this.houseImageArr[0],
+        newRoute:this.$route.path
+      };
+      this.$router.push("/regularpage");
+
+      console.log(obj);
+      eventBus.$emit("editphoto", obj);
+      window.localStorage.setItem("obj", JSON.stringify(obj));
+    },
     regularBtn() {
-      this.isshowwRegular = false;
-      this.scoreNum = 0;
-      setTimeout(() => {
-        this.num = true;
-      });
+      // this.isshowwRegular = false;
+      // this.scoreNum = 0;
+      // this.totalH = null;
+      // this.house = null;
+      this.$router.push("/home");
+      // setTimeout(() => {
+      //   this.num = true;
+      // });
     },
     // s() {
     //   console.log(222);
@@ -187,15 +217,16 @@ export default {
     homeBtn() {
       // 出现上部房子才可点击下落的事件
       if (this.num) {
-        console.log(this.num);
+        // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
+        this.num = false;
+        console.log(222);
         // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
         let box = document.querySelector(".box-content");
         // 停止顶部房子变化，要开始下落
         box.style.animationPlayState = "paused";
         // 点击 线条进行隐藏
         this.isshowline = false;
-        // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
-        this.num = false;
+
         this.house = this.$refs.house;
         this.footH = this.$refs.footH;
         this.bigbox = this.$refs.bigbox;

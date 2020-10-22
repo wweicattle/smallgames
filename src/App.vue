@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="$store.state.pageReload" />
+    <router-view  />
   </div>
 </template>
 <script>
