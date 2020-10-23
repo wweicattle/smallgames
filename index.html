@@ -91,13 +91,20 @@
 </head>
 
 <body>
+    <img src="./src/assets/logo.png" alt=""id="img">
     <div class="contain" id="contains">
-        <img src="./src//assets/avator.png" alt="">
+    <div id="sss">
+
+    </div>
     </div>
     <!-- <div class="tests">wukai</div> -->
 
 <div id="sss"></div>
     <script>
+        contains.appendChild(img);
+        document.querySelector(".box-content").childNodes[0].onload=function(){
+            console.log(22222222222);
+        }
         // var sum = 0;
         // for (i = 0; i < 2000; i++) {
         //     let div = document.createElement("div");
@@ -112,7 +119,6 @@
             contains.style.background = "#000";
             contains.style.left = "100px";
             contains.style.width = "200px";
-
             contains.classList.add("containss");
             Array.from(document.querySelectorAll(".tests")).forEach(val => {
                 console.log(2);

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { eventBus } from "utils/eventbus";
+// import { eventBus } from "utils/eventbus";
 
 export default {
   props: {
@@ -45,8 +45,6 @@ export default {
   created() {},
   mounted() {
     let obj = JSON.parse(window.localStorage.getItem("obj"));
-      // eventBus.$on('editphoto',(obj)=>{
-    //   console.log(obj);
     this.backImage = obj.backImage;
     this.footerImage = obj.footerImage;
     this.regularImg = obj.regularImg;
@@ -59,10 +57,6 @@ export default {
       console.log(this.$route);
       this.$router.push(this.newRoute)
 
-      // console.log(22);
-      // // console.log(this.$route.path);
-      // this.$emit("closeRgular");
-      // window.location.href =this.$route.path;
     },
   },
   computed: {},

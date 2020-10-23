@@ -1,19 +1,54 @@
 <template>
   <div class="gift-contain">
-    <img src="static/img/gift/gift.png" ref="img" alt="" v-if="!isshowLuck" />
-  
+    <img
+      class="gift"
+      src="static/img/gift/gift.png"
+      ref="img"
+      alt=""
+      v-if="!isshowLuck"
+    />
     <div class="luck-after" v-else>
-      <img src="static/img/gift/giftsuccess.png" alt="" />
-      <div class="button-content">
-        <div class="luck-gift">一等奖</div>
-        <div class="luck-detail">
-          <van-button round type="info" > 查看奖品详情 </van-button>
+      <div v-if="isluckAlready">
+        <img src="static/img/gift/giftsuccess.png" alt="" />
+        <div class="button-content">
+          <div class="luck-gift">一等奖</div>
+          <div class="luck-detail">
+            <van-button round type="info"> 查看奖品详情 </van-button>
+          </div>
+          <div class="button-box">
+            <van-button round type="info" class="ranking-list"
+              >排行榜</van-button
+            >
+            <van-button
+              round
+              type="info"
+              class="return-home"
+              @click="$router.push('/')"
+              >返回首页</van-button
+            >
+          </div>
         </div>
-        <div class="button-box">
-          <van-button round type="info" class="ranking-list">排行榜</van-button>
-          <van-button round type="info" class="return-home" @click="$router.push('/')"
-            >返回首页</van-button
-          >
+      </div>
+      <div v-else>
+        <img src="static/img/gift/giftFail.png" alt="" />
+        <div class="button-content">
+          <div class="luck-details">
+            <van-button round type="info" @click="$router.push('/regularpage')">
+              再玩一次
+            </van-button>
+          </div>
+          <div class="button-box">
+            <van-button round type="info" class="ranking-list"
+              >排行榜</van-button
+            >
+            <van-button
+              round
+              type="info"
+              class="return-home"
+              @click="$router.push('/')"
+              >返回首页</van-button
+            >
+          </div>
         </div>
       </div>
     </div>
@@ -25,22 +60,22 @@ export default {
   data() {
     return {
       isshowLuck: false,
+      isluckAlready: false,
     };
   },
   created() {},
   mounted() {
     console.log(this.$refs.img);
     let that = this;
-    that.$refs.img.addEventListener("animationend", this.ss);
-    that.$refs.img.addEventListener("webkitAnimationEnd", this.ss);
-    // setTimeout(() => {
+    // 礼物开奖动画结束后
+    that.$refs.img.addEventListener("animationend", this.showLuckAfter);
+    that.$refs.img.addEventListener("webkitAnimationEnd", this.showLuckAfter);
     that.$refs.img.addEventListener("click", () => {
       that.$refs.img.classList.add("test");
     });
-    // });
   },
   methods: {
-    ss() {
+    showLuckAfter() {
       this.isshowLuck = true;
     },
   },
@@ -67,9 +102,12 @@ export default {
     width: 74%;
     left: 0;
     right: 0;
-    top: 20px;
+    // top: 20px;
     margin: auto;
     position: absolute;
+  }
+  img.gift {
+    top: 40px;
   }
   .button-content {
     width: 100%;
@@ -82,13 +120,28 @@ export default {
       text-align: center;
     }
     .luck-detail {
-      margin:40px 0;
+      margin: 40px 0;
       text-align: center;
       .van-button {
         padding: 0 30px;
         font-weight: 700;
         background: rgb(255, 111, 98);
         color: #fff;
+        height: 36px;
+        border: none;
+        outline: none;
+        letter-spacing: 2px;
+        font-size: 17px;
+      }
+    }
+    .luck-details {
+      margin: 40px 0;
+      text-align: center;
+      .van-button {
+        padding: 0 50px;
+        font-weight: 700;
+        background: rgb(238, 185, 113);
+        color: #000;
         height: 36px;
         border: none;
         outline: none;

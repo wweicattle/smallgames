@@ -18,7 +18,6 @@ export default {
       houseImageArr: [
         "static/img/firstLevel2/house1.png",
         "static/img/firstLevel2/house2.png",
-        "static/img/firstLevel2/house3.png",
       ],
     };
   },

@@ -22,7 +22,7 @@
 
       <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
       <div class="box-content" ref="box">
-        <img :src="houseImageArr[0]" style="width: 100%" />
+        <img :src="houseImageArr[0]" style="width: 100%" @load="imgloaded" />
       </div>
     </div>
 
@@ -63,6 +63,7 @@ import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 import { eventBus } from "utils/eventbus";
 export default {
+  name: "homePage",
   props: {
     backImage: {
       type: String,
@@ -94,7 +95,7 @@ export default {
       bottom: null,
       totalH: null,
       //   isshowfailline:false,
-      num: true,
+      num: false,
       isshowline: false,
       lineClass: null,
       oldwidth: null,
@@ -111,73 +112,59 @@ export default {
   },
   created() {},
   mounted() {
-    const debounce = (fn, wait) => {
-      let timer = null;
+    document.querySelector(".box-content").childNodes[0].onload = function () {
+      console.log("imgload");
+    };
+    // 发起节流，防止点击太频繁
+    let throttleTime = function (func, wait) {
+      let prev = 0;
       return function () {
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-          fn.apply(this, arguments);
-        }, wait);
+        let now = Date.now();
+        if (now - prev > wait) {
+          func.apply(this);
+          prev = now;
+        }
       };
     };
-    const fn = debounce((e) => {
-      this.homeBtn();
-    }, 70);
-    document.querySelector(".home-contain").addEventListener("click", fn);
-    // 这是设置动态背景的
-    let home = document.querySelector(".home-contain");
-    home.style.backgroundImage = `url(${this.backImage})`;
-    home.style.backgroundSize = `cover`;
 
-    // console.log(this.$refs.box);
-    // let s = document.querySelector(".real-house-contain");
-    // console.log(s);
-    // s.addEventListener("transitionend", () => {
-    //   console.log(22222222222222222222);
-    // });
-
-    // let ss = document.querySelector(".box-content");
-    // ss.addEventListener("transitionend", () => {
-    //   console.log(22222222222222222222);
-    // });
-    // ss.addEventListener("webkitTransitionEnd", () => {
-    //   console.log(22222222222222222222);
-    // });
+    // // 点击防抖
+    // const debounce = (fn, wait) => {
+    //   let timer = null;
+    //   return function () {
+    //     clearTimeout(timer);
+    //     timer = setTimeout(() => {
+    //       fn.apply(this, arguments);
+    //     }, wait);
+    //   };
+    // };
+    // const fn = debounce((e) => {
+    //   this.homeBtn();
+    // }, 200);
+    // document.querySelector(".home-contain").addEventListener("click", fn);
+    let throole = throttleTime(this.homeBtn, 150);
+    document.querySelector(".home-contain").addEventListener("click", throole);
   },
   methods: {
-    failBtn() {
-      let obj = {
-        backImage: this.backImage,
-        footerImage: this.footerImage,
-        regularImg: this.houseImageArr[0],
-        newRoute:this.$route.path
+    imgloaded() {
+      this.num = true;
+    },
+    imgload() {
+      var that = this;
+      document.querySelector(
+        ".box-content"
+      ).childNodes[0].onload = function () {
+        // 进行可以可以点击
+        that.num = true;
+        // 出现参照线条
+        that.isshowline = true;
+
+        console.log(22222222222);
       };
+    },
+    failBtn() {
       this.$router.push("/regularpage");
-
-      console.log(obj);
-      eventBus.$emit("editphoto", obj);
-      window.localStorage.setItem("obj", JSON.stringify(obj));
     },
-    regularBtn() {
-      // this.isshowwRegular = false;
-      // this.scoreNum = 0;
-      // this.totalH = null;
-      // this.house = null;
-      this.$router.push("/home");
-      // setTimeout(() => {
-      //   this.num = true;
-      // });
-    },
-    // s() {
-    //   console.log(222);
-    //   this.cloneBox.style.top = 0;
-    //   this.cloneBox.style.animationPlayState = "running";
-
-    //   this.bigbox.appendChild(this.cloneBox);
-    //   this.isshowline = true;
-    //   this.lineClass = this.house.firstElementChild.clientWidth + "px";
-    //   this.num = true;
-    // },
+    regularBtn() {},
     marginedit() {
       // 进行房子的高度进行替换
       this.newimgindex = ++this.newimgindex;
@@ -196,9 +183,8 @@ export default {
           this.cloneBox.children[0].style.display = "block";
           this.cloneBox.children[0].src = this.houseImageArr[this.newimgindex];
           this.bigbox.appendChild(this.cloneBox);
-          this.isshowline = true;
           this.lineClass = this.house.firstElementChild.clientWidth + "px";
-          this.num = true;
+          this.imgload();
         }, 1000);
       } else {
         //   进行添加新的模块
@@ -207,19 +193,17 @@ export default {
         this.cloneBox.display = "block";
         this.cloneBox.children[0].style.display = "block";
         this.cloneBox.children[0].src = this.houseImageArr[this.newimgindex];
-
         this.bigbox.appendChild(this.cloneBox);
-        this.isshowline = true;
         this.lineClass = this.house.firstElementChild.clientWidth + "px";
-        this.num = true;
+        this.imgload();
       }
     },
     homeBtn() {
       // 出现上部房子才可点击下落的事件
       if (this.num) {
+        console.log(1111111111111111111);
         // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
         this.num = false;
-        console.log(222);
         // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
         let box = document.querySelector(".box-content");
         // 停止顶部房子变化，要开始下落
@@ -306,6 +290,15 @@ export default {
               setTimeout(() => {
                 // 清除加载提示框
                 this.$toast.clear();
+                // 进行收藏关卡页面保存本地存储，之后会进行使用
+                let obj = {
+                  backImage: this.backImage,
+                  footerImage: this.footerImage,
+                  regularImg: this.houseImageArr[0],
+                  newRoute: this.$route.path,
+                };
+                window.localStorage.setItem("obj", JSON.stringify(obj));
+
                 if (this.scoreNum >= 40) {
                   this.isshowSucess = true;
                 } else {
@@ -336,6 +329,7 @@ export default {
 
 <style  lang="scss" >
 .home-contain {
+  user-select: none;
   position: fixed;
   top: 0;
   width: 100%;
@@ -396,12 +390,6 @@ export default {
     100% {
       border-left: 1px solid #fff;
       border-right: 1px solid #fff;
-      //   background: red;
-
-      /* padding: -200px 200px 200px -200px; */
-
-      /* width: 200px;
-                height: 200px; */
     }
   }
   @-moz-keyframes myfirst2 {
@@ -432,7 +420,7 @@ export default {
   }
 
   .test {
-    border: 1px solid #eee;
+    // border: 1px solid #eee;
     height: 180px;
     padding-top: 70px;
     position: relative;
@@ -446,6 +434,9 @@ export default {
         border-radius: 50%;
       }
       .score-num {
+        user-select: none;
+        -webkit-user-select: none; /*禁用手机浏览器的用户选择功能 */
+        -moz-user-select: none;
         font-size: 18px;
         padding-left: 5px;
         vertical-align: 5px;
@@ -491,8 +482,8 @@ export default {
       right: 0;
       margin: auto;
       //   background: red;
-      border-left: 1px solid #fff;
-      border-right: 1px solid #fff;
+      border-left: 1px dotted #fff;
+      border-right: 1px dotted #fff;
       z-index: 1001;
       animation: myfirst1 1s ease 0s infinite alternate;
     }
@@ -502,7 +493,7 @@ export default {
     from {
     }
     to {
-      transform: scale(0.25);
+      transform: scale(0.2);
     }
   }
   @keyframes myfirst1 {

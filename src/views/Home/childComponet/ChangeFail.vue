@@ -67,13 +67,14 @@ export default {
   }
   img {
     width: 100%;
+    margin-top: -20px;
   }
   .text-cotnain {
     left: 0;
     right: 0;
     margin: auto;
     width: 200px;
-    top: 210px;
+    top: 190px;
     position: fixed;
     z-index: 1001;
     text-align: center;
@@ -146,7 +147,7 @@ export default {
     display: flex;
     justify-content: center;
     width: 100%;
-    top: 470px;
+    top: 450px;
     position: fixed;
     z-index: 1003;
     .van-button {
