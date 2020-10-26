@@ -3,10 +3,24 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+const active = () => import("views/SkillBag/ChildComponents/ActiveItem");
+const mysize = () => import("views/SkillBag/ChildComponents/MySize");
+const rankinglist = () => import("views/SkillBag/ChildComponents/RankingList");
+
+
+
+
+
+
 const routes = [{
     path: '/',
     name: 'index',
-    redirect: "/checkoutpoint"
+    redirect: "/index"
+  },
+  {
+    path: '/index',
+    name: 'index',
+    component: () => import( /* webpackChunkName: "about" */ '../views/Index')
   },
   {
     path: '/home',
@@ -15,6 +29,25 @@ const routes = [{
     //   // this generates a separate chunk (about.[hash].js) for this route
     //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../views/Home')
+  },
+  {
+    path: '/skillbag',
+    name: 'skillbag',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    redirect: "/active",
+    component: () => import( /* webpackChunkName: "about" */ '../views/SkillBag'),
+    children: [{
+      path: "/active",
+      component: active,
+    }, {
+      path: "/mysize",
+      component: mysize,
+    }, {
+      path: "/rankinglist",
+      component: rankinglist,
+    }]
   },
   {
     path: '/gift',
@@ -60,7 +93,7 @@ const routes = [{
 ]
 
 const router = new VueRouter({
-  // mode: 'history',
+  mode: 'history',
   // base: process.env.BASE_URL,
   routes
 })
@@ -70,5 +103,9 @@ const router = new VueRouter({
 //   }else{
 //     next();
 //   }
-// })
+// })const routerPush = VueRouter.prototype.push
+const routerPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error)
+}
 export default router

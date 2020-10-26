@@ -328,6 +328,7 @@ export default {
 </script>
 
 <style  lang="scss" >
+// #faeaed
 .home-contain {
   user-select: none;
   position: fixed;
