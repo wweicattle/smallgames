@@ -77,17 +77,21 @@ export default {
 
 <style scoped lang="scss">
 .acitive-contain {
-  height: calc(100% - 60px);
+  padding: 0 26px;
+  height: calc(100vh - 80px);
   overflow-y: scroll;
-  // border: 1px solid red;
   font-size: 14px;
   box-sizing: border-box;
   ul {
+    height: 100%;
     .item {
       padding-bottom: 12px;
       border-bottom: 1px dotted #ccc;
+      &:last-child {
+        padding-bottom: 80px;
+      }
     }
-    li {
+    & > li {
       padding: 2px 0;
       .van-tag {
         padding: 5px 7px;
@@ -95,7 +99,7 @@ export default {
         color: #000;
         font-weight: 500;
         font-size: 15px;
-        background: rgb(250,234,237);
+        background: rgb(250, 234, 237);
       }
     }
   }

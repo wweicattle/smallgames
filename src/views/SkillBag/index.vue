@@ -1,13 +1,26 @@
 <template>
-  <transition name="bounce">
-    <div class="skill-contain" v-if="ss">
-      <van-tabs v-model="active" animated @click="acitveItemBtn" type="card">
-        <van-tab v-for="(val, index) in titleArr" :title="val" :key="index">
-        </van-tab>
-      </van-tabs>
-      <router-view></router-view>
-    </div>
-  </transition>
+  <div>
+    <transition name="bounce">
+      <div v-if="ss" class="total-content">
+        <van-notice-bar
+          left-icon="volume-o"
+          text="请仔细阅读活动说明查看规则等。"
+          scrollable
+        />
+        <div class="skill-contain">
+          <van-tabs
+            v-model="active"
+            animated
+            @click="acitveItemBtn"
+          >
+            <van-tab v-for="(val, index) in titleArr" :title="val" :key="index">
+            </van-tab>
+          </van-tabs>
+        </div>
+        <router-view></router-view>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -22,11 +35,18 @@ export default {
   },
   created() {},
   mounted() {
+    console.log(this.$route.path)
+    // if(this.$route.path=="/mysize"&&(!window.localStorage.getItem("activeItem"))){
+    //   window
+    // };
+    let stattenum = window.localStorage.getItem("activeItem");
+    this.active = Number(stattenum);
     this.ss = true;
   },
   methods: {
     acitveItemBtn(name) {
-      this.active = name;
+      // 进行状态 保存本地 之后进行重新刷新
+      window.localStorage.setItem("activeItem", name);
     },
   },
   watch: {
@@ -46,32 +66,50 @@ export default {
       },
       immediate: true,
     },
+    $route(newVal,oldVal) {
+      console.log(newVal.path);
+      switch (newVal.path) {
+        case "/mysize":
+          this.active = 2;
+          window.localStorage.setItem("activeItem", 2);
+          break;
+        case "/active":
+          this.active = 0;
+          window.localStorage.setItem("activeItem", 0);
+          break;
+        case "/rankinglist":
+          this.active = 1;
+          window.localStorage.setItem("activeItem", 1);
+          break;
+      }
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.van-notice-bar {
+  padding: 0 20px;
+}
 .skill-contain {
-  padding-top: 10px;
   margin: 0 25px;
   height: 100%;
   box-sizing: border-box;
-  //   background: #f40;
 }
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }
 .bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
+  animation: bounce-in 0.2s reverse;
 }
 @keyframes bounce-in {
   0% {
-    transform: translate(375px,-667px);
+    transform: translate(375px, -667px);
   }
   50% {
   }
   100% {
-    transform: translate(0,0);
+    transform: translate(0, 0);
   }
 }
 </style>

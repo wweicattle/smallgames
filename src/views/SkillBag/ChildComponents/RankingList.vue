@@ -1,13 +1,12 @@
 <template>
   <div class="rank-contain">
-    <div class="score">分数排行榜</div>
     <div class="column">
       <ul>
         <li><span>排行</span></li>
         <li><span>昵称</span></li>
         <li><span>最高分</span></li>
       </ul>
-      <img src="static/img/RankList/rankcolumn.png" alt="" />
+      <!-- <img src="static/img/RankList/rankcolumn.png" alt="" /> -->
     </div>
     <div class="rank-detail">
       <ul>
@@ -196,42 +195,32 @@ export default {
 
 <style scoped lang="scss">
 .rank-contain {
-  //   background: #f40;
-  height: calc(100% - 60px);
+  padding: 0 26px;
+  height: calc(100vh - 82px);
   font-size: 14px;
   box-sizing: border-box;
+//   background: #f40;
   color: #000;
-  .score {
-    font-size: 21px;
-    font-weight:500;
-    text-align: center;
-    padding: 20px 0;
-  }
   .column {
     color: #000;
     font-weight: 600;
     position: relative;
-    margin-bottom: 5px;
+    margin: 10px 0;
     ul {
-      height: 100%;
       width: 100%;
-      position: absolute;
       display: flex;
       justify-content: space-around;
-      align-items: center;
+      padding: 12px 0 1px 0;
       li {
         width: 70px;
         text-align: center;
       }
     }
-    img {
-      width: 100%;
-    }
   }
   .rank-detail {
-    height: calc(100% - 100px);
     overflow-y: scroll;
-    padding-bottom: 60px;
+    // border: 1px solid red;
+    height: calc(100% - 50px);
     li {
       height: 32px;
       img {
@@ -239,7 +228,7 @@ export default {
       }
       display: flex;
       justify-content: space-around;
-      margin: 5px 0px;
+      margin: 10px 0px;
       align-items: center;
       border-bottom: 1px solid #ccc;
       span {
@@ -247,15 +236,18 @@ export default {
         text-align: center;
         width: 70px;
       }
+      &:last-child{
+          margin-bottom: 40px;
+      }
     }
-    .num-one{
-        font-size: 21px;
+    .num-one {
+      font-size: 21px;
     }
-    .num-two{
-        font-size: 18px;
+    .num-two {
+      font-size: 18px;
     }
-    .num-three{
-        font-size: 17px;
+    .num-three {
+      font-size: 17px;
     }
   }
 }

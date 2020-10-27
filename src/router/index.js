@@ -97,12 +97,26 @@ const router = new VueRouter({
   // base: process.env.BASE_URL,
   routes
 })
-// router.beforeEach((to, from, next) => {
-//   if (to.meta.canSearch) {
-//     next(false)
-//   }else{
-//     next();
-//   }
+router.beforeEach((to, from, next) => {
+  // console.log(to);
+  // if (to.meta.canSearch) {
+  // next(false)
+  // 这是 进行判断用户直接进行输入url后进行跳转
+  // if (window.localStorage.getItem("activeItem") >= 0 && from.path == "/mysize" && to.path == "/active"){
+  //   window.localStorage.setItem("activeItem", 2);
+  // }
+  // if (to.path == "/active") {
+  //   window.localStorage.setItem("activeItem", 0);
+  // }
+  // if (to.path == "/rankinglist") {
+  //   window.localStorage.setItem("activeItem", 1);
+  // }
+  // if (to.path == "/mysize") {
+  //   window.localStorage.setItem("activeItem", 2);
+  // }
+  // }
+  next();
+})
 // })const routerPush = VueRouter.prototype.push
 const routerPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {

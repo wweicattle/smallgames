@@ -70,6 +70,7 @@ export default {
     text-align: center;
     img {
       width: 40%;
+    
     }
   }
   .luck-content {
