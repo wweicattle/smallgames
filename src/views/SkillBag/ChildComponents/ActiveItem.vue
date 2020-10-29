@@ -1,6 +1,7 @@
 <template>
   <div class="acitive-contain">
-    <ul>
+    <img src="static/img/confirm.png" alt="">
+    <!-- <ul>
       <li class="item">
         <div>
           <van-tag type="warning" round>活动奖品</van-tag>
@@ -60,7 +61,7 @@
           <van-tag type="warning" round>活动时间</van-tag>
         </div>
       </li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 
@@ -77,31 +78,34 @@ export default {
 
 <style scoped lang="scss">
 .acitive-contain {
-  padding: 0 26px;
-  height: calc(100vh - 80px);
-  overflow-y: scroll;
-  font-size: 14px;
-  box-sizing: border-box;
-  ul {
-    height: 100%;
-    .item {
-      padding-bottom: 12px;
-      border-bottom: 1px dotted #ccc;
-      &:last-child {
-        padding-bottom: 80px;
-      }
+    img{
+      width: 100%;
     }
-    & > li {
-      padding: 2px 0;
-      .van-tag {
-        padding: 5px 7px;
-        margin: 15px 0;
-        color: #000;
-        font-weight: 500;
-        font-size: 15px;
-        background: rgb(250, 234, 237);
-      }
-    }
-  }
+  // padding: 0 26px;
+  // height: calc(100vh - 80px);
+  // overflow-y: scroll;
+  // font-size: 14px;
+  // box-sizing: border-box;
+  // ul {
+  //   height: 100%;
+  //   .item {
+  //     padding-bottom: 12px;
+  //     border-bottom: 1px dotted #ccc;
+  //     &:last-child {
+  //       padding-bottom: 80px;
+  //     }
+  //   }
+  //   & > li {
+  //     padding: 2px 0;
+  //     .van-tag {
+  //       padding: 5px 7px;
+  //       margin: 15px 0;
+  //       color: #000;
+  //       font-weight: 500;
+  //       font-size: 15px;
+  //       background: rgb(250, 234, 237);
+  //     }
+  //   }
+  // }
 }
 </style>

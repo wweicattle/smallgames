@@ -8,7 +8,9 @@ import {
   Tab,
   Tabs,
   Tag,
-  NoticeBar 
+  NoticeBar,
+  Icon 
+
 } from 'vant';
 Vue.use(Button);
 Vue.use(Overlay);
@@ -19,3 +21,4 @@ Vue.use(Tabs);
 Vue.use(Tag);
 Vue.use(Notify);
 Vue.use(NoticeBar);
+Vue.use(Icon);

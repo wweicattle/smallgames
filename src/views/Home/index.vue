@@ -5,6 +5,7 @@
     :style="{ 'background-image': 'url(' + backImage + ')' }"
     v-if="isrepeatRender"
   >
+    <!-- 盒子发生碰撞时进行 -->
     <div
       class="shineCopy"
       ref="lineref"
@@ -20,8 +21,13 @@
         <span class="score-num">{{ scoreNum }}</span>
       </div>
 
-      <div class="line" v-if="isshowline" :style="{ width: lineClass }"></div>
-      <div class="box-content" ref="box">
+      <div
+        class="line"
+        v-if="isshowline"
+        :style="{ width: lineClass, animation: lineAnimation }"
+      ></div>
+      <!-- animation: myfirst 1s linear 0s infinite alternate; -->
+      <div class="box-content" ref="box" :style="animationSpeed">
         <img :src="houseImageArr[0]" style="width: 100%" @load="imgloaded" />
       </div>
     </div>
@@ -44,7 +50,7 @@
     ></change-success>
 
     <!-- 挑战失败组件 -->
-    <change-fail v-if="isshowFail" @refreshHome="failBtn"></change-fail>
+    <change-fail v-if="isshowFail" @refreshHome="failBtn" :scoreNums="scoreNums"></change-fail>
 
     <!-- 显示规则组件 -->
     <regular-page
@@ -65,6 +71,16 @@ import { eventBus } from "utils/eventbus";
 export default {
   name: "homePage",
   props: {
+    scoreNums: {
+      type: Number,
+    },
+    stepsScore: {
+      type: Number,
+    },
+    timeAnimaiton: {
+      type: String,
+      default: "1s",
+    },
     backImage: {
       type: String,
       default: "static/img/firstLevel/homeback.png",
@@ -257,24 +273,9 @@ export default {
             //每次插入新的房子前，把原来的第一个房子dom获取
             let oldFirstNode = this.house.firstElementChild;
             this.house.insertBefore(box, oldFirstNode);
-            this.scoreNum = this.scoreNum + 10;
 
             //是否有出现碰撞，之后进行比较线条
             if (w > getComputedStyle(oldFirstNode).width.split("p")[0]) {
-              // let div = document.createElement("div");
-              // div.style.position = "absolute";
-              // div.style.zIndex = 1309;
-              // div.style.top = 0;
-              // div.style.bottom = 0;
-              // div.style.right = 0;
-              // div.style.left = 0;
-              // div.style.background = "#f40";
-              // div.style.width = getComputedStyle(t).width;
-              // div.style.height = h + 40 + "px";
-              // div.style.margin = "auto";
-              // div.style.borderLeft = "2px dotted #000";
-              // div.style.borderRight = "2px dotted #000";
-              // div.classList.add("shine");
               // 比较两个房子的时候，出现线条时的动态宽高
               this.linefailwidth = getComputedStyle(oldFirstNode).width;
               this.linefailheihgt = h + 40 + "px";
@@ -299,7 +300,8 @@ export default {
                 };
                 window.localStorage.setItem("obj", JSON.stringify(obj));
 
-                if (this.scoreNum >= 40) {
+                //看是否游戏结束后是否超过分数 可抽奖
+                if (this.scoreNum >= this.scoreNums) {
                   this.isshowSucess = true;
                 } else {
                   this.isshowFail = true;
@@ -307,22 +309,36 @@ export default {
               }, 1500);
               return;
             } else {
+              // 盒子无碰撞进行分数叠加
+              this.scoreNum = this.scoreNum + this.stepsScore;
               // 没有出现房子碰撞，可能会下移
               this.marginedit();
             }
           }, 1000);
-          //   console.log(house.clientHeight);
         });
       } else {
         return;
       }
     },
   },
-  watch: {},
+  watch: {
+    
+  },
   components: {
     ChangeSuccess,
     ChangeFail,
     RegularPage,
+  },
+  computed: {
+    animationSpeed() {
+      let animation = `myfirst ${this.timeAnimaiton} linear 0s infinite alternate`;
+      return {
+        animation,
+      };
+    },
+    lineAnimation() {
+      return `myfirst1 ${this.timeAnimaiton} ease 0s infinite alternate`;
+    },
   },
 };
 </script>
@@ -453,7 +469,6 @@ export default {
       transition: all 1s;
       position: relative;
       z-index: 100;
-      animation: myfirst 1s linear 0s infinite alternate;
       // background-image: url(~assets/home.png) ;
       background-size: cover;
       display: block;
@@ -474,19 +489,16 @@ export default {
       }
     }
     .line {
-      top: 50px;
-      //   width: 120px;
-      // padding-top: 70px;
+      top: 60px;
       height: 120px;
       position: absolute;
       left: 0;
       right: 0;
       margin: auto;
-      //   background: red;
-      border-left: 1px dotted #fff;
-      border-right: 1px dotted #fff;
+      border-left: 1px dotted rgb(102, 97, 97);
+      border-right: 1px dotted rgb(102, 97, 97);
       z-index: 1001;
-      animation: myfirst1 1s ease 0s infinite alternate;
+      // animation: myfirst1 1s ease 0s infinite alternate;
     }
   }
 

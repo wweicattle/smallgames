@@ -3,9 +3,17 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const active = () => import("views/SkillBag/ChildComponents/ActiveItem");
-const mysize = () => import("views/SkillBag/ChildComponents/MySize");
-const rankinglist = () => import("views/SkillBag/ChildComponents/RankingList");
+// const active = () => import("views/SkillBag/ChildComponents/ActiveItem");
+// const mysize = () => import("views/SkillBag/ChildComponents/MySize");
+// const rankinglist = () => import("views/SkillBag/ChildComponents/RankingList");
+
+
+const active=()=>import("components/skillbags/ActiveConfirm")
+const mysize=()=>import("components/skillbags/MySizes")
+const ranklist=()=>import("components/skillbags/RankingList")
+const luckpeople=()=>import("components/skillbags/LuckPeople")
+
+
 
 
 
@@ -25,70 +33,91 @@ const routes = [{
   {
     path: '/home',
     name: 'home',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../views/Home')
   },
-  {
-    path: '/skillbag',
-    name: 'skillbag',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    redirect: "/active",
-    component: () => import( /* webpackChunkName: "about" */ '../views/SkillBag'),
-    children: [{
-      path: "/active",
-      component: active,
-    }, {
-      path: "/mysize",
-      component: mysize,
-    }, {
-      path: "/rankinglist",
-      component: rankinglist,
-    }]
-  },
+  // {
+  //   path: '/skillbag',
+  //   name: 'skillbag',
+  //   redirect: "/active",
+  //   component: () => import( /* webpackChunkName: "about" */ '../views/SkillBag'),
+  //   children: [{
+  //     path: "/active",
+  //     component: active,
+  //   }, {
+  //     path: "/mysize",
+  //     component: mysize,
+  //   }, {
+  //     path: "/rankinglist",
+  //     component: rankinglist,
+  //   }]
+  // },
   {
     path: '/gift',
     name: 'gift',
     meta: {
       canSearch: true
     },
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../views/Home/childComponet/GiftPage')
+  },
+  {
+    path: '/zeropage',
+    name: 'zeropage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/ZeroPage')
   },
   {
     path: '/firstpage',
     name: 'firstpage',
-    //   // this generates a separate chunk (about.[hash].js) for this route
-
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../components/FirstPage')
+  },
+  {
+    path: '/twopage',
+    name: 'twopage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/TwoPage')
+  },
+  {
+    path: '/threepage',
+    name: 'threepage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/ThreePage')
+  },
+  {
+    path: '/fourpage',
+    name: 'fourpage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/FourPage')
+  },
+  {
+    path: '/fivepage',
+    name: 'fivepage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/FivePage')
   },
   {
     path: '/checkoutpoint',
     name: 'checkoutpoint',
-    //   // this generates a separate chunk (about.[hash].js) for this route
-
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../components/SelectCheckPoint')
   },
   {
     path: '/regularpage',
     name: 'regularpage',
-    //   // this generates a separate chunk (about.[hash].js) for this route
-
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
     component: () => import( /* webpackChunkName: "about" */ '../views/Home/childComponet/RegularPage')
+  },
+  {
+    path: '/active',
+    name: 'active',
+    component:active
+  },
+  {
+    path: '/mysize',
+    name: 'mysize',
+    component:mysize
+  },
+  {
+    path: '/ranklist',
+    name: 'ranklist',
+    component:ranklist
+  },
+  {
+    path: '/luckpeople',
+    name: 'luckpeople',
+    component:luckpeople
   }
 ]
 
@@ -98,6 +127,14 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  // console.log(to);
+  // const routeArr=["/zeropage","/firstpage","/twopage","/threepage","/fourpage","/fivepage"]
+  // if(from.path=="/zeropage"){
+  //   alert("/defeat");
+  //   next(false);
+  // }else{
+  //   next();
+  // }
   // console.log(to);
   // if (to.meta.canSearch) {
   // next(false)

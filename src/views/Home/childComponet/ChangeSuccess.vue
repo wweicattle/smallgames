@@ -20,43 +20,57 @@
           </ul>
         </div>
         <div class="luck-draw">今天还有三次机会抽奖</div>
-        <van-button round type="info" size="large" @click="goLuckDrawBtn"> 赶紧去抽奖 </van-button>
+        <van-button round type="info" size="large" @click="goLuckDrawBtn">
+          赶紧去抽奖
+        </van-button>
       </div>
       <div class="button-content">
-        <van-button round type="info" class="ranking-list">排行榜</van-button>
-        <van-button round type="info" class="return-home" @click="$router.push('/')">返回关卡</van-button>
+        <van-button
+          round
+          type="info"
+          class="ranking-list"
+          @click="jumpMysizeBtn"
+          >排行榜</van-button
+        >
+        <van-button
+          round
+          type="info"
+          class="return-home"
+          @click="$router.push('/')"
+          >返回关卡</van-button
+        >
       </div>
     </van-popup>
 
-
     <!-- 进行抽奖组件 -->
-    <gift-page v-if="isshowGift">
-
-    </gift-page>
-
+    <gift-page v-if="isshowGift"> </gift-page>
   </div>
 </template>
 
 <script>
-import GiftPage from "./GiftPage"
+import GiftPage from "./GiftPage";
 export default {
   data() {
     return {
       show: true,
-      isshowGift:false
+      isshowGift: false,
     };
   },
   created() {},
   mounted() {},
   methods: {
-      goLuckDrawBtn(){
-          this.$emit("closeNum")
-          this.$router.push("/gift");
-      }
+    jumpMysizeBtn() {
+      window.localStorage.setItem("activeItem", 1);
+      this.$router.push("/skillbag");
+    },
+    goLuckDrawBtn() {
+      this.$emit("closeNum");
+      this.$router.push("/gift");
+    },
   },
-  components:{
-      GiftPage
-  }
+  components: {
+    GiftPage,
+  },
 };
 </script>
 
@@ -97,9 +111,8 @@ export default {
       }
     }
     .success-defeat {
-      padding: 15px 0;
+      padding: 10px 0 20px 0;
       font-size: 15px;
-      font-weight: 500;
     }
     .score-content {
       //   width: 220px;
@@ -147,7 +160,7 @@ export default {
       height: 36px;
       border: none;
       outline: none;
-      letter-spacing:2px;
+      letter-spacing: 2px;
       font-size: 17px;
     }
   }

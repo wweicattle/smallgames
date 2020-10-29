@@ -6,7 +6,7 @@
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
         </div>
-        <div class="success-defeat">成功击败了99%的玩家</div>
+        <div class="success-defeat">成绩必须达到{{scoreNums}}分才能抽奖</div>
         <div class="score-content">
           <ul>
             <li>
@@ -15,7 +15,7 @@
             </li>
             <li>
               <span class="title">最佳排名</span
-              ><span class="score">120分</span>
+              ><span class="score">NO:120</span>
             </li>
           </ul>
         </div>
@@ -24,7 +24,7 @@
         </van-button>
       </div>
       <div class="button-content">
-        <van-button round type="info" class="ranking-list">排行榜</van-button>
+        <van-button round type="info" class="ranking-list" @click="jumpMysizeBtn">排行榜</van-button>
         <van-button round type="info" class="return-home" @click="$router.push('/')">返回关卡</van-button>
       </div>
     </van-popup>
@@ -38,9 +38,18 @@ export default {
       show: true,
     };
   },
+  props:{
+    scoreNums:{
+      type:Number
+    }
+  },
   created() {},
   mounted() {},
   methods: {
+     jumpMysizeBtn() {
+      window.localStorage.setItem("activeItem", 1);
+      this.$router.push("/skillbag");
+    },
     clickOnceBtn() {
       // 进行重新加载主页
       this.$emit("refreshHome");
@@ -87,9 +96,9 @@ export default {
       }
     }
     .success-defeat {
-      padding: 15px 0;
+      padding: 10px 0 20px 0;
       font-size: 15px;
-      font-weight: 500;
+      // font-weight: 500;
     }
     .score-content {
       //   width: 220px;

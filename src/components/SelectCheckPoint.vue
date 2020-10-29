@@ -11,16 +11,16 @@
               @click="checkPointBtn(index)"
               :class="{ highBox: index == nowindex }"
             />
-            <span>{{ index + 1 }}</span>
+            <span :class="{ highBox: index == nowindex }">{{ index + 1 }}</span>
           </li>
         </template>
         <template v-for="(i, index) in 6 - lucklevel">
-          <li :key="6 - index">
+          <li :key="index + lucklevel">
             <img
               src="static/img/unluck/7.png"
               alt=""
-              @click="checkPointBtn(6 - index)"
-              :class="{ highBox: 6 - index == nowindex }"
+              @click="checkPointBtn(index + lucklevel)"
+              :class="{ highBox: index + lucklevel == nowindex }"
             />
             <span>{{ index + lucklevel + 1 }}</span>
           </li>
@@ -30,6 +30,16 @@
         <img src="static/img/begingameIcon.png" alt="" />
       </div>
     </van-popup>
+    <div class="header">
+      <img src="static/img/homes/header.png" alt="" />
+    </div>
+    <div class="center">
+      <img src="static/img/homes/center.png" alt="" />
+    </div>
+    <div class="footer">
+      <img src="static/img/homes/begingame.png" alt="" />
+      <div class="begin-icon" @click="$router.push('/checkoutpoint')"></div>
+    </div>
   </div>
 </template>
 
@@ -37,9 +47,10 @@
 export default {
   data() {
     return {
-      lucklevel: 4,
+      lucklevel: 6,
       show: true,
       nowindex: 0,
+      copynowindex: 0,
       umlockiconArr: [
         "static/img/unluck/1.png",
         "static/img/unluck/2.png",
@@ -54,15 +65,27 @@ export default {
   mounted() {},
   methods: {
     beginGamesBtn() {
-      switch (this.nowindex) {
+      console.log(this.copynowindex);
+      switch (this.copynowindex) {
         case 0:
-          this.$router.push("/home");
+          this.$router.push("/zeropage");
           break;
         case 1:
           this.$router.push("/firstpage");
           break;
+        case 2:
+          this.$router.push("/twopage");
+          break;
+        case 3:
+          this.$router.push("/threepage");
+          break;
+        case 4:
+          this.$router.push("/fourpage");
+          break;
+        case 5:
+          this.$router.push("/fivepage");
+          break;
         default:
-          // this.$toast.
           this.$notify({
             color: "#fff",
             background: "rgb(255,125,112)",
@@ -71,7 +94,11 @@ export default {
       }
     },
     checkPointBtn(index) {
+      // 进行点击的关卡进行高亮
       this.nowindex = index;
+      // 进行判断是否 该关卡 没有解锁
+      if (index + 1 > this.lucklevel) return (this.copynowindex = 7);
+      this.copynowindex = index;
     },
   },
 };
@@ -81,10 +108,55 @@ export default {
 .check-point-contain {
   height: 100%;
   position: fixed;
-  background: url("~assets/22.png");
+  background: #000;
+  background: url("/static/img/homes/homeback.png");
+  background-size: 100%;
   width: 100%;
+  .header {
+    width: 40%;
+    position: absolute;
+    top: 0;
+    right: 50px;
+    img {
+      width: 100%;
+    }
+  }
+  .center {
+    width: 70%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 120px;
+    // right: 60px;
+    img {
+      width: 100%;
+    }
+  }
+  .footer {
+    width: 80%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 20px;
+    img {
+      width: 100%;
+    }
+    .begin-icon {
+      width: 150px;
+      height: 50px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin: auto;
+    }
+  }
   .highBox {
-    transform: scale(1.2);
+    transform: scale(1.3);
+    color: #a05926 !important;
+    // box-shadow: 0 0 1px 1px #000;
   }
 
   .van-popup {
@@ -116,13 +188,13 @@ export default {
         rgb(255, 87, 74)
       );
       border-radius: 8px;
-      padding: 15px;
+      padding: 15px 10px;
       position: absolute;
       top: 150px;
       left: 0;
       right: 0;
       margin: auto;
-      width: 240px;
+      width: 280px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-around;
@@ -142,7 +214,7 @@ export default {
         span {
           padding: 5px 0 8px 0;
           color: #fff;
-          font-size: 16px;
+          font-size: 18px;
           font-weight: 600;
           font-family: Georgia, "Times New Roman", Times, serif;
         }

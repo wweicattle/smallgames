@@ -1,21 +1,21 @@
 <template>
-  <div>
+  <div class="skill-contain" red ref="skill">
     <transition name="bounce">
-      <div v-if="ss" class="total-content">
+      <div v-if="isshowskill" class="total-content">
         <van-notice-bar
           left-icon="volume-o"
           text="请仔细阅读活动说明查看规则等。"
           scrollable
         />
         <div class="skill-contain">
-          <van-tabs
-            v-model="active"
-            animated
-            @click="acitveItemBtn"
-          >
+          <van-tabs v-model="active" animated @click="acitveItemBtn">
             <van-tab v-for="(val, index) in titleArr" :title="val" :key="index">
             </van-tab>
           </van-tabs>
+    
+          <div class="return-index" @click="isshowskill=false">
+            <van-icon name="clear" />
+          </div>
         </div>
         <router-view></router-view>
       </div>
@@ -28,20 +28,22 @@ export default {
   name: "skillbag",
   data() {
     return {
-      ss: false,
+      isshowskill: false,
       active: 0,
       titleArr: ["活动说明", "排行榜", "我的奖品"],
     };
   },
   created() {},
   mounted() {
-    console.log(this.$route.path)
-    // if(this.$route.path=="/mysize"&&(!window.localStorage.getItem("activeItem"))){
-    //   window
-    // };
+    this.isshowskill = true;
+    this.$refs.skill.addEventListener("animationend", () => {
+      if (!this.isshowskill) {
+        this.$router.push("/")
+      } 
+    });
     let stattenum = window.localStorage.getItem("activeItem");
+    console.log(stattenum);
     this.active = Number(stattenum);
-    this.ss = true;
   },
   methods: {
     acitveItemBtn(name) {
@@ -66,7 +68,7 @@ export default {
       },
       immediate: true,
     },
-    $route(newVal,oldVal) {
+    $route(newVal, oldVal) {
       console.log(newVal.path);
       switch (newVal.path) {
         case "/mysize":
@@ -84,6 +86,11 @@ export default {
       }
     },
   },
+  beforeDestroy() {},
+  destroyed() {
+    // this.ss=false
+    // this.$router.push("/")
+  },
 };
 </script>
 
@@ -92,9 +99,24 @@ export default {
   padding: 0 20px;
 }
 .skill-contain {
-  margin: 0 25px;
+  position: relative;
   height: 100%;
   box-sizing: border-box;
+  .van-tabs {
+    padding: 0 24px;
+  }
+  .return-index {
+    position: absolute;
+    right: 10px;
+    top: -6px;
+    bottom: 0;
+    margin: auto;
+    height: 20px;
+    font-size: 20px;
+    color: #999;
+    .van-icon {
+    }
+  }
 }
 .bounce-enter-active {
   animation: bounce-in 0.5s;

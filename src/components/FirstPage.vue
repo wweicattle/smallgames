@@ -4,21 +4,27 @@
       :backImage="backImage"
       :footerImage="footerImage"
       :houseImageArr="houseImageArr"
+      :timeAnimaiton="timeset"
+      :scoreNums="scoreNums"
+      :stepsScore="stepsScore"
+
     ></luck-draw>
   </div>
 </template>
 
 <script>
 import LuckDraw from "views/Home";
+import levelSetting from "utils/levelSetting";
 export default {
   data() {
     return {
-      backImage: "static/img/firstLevel2/homeback.png",
-      footerImage: "static/img/firstLevel2/footerImg.png",
-      houseImageArr: [
-        "static/img/firstLevel2/house1.png",
-        "static/img/firstLevel2/house2.png",
-      ],
+      stepsScore:levelSetting[1][1].stepsScore,
+
+      scoreNums:levelSetting[1][1].scoreNums,
+      timeset: levelSetting[1][1].timeSet,
+      backImage: levelSetting[1][1].photos.backImage,
+      footerImage: levelSetting[1][1].photos.footerImage,
+      houseImageArr: levelSetting[1][1].photos.houseImageArr,
     };
   },
   created() {},
