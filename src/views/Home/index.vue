@@ -4,6 +4,7 @@
     :key="index"
     :style="{ 'background-image': 'url(' + backImage + ')' }"
     v-if="isrepeatRender"
+    ref="homeContainRef"
   >
     <!-- 盒子发生碰撞时进行 -->
     <div
@@ -15,10 +16,21 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
+      <div class="notice-bar">
+        <van-notice-bar
+          left-icon="volume-o"
+          text="该版本为测试版本，请勿对外开放！"
+          scrollable
+        />
+      </div>
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img src="~assets/avator.png" alt="" />
         <span class="score-num">{{ scoreNum }}</span>
+      </div>
+      <div class="music-content" ref="music" @click.stop="pauseMusicBtn">
+        <van-icon name="music-o" />
+        <div class="pause-line" v-if="!musicState">\</div>
       </div>
 
       <div
@@ -50,7 +62,11 @@
     ></change-success>
 
     <!-- 挑战失败组件 -->
-    <change-fail v-if="isshowFail" @refreshHome="failBtn" :scoreNums="scoreNums"></change-fail>
+    <change-fail
+      v-if="isshowFail"
+      @refreshHome="failBtn"
+      :scoreNums="scoreNums"
+    ></change-fail>
 
     <!-- 显示规则组件 -->
     <regular-page
@@ -101,6 +117,7 @@ export default {
   },
   data() {
     return {
+      musicState: 1,
       isrepeatRender: true,
       index: 1,
       scoreNum: 0,
@@ -131,36 +148,75 @@ export default {
     document.querySelector(".box-content").childNodes[0].onload = function () {
       console.log("imgload");
     };
-    // 发起节流，防止点击太频繁
-    let throttleTime = function (func, wait) {
-      let prev = 0;
-      return function () {
-        let now = Date.now();
-        if (now - prev > wait) {
-          func.apply(this);
-          prev = now;
-        }
-      };
-    };
+    this.throttle();
+    // 进行添加游戏音乐
+    this.initMusic(["static/music/bg.mp3", "static/music/bling.mp3"], true);
 
-    // // 点击防抖
-    // const debounce = (fn, wait) => {
-    //   let timer = null;
-    //   return function () {
-    //     clearTimeout(timer);
-    //     timer = setTimeout(() => {
-    //       fn.apply(this, arguments);
-    //     }, wait);
-    //   };
-    // };
-    // const fn = debounce((e) => {
-    //   this.homeBtn();
-    // }, 200);
-    // document.querySelector(".home-contain").addEventListener("click", fn);
-    let throole = throttleTime(this.homeBtn, 150);
-    document.querySelector(".home-contain").addEventListener("click", throole);
+    if (window.localStorage.getItem("musicState") == "pause") {
+      this.musicState = 1;
+      this.pauseMusicBtn();
+    }
   },
   methods: {
+    // 点击 节流
+    throttle() {
+      let that = this;
+      // 发起节流，防止点击太频繁
+      let throttleTime = function (func, wait) {
+        let prev = 0;
+        return function () {
+          let now = Date.now();
+          // 进行判断是否用户点击了禁止播放音效
+          if (now - prev > wait) {
+            if (window.localStorage.getItem("musicState") != "pause") {
+              //点击的声音
+              that.y.play();
+            }
+
+            func.apply(this);
+            prev = now;
+          }
+        };
+      };
+      let throole = throttleTime(this.homeBtn, 150);
+      document
+        .querySelector(".home-contain")
+        .addEventListener("click", throole);
+    },
+    // 组件初始化创建音效
+    initMusic(srcArr, isloop) {
+      this.x = document.createElement("AUDIO");
+      this.x.setAttribute("src", srcArr[0]);
+      this.x.loop = isloop;
+      this.x.autoplay = true;
+      this.x.volume = 0.2;
+      this.y = document.createElement("AUDIO");
+      this.y.setAttribute("src", srcArr[1]);
+      // this.y.loop = isloop;
+      // this.y.autoplay = true;
+      this.y.volume = 0.2;
+      this.y.playbackRate = 3;
+      this.$refs.homeContainRef.appendChild(this.x);
+      this.$refs.homeContainRef.appendChild(this.y);
+    },
+    // 音乐声音设置
+    pauseMusicBtn() {
+      if (this.musicState) {
+        this.$refs.music.style.animation = "none";
+        this.musicState = 0;
+        this.x.pause();
+        this.y.pause();
+        window.localStorage.setItem("musicState", "pause");
+      } else {
+        console.log(this.x);
+        this.$refs.music.style.animation = "music 2s linear 0s infinite";
+        this.musicState = 1;
+        this.x.play();
+        this.y.play();
+        window.localStorage.setItem("musicState", "play");
+      }
+    },
+    //设置 上部盒子加载完之后才有点击落下事件
     imgloaded() {
       this.num = true;
     },
@@ -173,8 +229,6 @@ export default {
         that.num = true;
         // 出现参照线条
         that.isshowline = true;
-
-        console.log(22222222222);
       };
     },
     failBtn() {
@@ -215,9 +269,9 @@ export default {
       }
     },
     homeBtn() {
+      console.log(2222);
       // 出现上部房子才可点击下落的事件
       if (this.num) {
-        console.log(1111111111111111111);
         // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
         this.num = false;
         // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
@@ -321,9 +375,7 @@ export default {
       }
     },
   },
-  watch: {
-    
-  },
+  watch: {},
   components: {
     ChangeSuccess,
     ChangeFail,
@@ -439,10 +491,16 @@ export default {
   .test {
     // border: 1px solid #eee;
     height: 180px;
-    padding-top: 70px;
+    padding-top: 100px;
     position: relative;
+    .notice-bar {
+      width: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
     .actar-contain {
-      top: 10px;
+      top: 43px;
       left: 10px;
       position: absolute;
       img {
@@ -458,6 +516,38 @@ export default {
         padding-left: 5px;
         vertical-align: 5px;
         color: #fff;
+      }
+    }
+    .music-content {
+      // top: 20px;
+      top: 50px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      font-size: 40px;
+      line-height: 40px;
+      text-align: center;
+      border-radius: 50%;
+      background: rgb(235, 225, 222);
+      animation: music 2s linear 0s infinite;
+      // z-index: 1002;
+      .pause-line {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        font-size: 32px;
+        transform: rotate(-25deg);
+      }
+    }
+    @keyframes music {
+      from {
+      }
+      to {
+        transform: rotate(360deg);
       }
     }
     .box-content {
@@ -489,8 +579,8 @@ export default {
       }
     }
     .line {
-      top: 60px;
-      height: 120px;
+      top: 90px;
+      height: 100px;
       position: absolute;
       left: 0;
       right: 0;

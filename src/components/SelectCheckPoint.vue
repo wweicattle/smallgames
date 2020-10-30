@@ -1,5 +1,8 @@
 <template>
-  <div class="check-point-contain">
+  <div
+    class="check-point-contain"
+    style="backgroundImage: url('static/img/homes/homeback.jpg')"
+  >
     <van-popup v-model="show">
       <div class="select-luck">选择关卡</div>
       <ul>
@@ -109,8 +112,7 @@ export default {
   height: 100%;
   position: fixed;
   background: #000;
-  background: url("/static/img/homes/homeback.png");
-  background-size: 100%;
+  background-size: cover;
   width: 100%;
   .header {
     width: 40%;
@@ -139,7 +141,8 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
-    bottom: 20px;
+    bottom: calc((100% - 521px) / 2);
+
     img {
       width: 100%;
     }
@@ -155,7 +158,7 @@ export default {
   }
   .highBox {
     transform: scale(1.3);
-    color: #a05926 !important;
+    color: #fff !important;
     // box-shadow: 0 0 1px 1px #000;
   }
 
@@ -180,7 +183,6 @@ export default {
       }
     }
     ul {
-      // background: rgb(255,125,112);
       background-image: linear-gradient(
         to bottom,
         rgb(255, 125, 112),
@@ -213,7 +215,7 @@ export default {
         }
         span {
           padding: 5px 0 8px 0;
-          color: #fff;
+          color: #9c806c;
           font-size: 18px;
           font-weight: 600;
           font-family: Georgia, "Times New Roman", Times, serif;

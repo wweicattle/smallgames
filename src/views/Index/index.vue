@@ -1,7 +1,10 @@
 <template>
-  <div class="home-contain">
+  <div
+    class="home-contain"
+    style="backgroundImage: url('static/img/homes/homeback.jpg')"
+  >
     <div class="com-icon">
-      <img src="/static/img/homes/lilanz.png" alt="" />
+      <img src="static/img/homes/lilanz.png" alt="" />
     </div>
     <div class="header">
       <img src="static/img/homes/header.png" alt="" />
@@ -45,13 +48,13 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  background: url("/static/img/homes/homeback.jpg");
-  background-size: 100% 100%;
+  // background: url("/static/img/homes/homeback.png");
+  background-size: cover;
   .com-icon {
     text-align: center;
-    img{
-        margin-top: 20px;
-        width: 24%;
+    img {
+      margin-top: 20px;
+      width: 24%;
     }
   }
   .header {
@@ -81,7 +84,8 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
-    bottom: 20px;
+    bottom: calc((100% - 521px) / 2);
+    // bottom: 0;
     img {
       width: 100%;
     }

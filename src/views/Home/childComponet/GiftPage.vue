@@ -17,7 +17,7 @@
           </div>
           <div class="button-box">
             <van-button round type="info" class="ranking-list"
-              >排行榜</van-button
+              @click="$router.push('/ranklist')">排行榜</van-button
             >
             <van-button
               round

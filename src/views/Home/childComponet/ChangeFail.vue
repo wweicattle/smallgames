@@ -1,12 +1,21 @@
 <template>
   <div class="fail-success">
     <van-popup v-model="show" :close-on-click-overlay="false">
-      <img src="static/img/Winningpage/failpage/fail.png" alt="" />
+      <img
+        class="bird-img"
+        src="static/img/Winningpage/failpage/bird.png"
+        alt=""
+      />
+      <img
+        class="back-img"
+        src="static/img/Winningpage/failpage/fail.png"
+        alt=""
+      />
       <div class="text-cotnain">
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
         </div>
-        <div class="success-defeat">成绩必须达到{{scoreNums}}分才能抽奖</div>
+        <div class="success-defeat">成绩必须达到{{ scoreNums }}分才能抽奖</div>
         <div class="score-content">
           <ul>
             <li>
@@ -24,8 +33,20 @@
         </van-button>
       </div>
       <div class="button-content">
-        <van-button round type="info" class="ranking-list" @click="jumpMysizeBtn">排行榜</van-button>
-        <van-button round type="info" class="return-home" @click="$router.push('/')">返回关卡</van-button>
+        <van-button
+          round
+          type="info"
+          class="ranking-list"
+          @click="jumpMysizeBtn"
+          >排行榜</van-button
+        >
+        <van-button
+          round
+          type="info"
+          class="return-home"
+          @click="$router.push('/')"
+          >返回首页</van-button
+        >
       </div>
     </van-popup>
   </div>
@@ -38,17 +59,16 @@ export default {
       show: true,
     };
   },
-  props:{
-    scoreNums:{
-      type:Number
-    }
+  props: {
+    scoreNums: {
+      type: Number,
+    },
   },
   created() {},
   mounted() {},
   methods: {
-     jumpMysizeBtn() {
-      window.localStorage.setItem("activeItem", 1);
-      this.$router.push("/skillbag");
+    jumpMysizeBtn() {
+      this.$router.push("/ranklist");
     },
     clickOnceBtn() {
       // 进行重新加载主页
@@ -74,7 +94,23 @@ export default {
     height: 100%;
     background-color: transparent;
   }
-  img {
+  @keyframes birdLeft {
+    from {
+    }
+    to {
+      right: 100%;
+    }
+  }
+  .bird-img {
+    top: 20px;
+    position: absolute;
+    // right: 0;
+    width: 30%;
+    z-index: 1009;
+    right: 0;
+    animation: birdLeft 3s linear 0s forwards 1;
+  }
+  .back-img {
     width: 100%;
     margin-top: -20px;
   }

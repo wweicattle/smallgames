@@ -37,7 +37,7 @@
           type="info"
           class="return-home"
           @click="$router.push('/')"
-          >返回关卡</van-button
+          >返回首页</van-button
         >
       </div>
     </van-popup>
@@ -60,8 +60,7 @@ export default {
   mounted() {},
   methods: {
     jumpMysizeBtn() {
-      window.localStorage.setItem("activeItem", 1);
-      this.$router.push("/skillbag");
+      this.$router.push("/ranklist");
     },
     goLuckDrawBtn() {
       this.$emit("closeNum");
