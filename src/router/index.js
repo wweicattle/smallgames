@@ -117,13 +117,13 @@ const routes = [{
   {
     path: '/luckpeople',
     name: 'luckpeople',
-    component:luckpeople
+    component:luckpeople,
   }
 ]
-
+console.log(__dirname);
 const router = new VueRouter({
   // mode: 'history',
-  // base: process.env.BASE_URL,
+  // base: "/web_tlerp/QYWX/Test/wwcattle/",
   routes
 })
 router.beforeEach((to, from, next) => {

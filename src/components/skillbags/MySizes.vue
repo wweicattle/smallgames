@@ -1,5 +1,7 @@
 <template>
-  <div class="mysize-contain">
+  <div class="mysize-contain"
+    style="backgroundImage: url('static/img/icon/mysizeindex.jpg')"
+  >
     <img src="static/img/icon/mysize.png" alt="" />
     <div class="mysize-detail">
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit, harum.
@@ -67,7 +69,8 @@ export default {
   height: 100%;
   text-align: center;
   overflow: hidden;
-  background: url("/static/img/icon/mysizeindex.jpg");
+  // background: url("/static/img/icon/mysizeindex.jpg");
+  background-size: cover;
   img {
     padding-top: 30px;
     width: 50%;

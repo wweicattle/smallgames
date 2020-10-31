@@ -87,6 +87,10 @@ import { eventBus } from "utils/eventbus";
 export default {
   name: "homePage",
   props: {
+    isSecond: {
+      type: Boolean,
+      default: false,
+    },
     scoreNums: {
       type: Number,
     },
@@ -192,8 +196,6 @@ export default {
       this.x.volume = 0.2;
       this.y = document.createElement("AUDIO");
       this.y.setAttribute("src", srcArr[1]);
-      // this.y.loop = isloop;
-      // this.y.autoplay = true;
       this.y.volume = 0.2;
       this.y.playbackRate = 3;
       this.$refs.homeContainRef.appendChild(this.x);
@@ -236,9 +238,22 @@ export default {
     },
     regularBtn() {},
     marginedit() {
+      console.log(this.isSecond);
       // 进行房子的高度进行替换
       this.newimgindex = ++this.newimgindex;
-      if (this.newimgindex == this.houseImageArr.length) this.newimgindex = 0;
+      console.log(this.newimgindex);
+      console.log(this.isSecond);
+
+      // 这是判断 第三关，因为这一关的图片有问题，让他一直处于最上面的一张图片
+      if (this.newimgindex == this.houseImageArr.length && this.isSecond) {
+        this.newimgindex = this.houseImageArr.length - 1;
+      } else if(this.newimgindex == this.houseImageArr.length){
+        this.newimgindex = 0;
+      }
+
+      // if (this.newimgindex == this.houseImageArr.length) {
+      //   this.newimgindex=0
+      // }
       // 真实房子是否需要偏移
       if (this.house.clientHeight > this.footH.clientHeight) {
         // 偏移的bottom
@@ -559,7 +574,6 @@ export default {
       transition: all 1s;
       position: relative;
       z-index: 100;
-      // background-image: url(~assets/home.png) ;
       background-size: cover;
       display: block;
 
@@ -596,30 +610,19 @@ export default {
     from {
     }
     to {
-      transform: scale(0.2);
+      transform: scale(0.16);
     }
   }
   @keyframes myfirst1 {
     0% {
-      //   background: red;
-      //    width: 50px;
-      //   height: 50px;
+   
     }
 
     50% {
-      //   background: red;
-      /* padding: -100px 100px 100px -100px; */
-      /* width: 100px;
-                height: 100px; */
+    
     }
 
     100% {
-      //   background: red;
-
-      /* padding: -200px 200px 200px -200px; */
-
-      /* width: 200px;
-                height: 200px; */
       transform: scale(1, 0.2);
     }
   }

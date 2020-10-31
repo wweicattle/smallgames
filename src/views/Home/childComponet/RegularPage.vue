@@ -14,7 +14,7 @@
       consequatur? -->
     </div>
     <img :src="footerImage" alt="" />
-    <img class="regular-remind" src="static/img/gameRegular.png" alt="" />
+    <img class="regular-remind" src="static/img/homes/gameRegular.png" alt="" />
   </div>
 </template>
 

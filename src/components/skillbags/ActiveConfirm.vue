@@ -5,7 +5,7 @@
       text="请仔细阅读活动说明查看规则等。"
       scrollable
     />
-    <img src="static/img/confirm.png" alt="" />
+    <img src="static/img/homes/confirm.png" alt="" />
   </div>
 </template>
 

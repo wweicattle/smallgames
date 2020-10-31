@@ -30,7 +30,7 @@
         </template>
       </ul>
       <div class="clickBox" @click="beginGamesBtn">
-        <img src="static/img/begingameIcon.png" alt="" />
+        <img src="static/img/unluck/begin.png" alt="" />
       </div>
     </van-popup>
     <div class="header">

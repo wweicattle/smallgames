@@ -3,12 +3,12 @@
     <van-popup v-model="show" :close-on-click-overlay="false">
       <img
         class="bird-img"
-        src="static/img/Winningpage/failpage/bird.png"
+        src="static/img/Winningpage/bird.png"
         alt=""
       />
       <img
         class="back-img"
-        src="static/img/Winningpage/failpage/fail.png"
+        src="static/img/Winningpage/fail.png"
         alt=""
       />
       <div class="text-cotnain">

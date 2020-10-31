@@ -1,6 +1,8 @@
 <template>
-  <div class="rank-contain">
-    <!-- <img src="static/img/icon/ww.png" alt=""> -->
+  <div
+    class="rank-contain"
+    style="backgroundImage: url('static/img/icon/mysizeindex.jpg')"
+  >
     <div class="rank-title">排行榜</div>
     <div class="header-per">
       <ul>
@@ -252,7 +254,8 @@ export default {
   padding: 0 30px;
   height: 100%;
   overflow-y: scroll;
-  background: url("/static/img/icon/mysizeindex.jpg");
+  // background: url("/static/img/icon/mysizeindex.jpg");
+  background-size: cover;
   // img{
   //     width: 100%;
   //     display: block;
@@ -295,7 +298,7 @@ export default {
           }
         }
         .number-one {
-          transform: scale(1.23);
+          transform: scale(1.2);
           .actar-header {
             width: 84%;
             height: 84%;
@@ -326,6 +329,7 @@ export default {
   .person-detail {
     ul {
       width: 100%;
+      padding: 0 14px;
       li {
         width: 100%;
         display: flex;

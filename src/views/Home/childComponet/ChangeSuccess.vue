@@ -1,7 +1,7 @@
 <template>
   <div class="change-success">
     <van-popup v-model="show" :close-on-click-overlay="false">
-      <img src="static/img/Winningpage/changesuccess/success.png" alt="" />
+      <img src="static/img/Winningpage/success.png" alt="" />
       <div class="text-cotnain">
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
