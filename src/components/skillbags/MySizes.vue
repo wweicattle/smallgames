@@ -1,8 +1,8 @@
 <template>
   <div class="mysize-contain"
-    style="backgroundImage: url('static/img/icon/mysizeindex.jpg')"
+    style="backgroundImage: url('https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg')"
   >
-    <img src="static/img/icon/mysize.png" alt="" />
+    <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysize.png" alt="" />
     <div class="mysize-detail">
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sit, harum.
       Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sunt provident
@@ -69,7 +69,7 @@ export default {
   height: 100%;
   text-align: center;
   overflow: hidden;
-  // background: url("/static/img/icon/mysizeindex.jpg");
+  // background: url("/https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg");
   background-size: cover;
   img {
     padding-top: 30px;

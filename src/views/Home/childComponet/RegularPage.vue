@@ -14,7 +14,7 @@
       consequatur? -->
     </div>
     <img :src="footerImage" alt="" />
-    <img class="regular-remind" src="static/img/homes/gameRegular.png" alt="" />
+    <img class="regular-remind" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/gameRegular.png" alt="" />
   </div>
 </template>
 

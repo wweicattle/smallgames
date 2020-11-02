@@ -1,7 +1,6 @@
 <template>
   <div
     class="check-point-contain"
-    style="backgroundImage: url('static/img/homes/homeback.jpg')"
   >
     <van-popup v-model="show">
       <div class="select-luck">选择关卡</div>
@@ -20,7 +19,7 @@
         <template v-for="(i, index) in 6 - lucklevel">
           <li :key="index + lucklevel">
             <img
-              src="static/img/unluck/7.png"
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/7.png"
               alt=""
               @click="checkPointBtn(index + lucklevel)"
               :class="{ highBox: index + lucklevel == nowindex }"
@@ -30,17 +29,17 @@
         </template>
       </ul>
       <div class="clickBox" @click="beginGamesBtn">
-        <img src="static/img/unluck/begin.png" alt="" />
+        <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/begin.png" alt="" />
       </div>
     </van-popup>
     <div class="header">
-      <img src="static/img/homes/header.png" alt="" />
+      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/header.png" alt="" />
     </div>
     <div class="center">
-      <img src="static/img/homes/center.png" alt="" />
+      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/center.png" alt="" />
     </div>
     <div class="footer">
-      <img src="static/img/homes/begingame.png" alt="" />
+      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/begingame.png" alt="" />
       <div class="begin-icon" @click="$router.push('/checkoutpoint')"></div>
     </div>
   </div>
@@ -55,12 +54,12 @@ export default {
       nowindex: 0,
       copynowindex: 0,
       umlockiconArr: [
-        "static/img/unluck/1.png",
-        "static/img/unluck/2.png",
-        "static/img/unluck/3.png",
-        "static/img/unluck/4.png",
-        "static/img/unluck/5.png",
-        "static/img/unluck/6.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/3.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/4.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/5.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/6.png",
       ],
     };
   },
@@ -111,7 +110,8 @@ export default {
 .check-point-contain {
   height: 100%;
   position: fixed;
-  background: #000;
+  // background: #000;
+  background-image: url('https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/homeback.jpg');
   background-size: cover;
   width: 100%;
   .header {

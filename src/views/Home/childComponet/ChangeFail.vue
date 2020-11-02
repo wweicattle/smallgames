@@ -3,12 +3,12 @@
     <van-popup v-model="show" :close-on-click-overlay="false">
       <img
         class="bird-img"
-        src="static/img/Winningpage/bird.png"
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/bird.png"
         alt=""
       />
       <img
         class="back-img"
-        src="static/img/Winningpage/fail.png"
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/fail.png"
         alt=""
       />
       <div class="text-cotnain">

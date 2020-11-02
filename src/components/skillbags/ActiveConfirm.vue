@@ -5,7 +5,7 @@
       text="请仔细阅读活动说明查看规则等。"
       scrollable
     />
-    <img src="static/img/homes/confirm.png" alt="" />
+    <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/confirm.png" alt="" />
   </div>
 </template>
 

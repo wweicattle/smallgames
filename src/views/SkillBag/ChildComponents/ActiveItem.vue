@@ -1,6 +1,6 @@
 <template>
   <div class="acitive-contain">
-    <img src="static/img/confirm.png" alt="">
+    <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/confirm.png" alt="">
     <!-- <ul>
       <li class="item">
         <div>

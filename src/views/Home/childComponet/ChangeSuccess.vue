@@ -1,7 +1,7 @@
 <template>
   <div class="change-success">
     <van-popup v-model="show" :close-on-click-overlay="false">
-      <img src="static/img/Winningpage/success.png" alt="" />
+      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/success.png" alt="" />
       <div class="text-cotnain">
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
@@ -63,8 +63,7 @@ export default {
       this.$router.push("/ranklist");
     },
     goLuckDrawBtn() {
-      this.$emit("closeNum");
-      this.$router.push("/gift");
+      this.$router.push({name: 'gift',params:{canLuck:true}});
     },
   },
   components: {

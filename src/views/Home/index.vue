@@ -25,7 +25,7 @@
       </div>
       <!-- 头像区域 -->
       <div class="actar-contain">
-        <img src="~assets/avator.png" alt="" />
+        <img :src="peractar" alt="" />
         <span class="score-num">{{ scoreNum }}</span>
       </div>
       <div class="music-content" ref="music" @click.stop="pauseMusicBtn">
@@ -56,10 +56,7 @@
     <div class="font-content" ref="footH"></div>
 
     <!-- 挑战成功组件 -->
-    <change-success
-      v-if="isshowSucess"
-      @closeNum="num = false"
-    ></change-success>
+    <change-success v-if="isshowSucess"></change-success>
 
     <!-- 挑战失败组件 -->
     <change-fail
@@ -84,6 +81,7 @@ import ChangeSuccess from "./childComponet/ChangeSuccess";
 import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 import { eventBus } from "utils/eventbus";
+import { getUserInfo } from "network/home";
 export default {
   name: "homePage",
   props: {
@@ -103,24 +101,26 @@ export default {
     },
     backImage: {
       type: String,
-      default: "static/img/firstLevel/homeback.png",
+      default:
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/homeback.png",
     },
     footerImage: {
       type: String,
-      default: `static/img/firstLevel/footerImg.png`,
+      default: `https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png`,
     },
     houseImageArr: {
       type: Array,
       default() {
         return [
-          "static/img/firstLevel/house1.png",
-          "static/img/firstLevel/house2.png",
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house1.png",
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house2.png",
         ];
       },
     },
   },
   data() {
     return {
+      peractar: null,
       musicState: 1,
       isrepeatRender: true,
       index: 1,
@@ -147,11 +147,58 @@ export default {
       isshowwRegular: false,
     };
   },
-  created() {},
+  created() {
+    console.log(4444444444444);
+    let userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    // 首次进行发送请求用户的数据 
+    if (!userInfo) {
+      getUserInfo().then((da) => {
+        console.log(da);
+        let data = {
+          errcode: 0,
+          data: {
+            id: "42166",
+            token: "fdfumFJvUztKCL6Nz80C",
+            openid: "oyLvDju5tyhnmIkzdO8XE1sjvUyg",
+            nickname: "诺颜",
+            sex: 1,
+            province: "福建",
+            city: "泉州",
+            country: "中国",
+            headimgurl:
+              "https://thirdwx.qlogo.cn/mmopen/vi_32/2Y4DJfdXXrnde7Qt6ic45hxTZH2XhtelZ2DU10pAIliapicGu8QcnoF9cKwqN4kmJu4kutFSyKkibfmZ19ibPicZcuaQ/132",
+            unionid: "oarvQwwByo4DlWnIDRfmt6X-IsNg",
+            language: "zh_CN",
+            configKey: "3",
+            subscribeType: 0,
+            objectID: 10,
+            khid: 0,
+            mdid: 0,
+            isSubscribe: 0,
+            subscribeDate: null,
+            vipID: "0",
+          },
+          errmsg: "用户的信息",
+        };
+        if (data.errcode == 0) {
+          this.peractar = data.data.headimgurl;
+          window.localStorage.setItem("userInfo", JSON.stringify(data.data));
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "获取用户数据信息失败！",
+          });
+        }
+      });
+    } else {
+      this.peractar = userInfo.headimgurl;
+    }
+  },
   mounted() {
     document.querySelector(".box-content").childNodes[0].onload = function () {
       console.log("imgload");
     };
+    // 节流防止频繁点击
     this.throttle();
     // 进行添加游戏音乐
     this.initMusic(["static/music/bg.mp3", "static/music/bling.mp3"], true);
@@ -247,7 +294,7 @@ export default {
       // 这是判断 第三关，因为这一关的图片有问题，让他一直处于最上面的一张图片
       if (this.newimgindex == this.houseImageArr.length && this.isSecond) {
         this.newimgindex = this.houseImageArr.length - 1;
-      } else if(this.newimgindex == this.houseImageArr.length){
+      } else if (this.newimgindex == this.houseImageArr.length) {
         this.newimgindex = 0;
       }
 
@@ -284,7 +331,6 @@ export default {
       }
     },
     homeBtn() {
-      console.log(2222);
       // 出现上部房子才可点击下落的事件
       if (this.num) {
         // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
@@ -601,7 +647,7 @@ export default {
       margin: auto;
       border-left: 1px dotted rgb(102, 97, 97);
       border-right: 1px dotted rgb(102, 97, 97);
-      z-index: 1001;
+      z-index: 1099;
       // animation: myfirst1 1s ease 0s infinite alternate;
     }
   }
@@ -615,11 +661,9 @@ export default {
   }
   @keyframes myfirst1 {
     0% {
-   
     }
 
     50% {
-    
     }
 
     100% {

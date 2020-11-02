@@ -1,15 +1,16 @@
 <template>
   <div
     class="rank-contain"
-    style="backgroundImage: url('static/img/icon/mysizeindex.jpg')"
+    style="backgroundImage: url('https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg')"
   >
+    <van-divider style="color: #fff">只展示前100名</van-divider>
     <div class="rank-title">排行榜</div>
     <div class="header-per">
       <ul>
         <li>
           <div class="actar">
             <img src="~assets/avator.png" alt="" class="actar-header" />
-            <img class="icon" src="static/img/RankList/2.png" alt="" />
+            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/2.png" alt="" />
           </div>
           <div class="name-num">
             <span class="rank-name"> 小李 </span>
@@ -19,7 +20,7 @@
         <li>
           <div class="actar number-one">
             <img class="actar-header" src="~assets/avator.png" alt="" />
-            <img class="icon" src="static/img/RankList/1.png" alt="" />
+            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/1.png" alt="" />
           </div>
           <div class="name-num">
             <span class="rank-name"> 小李 </span>
@@ -29,7 +30,7 @@
         <li>
           <div class="actar">
             <img class="actar-header" src="~assets/avator.png" alt="" />
-            <img class="icon" src="static/img/RankList/3.png" alt="" />
+            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/3.png" alt="" />
           </div>
           <div class="name-num">
             <span class="rank-name"> 小李 </span>
@@ -233,6 +234,22 @@
           </div>
           <span class="per-score"> 380分 </span>
         </li>
+        <!-- <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
+          repellendus fugit recusandae harum atque animi! Distinctio nesciunt
+          sint excepturi ad!
+        </div> -->
+        <van-divider style="color: #fff">只展示前100名</van-divider>
+
+        <li class="my-rank">
+          <div class="tag"><van-tag type="danger">我的排名</van-tag></div>
+          <span class="per-num"> NO.502 </span>
+          <div class="per-avator">
+            <img src="~assets/avator.png" alt="" />
+            <span class="per-name">狸猫之夜</span>
+          </div>
+          <span class="per-score"> 380分 </span>
+        </li>
       </ul>
     </div>
   </div>
@@ -254,7 +271,7 @@ export default {
   padding: 0 30px;
   height: 100%;
   overflow-y: scroll;
-  // background: url("/static/img/icon/mysizeindex.jpg");
+  // background: url("/https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg");
   background-size: cover;
   // img{
   //     width: 100%;
@@ -283,7 +300,7 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: url("/static/img/RankList/circle.png");
+          background: url("/https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/circle.png");
           background-size: 100%;
           .actar-header {
             width: 86%;
@@ -356,6 +373,25 @@ export default {
         .per-score {
           color: #fff;
           font-size: 15px;
+        }
+      }
+      .my-rank {
+        border: 2px solid #f2d3dd;
+        border-radius: 14px;
+        position: relative;
+        .tag{
+          position: absolute;
+          top: 0;
+          left:0;
+        }
+        .per-num{
+        color: #000;
+        }
+        .per-avator{
+        color: #000;
+        }
+        .per-score{
+        color: #000;
         }
       }
     }

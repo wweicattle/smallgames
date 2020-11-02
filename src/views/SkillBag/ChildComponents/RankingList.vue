@@ -6,22 +6,22 @@
         <li><span>昵称</span></li>
         <li><span>最高分</span></li>
       </ul>
-      <!-- <img src="static/img/RankList/rankcolumn.png" alt="" /> -->
+      <!-- <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/rankcolumn.png" alt="" /> -->
     </div>
     <div class="rank-detail">
       <ul>
         <li>
-          <span><img src="static/img/RankList/1.png" alt="" /></span>
+          <span><img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/1.png" alt="" /></span>
           <span>890</span>
           <span class="num-one">89000</span>
         </li>
         <li>
-          <span><img src="static/img/RankList/2.png" alt="" /></span>
+          <span><img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/2.png" alt="" /></span>
           <span>890</span>
           <span class="num-two">89000</span>
         </li>
         <li>
-          <span><img src="static/img/RankList/3.png" alt="" /></span>
+          <span><img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/3.png" alt="" /></span>
           <span>890</span>
           <span class="num-three">89000</span>
         </li>

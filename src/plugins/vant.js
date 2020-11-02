@@ -9,7 +9,8 @@ import {
   Tabs,
   Tag,
   NoticeBar,
-  Icon 
+  Icon ,
+  Divider 
 
 } from 'vant';
 Vue.use(Button);
@@ -22,3 +23,4 @@ Vue.use(Tag);
 Vue.use(Notify);
 Vue.use(NoticeBar);
 Vue.use(Icon);
+Vue.use(Divider);

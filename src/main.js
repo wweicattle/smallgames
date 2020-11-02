@@ -7,6 +7,8 @@ import "./plugins/vant.js"
 import "./network/axios"
 import 'lib-flexible'
 
+
+
 // 进行判断屏幕竖直操作
 (function rotate() {
   var orientation = window.orientation;
@@ -56,6 +58,13 @@ import 'lib-flexible'
   };
 })();
 
+
+if (!window.localStorage.getItem("token")) {
+  // window.location.href="http://tm.lilanz.com/game/wxOauth?backUrl=http://tm.lilanz.com/qywx/test/smallgames/index.html&configKey=3";
+  // 获取token
+  window.localStorage.setItem("token", JSON.stringify("sasas"));
+
+}
 
 
 import myTouch from './myTouch.js'

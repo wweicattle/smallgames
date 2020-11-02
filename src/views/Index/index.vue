@@ -1,19 +1,28 @@
 <template>
-  <div
-    class="home-contain"
-    style="backgroundImage: url('static/img/homes/homeback.jpg')"
-  >
+  <div class="home-contain">
     <div class="com-icon">
-      <img src="static/img/homes/lilanz.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/lilanz.png"
+        alt=""
+      />
     </div>
     <div class="header">
-      <img src="static/img/homes/header.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/header.png"
+        alt=""
+      />
     </div>
     <div class="center">
-      <img src="static/img/homes/center.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/center.png"
+        alt=""
+      />
     </div>
     <div class="footer">
-      <img src="static/img/homes/begingame.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/begingame.png"
+        alt=""
+      />
       <div class="begin-icon" @click="$router.push('/checkoutpoint')"></div>
       <div class="active" @click="$router.push('active')"></div>
       <div class="mysize" @click="$router.push('mysize')"></div>
@@ -36,7 +45,9 @@ export default {
     return {};
   },
   created() {},
-  mounted() {},
+  mounted() {
+   
+  },
   methods: {},
 };
 </script>
@@ -48,7 +59,7 @@ export default {
   width: 100%;
   height: 100%;
   overflow-y: scroll;
-  // background: url("/static/img/homes/homeback.png");
+  background: url("https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/homeback.jpg");
   background-size: cover;
   .com-icon {
     text-align: center;

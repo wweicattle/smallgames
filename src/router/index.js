@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
+import {
+  getUserInfo
+} from "network/home";
 Vue.use(VueRouter)
 
 // const active = () => import("views/SkillBag/ChildComponents/ActiveItem");
@@ -8,10 +10,10 @@ Vue.use(VueRouter)
 // const rankinglist = () => import("views/SkillBag/ChildComponents/RankingList");
 
 
-const active=()=>import("components/skillbags/ActiveConfirm")
-const mysize=()=>import("components/skillbags/MySizes")
-const ranklist=()=>import("components/skillbags/RankingList")
-const luckpeople=()=>import("components/skillbags/LuckPeople")
+const active = () => import("components/skillbags/ActiveConfirm")
+const mysize = () => import("components/skillbags/MySizes")
+const ranklist = () => import("components/skillbags/RankingList")
+const luckpeople = () => import("components/skillbags/LuckPeople")
 
 
 
@@ -102,22 +104,22 @@ const routes = [{
   {
     path: '/active',
     name: 'active',
-    component:active
+    component: active
   },
   {
     path: '/mysize',
     name: 'mysize',
-    component:mysize
+    component: mysize
   },
   {
     path: '/ranklist',
     name: 'ranklist',
-    component:ranklist
+    component: ranklist
   },
   {
     path: '/luckpeople',
     name: 'luckpeople',
-    component:luckpeople,
+    component: luckpeople,
   }
 ]
 console.log(__dirname);
@@ -152,7 +154,51 @@ router.beforeEach((to, from, next) => {
   //   window.localStorage.setItem("activeItem", 2);
   // }
   // }
+  // if (!window.localStorage.getItem("token")) {
+  //   getUserInfo().then((da) => {
+  //     console.log(da)
+  //     let data = {
+  //       "errcode": 0,
+  //       "data": {
+  //         "id": "42166",
+  //         "token": "fdfumFJvUztKCL6Nz80C",
+  //         "openid": "oyLvDju5tyhnmIkzdO8XE1sjvUyg",
+  //         "nickname": "诺颜",
+  //         "sex": 1,
+  //         "province": "福建",
+  //         "city": "泉州",
+  //         "country": "中国",
+  //         "headimgurl": "https://thirdwx.qlogo.cn/mmopen/vi_32/2Y4DJfdXXrnde7Qt6ic45hxTZH2XhtelZ2DU10pAIliapicGu8QcnoF9cKwqN4kmJu4kutFSyKkibfmZ19ibPicZcuaQ/132",
+  //         "unionid": "oarvQwwByo4DlWnIDRfmt6X-IsNg",
+  //         "language": "zh_CN",
+  //         "configKey": "3",
+  //         "subscribeType": 0,
+  //         "objectID": 10,
+  //         "khid": 0,
+  //         "mdid": 0,
+  //         "isSubscribe": 0,
+  //         "subscribeDate": null,
+  //         "vipID": "0"
+  //       },
+  //       "errmsg": "用户的信息"
+  //     };
+
+  //     if (data.errcode == 0) {
+  //       window.localStorage.setItem("userInfo", JSON.stringify(data.data));
+  //     } else {
+
+  //     }
+  //   });
+  // } else {
+  //   next();
+  // }
+  console.log(2222);
+  if (!window.localStorage.getItem("token")) {
+    // 判断用户分享给好友情况下，则 好友 没有登陆跳到首页登录 
+   window.location.href="/"
+  }
   next();
+
 })
 // })const routerPush = VueRouter.prototype.push
 const routerPush = VueRouter.prototype.push

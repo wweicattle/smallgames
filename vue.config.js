@@ -14,14 +14,19 @@ module.exports = {
     }
   },
   devServer: {
-    port: 3333, // 端口号
-
+    port:3333,
     proxy: {
       '/api': {
-        target: 'http://oa.wuwei.kooboo.site'
-      }
+     
+        target: 'http://tm.lilanz.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
     }
-  },
+      
+    },
   configureWebpack: {
     resolve: {
       alias: {

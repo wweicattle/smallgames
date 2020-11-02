@@ -1,7 +1,14 @@
 import Vue from "vue";
 import axios from "axios";
+import {
+  token,
+  sign,
+  timestamp
+} from "utils/token";
+console.log(token);
 // import router from "@/router";
 // Full config:  https://github.com/axios/axios#request-config
+console.log(process.env.baseURL);
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -18,15 +25,19 @@ let config = {
 const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
-  function(config) {
+  function (config) {
     // const token = localStorage.getItem('token')
     // if (token) {
-    //   config.headers.Authorization = token
+    // console.log(token, sign, timestamp);
+    config.headers.token = token
+    config.headers.sign = sign
+    config.headers.timestamp = timestamp
+
     // }
     // Do something before request is sent
     return config;
   },
-  function(error) {
+  function (error) {
     // Do something with request error
     return Promise.reject(error);
   }
@@ -34,7 +45,7 @@ _axios.interceptors.request.use(
 
 // Add a response interceptor
 _axios.interceptors.response.use(
-  function(response) {
+  function (response) {
     // Do something with response data  响应
     // if (!response.data.success) {
     //   const isServerLogin = (response.headers.islogin && response.headers.islogin === 'True')
@@ -45,7 +56,7 @@ _axios.interceptors.response.use(
     // }
     return response;
   },
-  function(error) {
+  function (error) {
     // Do something with response error
     return Promise.reject(error);
   }

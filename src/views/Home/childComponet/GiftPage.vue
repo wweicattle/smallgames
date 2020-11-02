@@ -2,22 +2,26 @@
   <div class="gift-contain">
     <img
       class="gift"
-      src="static/img/gift/gift.png"
+      src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/gift.png"
       ref="img"
       alt=""
       v-if="!isshowLuck"
     />
     <div class="luck-after" v-else>
       <div v-if="isluckAlready">
-        <img src="static/img/gift/giftsuccess.png" alt="" />
+        <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftsuccess.png" alt="" />
         <div class="button-content">
           <div class="luck-gift">一等奖</div>
           <div class="luck-detail">
             <van-button round type="info"> 查看奖品详情 </van-button>
           </div>
           <div class="button-box">
-            <van-button round type="info" class="ranking-list"
-              @click="$router.push('/ranklist')">排行榜</van-button
+            <van-button
+              round
+              type="info"
+              class="ranking-list"
+              @click="$router.push('/ranklist')"
+              >排行榜</van-button
             >
             <van-button
               round
@@ -30,7 +34,7 @@
         </div>
       </div>
       <div v-else>
-        <img src="static/img/gift/giftFail.png" alt="" />
+        <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftFail.png" alt="" />
         <div class="button-content">
           <div class="luck-details">
             <van-button round type="info" @click="$router.push('/regularpage')">
@@ -65,14 +69,17 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(this.$refs.img);
-    let that = this;
-    // 礼物开奖动画结束后
-    that.$refs.img.addEventListener("animationend", this.showLuckAfter);
-    that.$refs.img.addEventListener("webkitAnimationEnd", this.showLuckAfter);
-    that.$refs.img.addEventListener("click", () => {
-      that.$refs.img.classList.add("test");
-    });
+    if (!this.$route.params.canLuck) {
+      this.$toast.fail("不能抽奖！")
+    } else {
+      let that = this;
+      // 礼物开奖动画结束后
+      that.$refs.img.addEventListener("animationend", this.showLuckAfter);
+      that.$refs.img.addEventListener("webkitAnimationEnd", this.showLuckAfter);
+      that.$refs.img.addEventListener("click", () => {
+        that.$refs.img.classList.add("test");
+      });
+    }
   },
   methods: {
     showLuckAfter() {
