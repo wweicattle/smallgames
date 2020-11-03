@@ -126,10 +126,9 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-
   if (!window.localStorage.getItem("token")) {
     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=http://192.168.36.115:3333&configKey=3"
+    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=http://192.168.31.105:3333&configKey=3"
   } else {
     next();
   }

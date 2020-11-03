@@ -150,43 +150,32 @@ export default {
       isshowFail: false,
       isshowwRegular: false,
       loadUser: null,
+      userInfo: null,
     };
   },
   created() {
-    getToken().then((da) => {
-      if (da.data.errcode == 0) {
+    this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    // 初始化头像，如果本地存储有数据的话
+    this.peractar = !(this.userInfo=="undefined"||(!this.userInfo))?this.peractar = this.userInfo.headimgurl:null;
+    if (!this.userInfo || this.userInfo == "undefined") {
+      let tokens = window.localStorage.getItem("tokens");
+      getUserInfo(tokens).then((da) => {
         console.log(da);
-          let token=da.data.data.token;
-        // 保存重新获取的token
-        window.localStorage.setItem("token", da.data.token);
-        this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-        // if (!this.userInfo) {
-        //   getUserInfo(token).then((da) => {
-        //     console.log(da);
-        //     let data = da.data;
-        //     if (data.errcode == 0) {
-        //       this.peractar = data.data.headimgurl;
-        //       window.localStorage.setItem(
-        //         "userInfo",
-        //         JSON.stringify(data.data)
-        //       );
-        //     } else {
-        //       this.$notify({
-        //         type: "warning",
-        //         message: "获取用户数据信息失败！",
-        //       });
-        //     }
-        //   });
-        // } else {
-        //   this.peractar = this.userInfo.headimgurl;
-        // }
-      }
-    });
+        if (da.data.errcode == 0) {
+          window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
+          // 用户信息进行保存
+          this.userInfo = da.data.data;
+          this.peractar = da.data.data.headimgurl;
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "获取用户信息失败！请重试",
+          });
+        }
+      });
+    }
   },
   mounted() {
-    document.querySelector(".box-content").childNodes[0].onload = function () {
-      console.log("imgload");
-    };
     // 节流防止频繁点击
     this.throttle();
     // 进行添加游戏音乐

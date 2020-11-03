@@ -58,12 +58,14 @@ import 'lib-flexible'
   };
 })();
 
-console.log(typeof window.localStorage.getItem("token"));
 // 没有token则进行，保存本地
 if (!window.localStorage.getItem("token")) {
   let token = window.location.search.slice(1).split("=")[1];
-  window.localStorage.setItem("token", token);
-  // window.location.href = window.location.origin;
+  window.localStorage.setItem("token",token);
+
+ 
+  window.location.href = window.location.origin;
+
 
 }
 

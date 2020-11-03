@@ -7,67 +7,66 @@ import {
 let token = window.localStorage.getItem("token");
 console.log(token);
 // 获取用户基本信息
-// export function getUserInfo(token) {
-//   return request.get(`/api/auth/getWXUserInfo?token=${token}`);
-// }
+export function getUserInfo(token) {
+  return request.get(`/api/auth/getWXUserInfo?token=${token}`);
+}
 
 // 获取用户token
-export function getToken() {
-  let token = window.localStorage.getItem("token");
+export function getToken(token) {
   return request.post(`/api/game/getWXUser?token=${token}`);
 }
 
-// // 关卡结束上传分数
-// export function getGameResult(param) {
-//   let {
-//     wxid,
-//     gameId,
-//     checkPoint,
-//     curScore,
-//     result
-//   } = param
-//   let arr = [{
-//       key: "wxid",
-//       value: wxid
-//     }, {
-//       key: "gameId",
-//       value: gameId
-//     },
-//     {
-//       key: "checkPoint",
-//       value: checkPoint
-//     },
-//     {
-//       key: "curScore",
-//       value: curScore
-//     },
-//     {
-//       key: "result",
-//       value: result
-//     }
-//   ]
-//   // 用户授权会返回token
-//   // let token = window.localStorage.getItem("token");
-//   // console.log(token);
-//   let {
-//     sign,
-//     timestamp,
-//     token
-//   } = tokens(arr);
+// 关卡结束上传分数
+export function getGameResult(param) {
+  let {
+    wxid,
+    gameId,
+    checkPoint,
+    curScore,
+    result
+  } = param
+  let arr = [{
+      key: "wxid",
+      value: wxid
+    }, {
+      key: "gameId",
+      value: gameId
+    },
+    {
+      key: "checkPoint",
+      value: checkPoint
+    },
+    {
+      key: "curScore",
+      value: curScore
+    },
+    {
+      key: "result",
+      value: result
+    }
+  ]
+  // 用户授权会返回token
+  // let token = window.localStorage.getItem("token");
+  // console.log(token);
+  let {
+    sign,
+    timestamp,
+    token
+  } = tokens(arr);
 
-//   return request({
-//     url: "/api/game/getGameResult",
-//     method: "post",
-//     headers: {
-//       token,
-//       sign,
-//       timestamp
-//     },
-//     params: param
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
+  return request({
+    url: "/api/game/getGameResult",
+    method: "post",
+    headers: {
+      token,
+      sign,
+      timestamp
+    },
+    params: param
+  }).then(da => {
+    console.log(da);
+  })
+}
 
 
 

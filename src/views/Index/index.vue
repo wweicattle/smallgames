@@ -40,13 +40,30 @@
 </template>
 
 <script>
+import { getUserInfo, getToken } from "network/home";
+
 export default {
   data() {
     return {};
   },
   created() {},
   mounted() {
-   
+    console.log(window.localStorage.getItem("token"));
+    let token = window.localStorage.getItem("token");
+    let tokens = window.localStorage.getItem("tokens");
+
+    if (!tokens||(tokens=="undefined"))
+      getToken(token).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          window.localStorage.setItem("tokens", da.data.data.token);
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "获取用户Token失败！请重试",
+          });
+        }
+      });
   },
   methods: {},
 };
