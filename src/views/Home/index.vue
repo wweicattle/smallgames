@@ -56,7 +56,7 @@
     <div class="font-content" ref="footH"></div>
 
     <!-- 挑战成功组件 -->
-    <change-success v-if="isshowSucess"></change-success>
+    <change-success :loadUser="loadUser" v-if="isshowSucess"></change-success>
 
     <!-- 挑战失败组件 -->
     <change-fail
@@ -81,10 +81,14 @@ import ChangeSuccess from "./childComponet/ChangeSuccess";
 import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 import { eventBus } from "utils/eventbus";
-import { getUserInfo } from "network/home";
+import { getUserInfo, getToken } from "network/home";
 export default {
   name: "homePage",
   props: {
+    checkPointNum: {
+      type: Number,
+      default: null,
+    },
     isSecond: {
       type: Boolean,
       default: false,
@@ -145,54 +149,39 @@ export default {
       isshowSucess: false,
       isshowFail: false,
       isshowwRegular: false,
+      loadUser: null,
     };
   },
   created() {
-    console.log(4444444444444);
-    let userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-    // 首次进行发送请求用户的数据 
-    if (!userInfo) {
-      getUserInfo().then((da) => {
+    getToken().then((da) => {
+      if (da.data.errcode == 0) {
         console.log(da);
-        let data = {
-          errcode: 0,
-          data: {
-            id: "42166",
-            token: "fdfumFJvUztKCL6Nz80C",
-            openid: "oyLvDju5tyhnmIkzdO8XE1sjvUyg",
-            nickname: "诺颜",
-            sex: 1,
-            province: "福建",
-            city: "泉州",
-            country: "中国",
-            headimgurl:
-              "https://thirdwx.qlogo.cn/mmopen/vi_32/2Y4DJfdXXrnde7Qt6ic45hxTZH2XhtelZ2DU10pAIliapicGu8QcnoF9cKwqN4kmJu4kutFSyKkibfmZ19ibPicZcuaQ/132",
-            unionid: "oarvQwwByo4DlWnIDRfmt6X-IsNg",
-            language: "zh_CN",
-            configKey: "3",
-            subscribeType: 0,
-            objectID: 10,
-            khid: 0,
-            mdid: 0,
-            isSubscribe: 0,
-            subscribeDate: null,
-            vipID: "0",
-          },
-          errmsg: "用户的信息",
-        };
-        if (data.errcode == 0) {
-          this.peractar = data.data.headimgurl;
-          window.localStorage.setItem("userInfo", JSON.stringify(data.data));
-        } else {
-          this.$notify({
-            type: "warning",
-            message: "获取用户数据信息失败！",
-          });
-        }
-      });
-    } else {
-      this.peractar = userInfo.headimgurl;
-    }
+          let token=da.data.data.token;
+        // 保存重新获取的token
+        window.localStorage.setItem("token", da.data.token);
+        this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+        // if (!this.userInfo) {
+        //   getUserInfo(token).then((da) => {
+        //     console.log(da);
+        //     let data = da.data;
+        //     if (data.errcode == 0) {
+        //       this.peractar = data.data.headimgurl;
+        //       window.localStorage.setItem(
+        //         "userInfo",
+        //         JSON.stringify(data.data)
+        //       );
+        //     } else {
+        //       this.$notify({
+        //         type: "warning",
+        //         message: "获取用户数据信息失败！",
+        //       });
+        //     }
+        //   });
+        // } else {
+        //   this.peractar = this.userInfo.headimgurl;
+        // }
+      }
+    });
   },
   mounted() {
     document.querySelector(".box-content").childNodes[0].onload = function () {
@@ -283,7 +272,6 @@ export default {
     failBtn() {
       this.$router.push("/regularpage");
     },
-    regularBtn() {},
     marginedit() {
       console.log(this.isSecond);
       // 进行房子的高度进行替换
@@ -414,6 +402,14 @@ export default {
                   newRoute: this.$route.path,
                 };
                 window.localStorage.setItem("obj", JSON.stringify(obj));
+                let url = {
+                  wxid: 42166,
+                  gameId: 2,
+                  checkPoint: this.checkPointNum,
+                  curScore: this.scoreNum,
+                  result: this.scoreNum >= this.scoreNums ? "win" : "fai",
+                };
+                this.loadUser = url;
 
                 //看是否游戏结束后是否超过分数 可抽奖
                 if (this.scoreNum >= this.scoreNums) {

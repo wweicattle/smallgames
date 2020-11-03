@@ -8,6 +8,8 @@
        :scoreNums="scoreNums"
       :stepsScore="stepsScore"
       :isSecond="true"
+      :checkPointNum="3"
+
     ></luck-draw>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <router-view />
   </div>
 </template>
@@ -9,9 +9,11 @@ export default {
   data: function () {
     return {};
   },
-  components: {},
-  methods: {
+  mounted() {
+    console.log(window.location);
   },
+  components: {},
+  methods: {},
 };
 </script>
 <style lang="scss">

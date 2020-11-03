@@ -13,7 +13,7 @@
         <div class="button-content">
           <div class="luck-gift">一等奖</div>
           <div class="luck-detail">
-            <van-button round type="info"> 查看奖品详情 </van-button>
+            <van-button round type="info" @click="$router.push('/mysize')"> 查看我的奖品 </van-button>
           </div>
           <div class="button-box">
             <van-button
@@ -84,6 +84,7 @@ export default {
   methods: {
     showLuckAfter() {
       this.isshowLuck = true;
+      this.isluckAlready=true
     },
   },
 };

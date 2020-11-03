@@ -1,11 +1,6 @@
 import Vue from "vue";
 import axios from "axios";
-import {
-  token,
-  sign,
-  timestamp
-} from "utils/token";
-console.log(token);
+
 // import router from "@/router";
 // Full config:  https://github.com/axios/axios#request-config
 console.log(process.env.baseURL);
@@ -26,12 +21,13 @@ const _axios = axios.create(config);
 
 _axios.interceptors.request.use(
   function (config) {
+    console.log(config);
     // const token = localStorage.getItem('token')
     // if (token) {
     // console.log(token, sign, timestamp);
-    config.headers.token = token
-    config.headers.sign = sign
-    config.headers.timestamp = timestamp
+  //  config.headers.token = token
+  //   config.headers.sign = sign
+  //   config.headers.timestamp = timestamp 
 
     // }
     // Do something before request is sent

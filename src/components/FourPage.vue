@@ -7,6 +7,7 @@
       :timeAnimaiton="timeset"
        :scoreNums="scoreNums"
       :stepsScore="stepsScore"
+      :checkPointNum="5"
 
     ></luck-draw>
   </div>

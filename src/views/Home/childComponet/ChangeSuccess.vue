@@ -1,7 +1,10 @@
 <template>
   <div class="change-success">
     <van-popup v-model="show" :close-on-click-overlay="false">
-      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/success.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/success.png"
+        alt=""
+      />
       <div class="text-cotnain">
         <div class="score-num">
           你的成绩为： <span class="detail-num">120分</span>
@@ -48,6 +51,7 @@
 </template>
 
 <script>
+import { getUserInfo, getGameResult, getToken } from "network/home";
 import GiftPage from "./GiftPage";
 export default {
   data() {
@@ -56,14 +60,45 @@ export default {
       isshowGift: false,
     };
   },
+  props: {
+    loadUser: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
   created() {},
-  mounted() {},
+  mounted() {
+    console.log(33333333333333)
+    // this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+   
+    // 上传分数后台，是否可以 解锁下一关
+    // let url = {
+    //   wxid: Number(this.userInfo.id),
+    //   gameId: 2,
+    //   checkPoint: this.checkPointNum,
+    //   curScore: this.scoreNum,
+    //   result: this.scoreNum >= this.scoreNums ? "win" : "fai",
+    // };
+    console.log(this.loadUser);
+    // getToken().then((da) => {
+    //   console.log(da.data);
+    //   // this.getGameResult(this.loadUser);
+    // });
+  },
   methods: {
+    // 游戏关卡结束
+    getGameResult(param) {
+      getGameResult(param).then((da) => {
+        console.log(da);
+      });
+    },
     jumpMysizeBtn() {
       this.$router.push("/ranklist");
     },
     goLuckDrawBtn() {
-      this.$router.push({name: 'gift',params:{canLuck:true}});
+      this.$router.push({ name: "gift", params: { canLuck: true } });
     },
   },
   components: {

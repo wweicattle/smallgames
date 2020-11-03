@@ -58,16 +58,21 @@ import 'lib-flexible'
   };
 })();
 
-
+console.log(typeof window.localStorage.getItem("token"));
+// 没有token则进行，保存本地
 if (!window.localStorage.getItem("token")) {
-  // window.location.href="http://tm.lilanz.com/game/wxOauth?backUrl=http://tm.lilanz.com/qywx/test/smallgames/index.html&configKey=3";
-  // 获取token
-  window.localStorage.setItem("token", JSON.stringify("sasas"));
+  let token = window.location.search.slice(1).split("=")[1];
+  window.localStorage.setItem("token", token);
+  // window.location.href = window.location.origin;
 
 }
 
 
+
 import myTouch from './myTouch.js'
+import {
+  createLogger
+} from 'vuex'
 myTouch(Vue)
 new Vue({
   router,
