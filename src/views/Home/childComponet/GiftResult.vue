@@ -70,22 +70,17 @@ export default {
   },
   created() {},
   mounted() {
-    let href=window.location.href;
-      window.location.href ="http://tm.lilanz.com/game/wxCompanyOauth?backUrl=http://tm.lilanz.com/qywx/test/small/index.html#/zeropage";
-
-  },
-  
-//   methods: {
-//     beginLuck() {
-//       // goToPrize().then((da) => {
-//       //   console.log(da);
-//       // });
-//     }
-//   }
+    let href = window.location.href;
    
-  
-    
- 
+  },
+
+  //   methods: {
+  //     beginLuck() {
+  //       // goToPrize().then((da) => {
+  //       //   console.log(da);
+  //       // });
+  //     }
+  //   }
 };
 </script>
 

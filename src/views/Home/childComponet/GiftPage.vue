@@ -93,7 +93,12 @@ export default {
   methods: {
     beginLuck() {},
     showLuckAfter() {
-      this.$router.push("/giftresult");
+      // // this.$router.push("/giftresult");
+      // let str = window.encodeURI(
+      //   "http://tm.lilanz.com/qywx/test/small/index.html#/zeropage"
+      // );
+      // window.location.href =
+      //   "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
     },
   },
   watch: {},

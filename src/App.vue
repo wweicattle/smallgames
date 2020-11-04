@@ -10,22 +10,20 @@ export default {
     return {};
   },
   mounted() {
+    console.log(2222);
     console.log(window.location.search);
-
     // //进入项目进行判断是否企业 用户
-    let userStates = window.localStorage.getItem("userStates");
-    if (userStates == "undefined" || !userStates) {
-      let code = window.location.search.slice(1).split("&")[0].split("=")[0];
-      let userStates = window.location.search
-        .slice(1)
-        .split("&")[0]
-        .split("=")[1];
-      if (code == "code") {
-        window.localStorage.setItem("userStates", userStates);
-        this.$router.push("/giftResult");
-        // window.location.href="http://tm.lilanz.com/qywx/test/small/index.html#/giftresult"
-      }
-    }
+    // let userStates = window.localStorage.getItem("userStates");
+    // if (userStates == "undefined" || !userStates) {
+    //   let code = window.location.search.slice(1).split("&")[0].split("=")[0];
+    //   let userStates = window.location.search
+    //     .slice(1)
+    //     .split("&")[0]
+    //     .split("=")[1];
+    //   if (code == "code") {
+    //     window.localStorage.setItem("userStates", userStates);
+    //   }
+    // }
   },
   components: {},
   methods: {},

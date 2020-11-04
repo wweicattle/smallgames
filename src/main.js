@@ -57,20 +57,45 @@ import 'lib-flexible'
     rotate();
   };
 })();
-new Promise(val=>{
-  console.log();
-  
-  val(32)
-}).then(da=>{
 
-})
+
+
+
+let token = window.localStorage.getItem("token");
 // // 没有token则进行，保存本地
-if (!window.localStorage.getItem("token")||window.localStorage.getItem("token")=="undefined") {
-  console.log(window.location);
-  let token = window.location.search.slice(1).split("=")[1];
-  window.localStorage.setItem("token",token);
-  // window.location.href = window.location.origin;
+if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
+  console.log(222222222222222222);
+  console.log("token");
+  let name = window.location.search.slice(1).split("=")[0];
+  if (name == "token") {
+    let token = window.location.search.slice(1).split("=")[1];
+    window.localStorage.setItem("token", token);
+  } else {
+    console.log("token is defeat!");
+  }
 }
+
+
+
+// 判断企业用户
+let userStates = window.localStorage.getItem("userStates");
+if ((userStates == "undefined" || !userStates) && token) {
+  console.log("qiywyongu");
+  // let str = window.encodeURI(
+  //   "http://tm.lilanz.com/qywx/test/small/index.html#/zeropage"
+  // );
+  window.location.href = "https://www.baidu.com"
+
+  let code = window.location.search.slice(1).split("&")[0].split("=")[0];
+  let userStates = window.location.search
+    .slice(1)
+    .split("&")[0]
+    .split("=")[1];
+  if (code == "code") {
+    window.localStorage.setItem("userStates", userStates);
+  }
+}
+
 
 
 
