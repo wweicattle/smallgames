@@ -1,12 +1,6 @@
 <template>
   <div class="gift-contain">
-    <img
-      class="gift"
-      src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/gift.png"
-      ref="img"
-      alt=""
-    />
-    <!-- <div class="luck-after" v-else>
+    <div class="luck-after">
       <div v-if="isluckAlready">
         <img
           src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftsuccess.png"
@@ -62,7 +56,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -70,33 +64,28 @@
 import { goToPrize, getUserState } from "network/home";
 export default {
   data() {
-    return {};
+    return {
+      isluckAlready: true,
+    };
   },
   created() {},
   mounted() {
-    // getUserState().then(da=>{
-    //   console.log(da);
-    // })
-    if (!this.$route.params.canLuck) {
-      this.$toast.fail("不能抽奖！");
-    } else {
-      let that = this;
-      // 礼物开奖动画结束后
-      that.$refs.img.addEventListener("animationend", this.showLuckAfter);
-      that.$refs.img.addEventListener("webkitAnimationEnd", this.showLuckAfter);
-      that.$refs.img.addEventListener("click", () => {
-        // this.beginLuck();
-        that.$refs.img.classList.add("test");
-      });
-    }
+    let href=window.location.href;
+      window.location.href ="http://tm.lilanz.com/game/wxCompanyOauth?backUrl=http://tm.lilanz.com/qywx/test/small/index.html#/zeropage";
+
   },
-  methods: {
-    beginLuck() {},
-    showLuckAfter() {
-      this.$router.push("/giftresult");
-    },
-  },
-  watch: {},
+  
+//   methods: {
+//     beginLuck() {
+//       // goToPrize().then((da) => {
+//       //   console.log(da);
+//       // });
+//     }
+//   }
+   
+  
+    
+ 
 };
 </script>
 

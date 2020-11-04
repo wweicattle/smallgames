@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js'
 
-export function tokens(content) {
+export function tokens(content,token) {
 
   var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -38,7 +38,6 @@ export function tokens(content) {
 
 
   //token根据getWXUser获得
-  let token = "q1qbq4LgH36a6Gt";
   let timestamp = Date.parse(new Date());
 
   let sign;

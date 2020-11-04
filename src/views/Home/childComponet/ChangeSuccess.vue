@@ -7,18 +7,18 @@
       />
       <div class="text-cotnain">
         <div class="score-num">
-          你的成绩为： <span class="detail-num">120分</span>
+          你的成绩为： <span class="detail-num">{{ loadUser.curScore }}分</span>
         </div>
-        <div class="success-defeat">成功击败了99%的玩家</div>
+        <div class="success-defeat">成功击败了{{ defeatsPercen }}%的玩家</div>
         <div class="score-content">
           <ul>
             <li>
               <span class="title">最佳成绩</span
-              ><span class="score">120分</span>
+              ><span class="score">{{ maxScore }}分</span>
             </li>
             <li>
               <span class="title">最佳排名</span
-              ><span class="score">120分</span>
+              ><span class="score">NO.{{ bestRank }}</span>
             </li>
           </ul>
         </div>
@@ -51,13 +51,16 @@
 </template>
 
 <script>
-import { getUserInfo, getGameResult, getToken } from "network/home";
+import { getGameResult, getToken } from "network/home";
 import GiftPage from "./GiftPage";
 export default {
   data() {
     return {
       show: true,
       isshowGift: false,
+      maxScore: null,
+      bestRank: null,
+      defeatsPercen: null,
     };
   },
   props: {
@@ -70,28 +73,23 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(33333333333333)
-    // this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-   
-    // 上传分数后台，是否可以 解锁下一关
-    // let url = {
-    //   wxid: Number(this.userInfo.id),
-    //   gameId: 2,
-    //   checkPoint: this.checkPointNum,
-    //   curScore: this.scoreNum,
-    //   result: this.scoreNum >= this.scoreNums ? "win" : "fai",
-    // };
-    console.log(this.loadUser);
-    // getToken().then((da) => {
-    //   console.log(da.data);
-    //   // this.getGameResult(this.loadUser);
-    // });
+    this.getGameResult(this.loadUser);
   },
   methods: {
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
         console.log(da);
+        if (da.data.errcode == 0) {
+          this.bestRank = da.data.data.bestRank;
+          this.maxScore = da.data.data.maxScore;
+          this.defeatsPercen = da.data.data.defeatsPercen;
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "上传结果失败！请刷新重试",
+          });
+        }
       });
     },
     jumpMysizeBtn() {

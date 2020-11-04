@@ -11,8 +11,8 @@ console.log(process.env.baseURL);
 let config = {
   // baseURL: "/api",
   timeout: 60 * 1000,
-  withCredentials: true
-  // baseURL: process.env.baseURL || process.env.apiUrl || ""
+  withCredentials: true,
+  baseURL:"http://tm.lilanz.com"
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };

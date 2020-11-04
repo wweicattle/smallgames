@@ -63,6 +63,7 @@
       v-if="isshowFail"
       @refreshHome="failBtn"
       :scoreNums="scoreNums"
+      :loadUser="loadUser"
     ></change-fail>
 
     <!-- 显示规则组件 -->
@@ -81,7 +82,7 @@ import ChangeSuccess from "./childComponet/ChangeSuccess";
 import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 import { eventBus } from "utils/eventbus";
-import { getUserInfo, getToken } from "network/home";
+import { getUser, getToken } from "network/home";
 export default {
   name: "homePage",
   props: {
@@ -149,23 +150,22 @@ export default {
       isshowSucess: false,
       isshowFail: false,
       isshowwRegular: false,
-      loadUser: null,
+      loadUser: {},
       userInfo: null,
     };
   },
   created() {
     this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
     // 初始化头像，如果本地存储有数据的话
-    this.peractar = !(this.userInfo=="undefined"||(!this.userInfo))?this.peractar = this.userInfo.headimgurl:null;
+    this.peractar = !(this.userInfo == "undefined" || !this.userInfo)
+      ? (this.peractar = this.userInfo.headImg)
+      : null;
+    // 如果本地没有数据重新进行请求
     if (!this.userInfo || this.userInfo == "undefined") {
-      let tokens = window.localStorage.getItem("tokens");
-      getUserInfo(tokens).then((da) => {
-        console.log(da);
+      getUser().then((da) => {
         if (da.data.errcode == 0) {
           window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
-          // 用户信息进行保存
-          this.userInfo = da.data.data;
-          this.peractar = da.data.data.headimgurl;
+          this.peractar = da.data.data.headImg;
         } else {
           this.$notify({
             type: "warning",
@@ -391,13 +391,14 @@ export default {
                   newRoute: this.$route.path,
                 };
                 window.localStorage.setItem("obj", JSON.stringify(obj));
+
+                // 
                 let url = {
-                  wxid: 42166,
-                  gameId: 2,
                   checkPoint: this.checkPointNum,
                   curScore: this.scoreNum,
                   result: this.scoreNum >= this.scoreNums ? "win" : "fai",
                 };
+
                 this.loadUser = url;
 
                 //看是否游戏结束后是否超过分数 可抽奖

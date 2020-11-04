@@ -13,18 +13,18 @@
       />
       <div class="text-cotnain">
         <div class="score-num">
-          你的成绩为： <span class="detail-num">120分</span>
+          你的成绩为： <span class="detail-num">{{ loadUser.curScore }}分</span>
         </div>
         <div class="success-defeat">成绩必须达到{{ scoreNums }}分才能抽奖</div>
         <div class="score-content">
           <ul>
             <li>
               <span class="title">最佳成绩</span
-              ><span class="score">120分</span>
+              ><span class="score">{{ maxScore }}分</span>
             </li>
             <li>
               <span class="title">最佳排名</span
-              ><span class="score">NO:120</span>
+              ><span class="score">NO.{{ bestRank }}</span>
             </li>
           </ul>
         </div>
@@ -53,20 +53,48 @@
 </template>
 
 <script>
+import { getGameResult, getToken } from "network/home";
+
 export default {
-  data() {
-    return {
-      show: true,
-    };
-  },
   props: {
     scoreNums: {
       type: Number,
     },
+    loadUser: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
+  },
+  data() {
+    return {
+      show: true,
+      maxScore: null,
+      bestRank: null,
+    };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.getGameResult(this.loadUser);
+  },
   methods: {
+    // 游戏关卡结束
+    getGameResult(param) {
+      getGameResult(param).then((da) => {
+        console.log(da);
+        if (da.data.errcode == 0) {
+          this.bestRank = da.data.data.bestRank;
+          this.maxScore = da.data.data.maxScore;
+          this.defeatsPercen = da.data.data.defeatsPercen;
+        } else {
+          this.$notify({
+            type: "warning",
+            message: "上传结果失败！请刷新重试",
+          });
+        }
+      });
+    },
     jumpMysizeBtn() {
       this.$router.push("/ranklist");
     },

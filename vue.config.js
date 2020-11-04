@@ -17,7 +17,6 @@ module.exports = {
     port:3333,
     proxy: {
       '/api': {
-     
         target: 'http://tm.lilanz.com',
         changeOrigin: true,
         pathRewrite: {
@@ -35,8 +34,6 @@ module.exports = {
         "components": "@/components",
         "views": "@/views",
         "utils": "@/utils",
-
-        
       }
     }
   }

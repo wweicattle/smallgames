@@ -59,6 +59,11 @@ const routes = [{
     component: () => import( /* webpackChunkName: "about" */ '../views/Home/childComponet/GiftPage')
   },
   {
+    path: '/giftresult',
+    name: 'giftresult',
+    component: () => import( /* webpackChunkName: "about" */ '../views/Home/childComponet/GiftResult')
+  },
+  {
     path: '/zeropage',
     name: 'zeropage',
     component: () => import( /* webpackChunkName: "about" */ '../components/ZeroPage')
@@ -126,9 +131,12 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  if (!window.localStorage.getItem("token")) {
+  console.log(to);
+  // console.log(typeof window.localStorage.getItem("token"));
+  if (!window.localStorage.getItem("token")||window.localStorage.getItem("token")=="undefined") {
     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=http://192.168.31.105:3333&configKey=3"
+    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=http://tm.lilanz.com/qywx/test/small/index.html&configKey=3"
+    
   } else {
     next();
   }

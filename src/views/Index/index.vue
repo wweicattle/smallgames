@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getUserInfo, getToken } from "network/home";
+import { getUserInfo, getToken, getUserState } from "network/home";
 
 export default {
   data() {
@@ -48,15 +48,17 @@ export default {
   },
   created() {},
   mounted() {
-    console.log(window.localStorage.getItem("token"));
+    console.log(22222222222222);
+    // 获取 tokens
     let token = window.localStorage.getItem("token");
     let tokens = window.localStorage.getItem("tokens");
-
-    if (!tokens||(tokens=="undefined"))
+    if (!tokens || tokens == "undefined") {
+      console.log(token);
       getToken(token).then((da) => {
         console.log(da);
         if (da.data.errcode == 0) {
           window.localStorage.setItem("tokens", da.data.data.token);
+          window.localStorage.setItem("wxid", da.data.data.wxid);
         } else {
           this.$notify({
             type: "warning",
@@ -64,6 +66,12 @@ export default {
           });
         }
       });
+    }
+
+    // // 判断是否内部人员
+    // getUserState().then((da) => {
+    //   console.log(da);
+    // });
   },
   methods: {},
 };
