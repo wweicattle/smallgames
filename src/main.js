@@ -61,11 +61,8 @@ import 'lib-flexible'
 
 
 
-let token = window.localStorage.getItem("token");
-// // 没有token则进行，保存本地
+// 没有token则进行，保存本地
 if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
-  console.log(222222222222222222);
-  console.log("token");
   let name = window.location.search.slice(1).split("=")[0];
   if (name == "token") {
     let token = window.location.search.slice(1).split("=")[1];
@@ -76,16 +73,13 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
 }
 
 
-
 // 判断企业用户
 let userStates = window.localStorage.getItem("userStates");
-if ((userStates == "undefined" || !userStates) && token) {
-  console.log("qiywyongu");
-  // let str = window.encodeURI(
-  //   "http://tm.lilanz.com/qywx/test/small/index.html#/zeropage"
-  // );
-  window.location.href = "https://www.baidu.com"
-
+if ((userStates == "undefined" || !userStates)) {
+  let str = window.encodeURI(
+    "http://tm.lilanz.com/qywx/test/small/index.html"
+  );
+  window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
   let code = window.location.search.slice(1).split("&")[0].split("=")[0];
   let userStates = window.location.search
     .slice(1)
@@ -94,7 +88,14 @@ if ((userStates == "undefined" || !userStates) && token) {
   if (code == "code") {
     window.localStorage.setItem("userStates", userStates);
   }
+  // // 重新跳转
+  // window.location.replace(
+  //   "http://tm.lilanz.com/qywx/test/small/index.html"
+  // );
 }
+
+
+
 
 
 
@@ -104,6 +105,7 @@ import myTouch from './myTouch.js'
 import {
   createLogger
 } from 'vuex'
+import vueConfig from '../vue.config'
 myTouch(Vue)
 new Vue({
   router,

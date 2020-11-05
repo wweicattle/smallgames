@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="check-point-contain"
-  >
+  <div class="check-point-contain">
     <van-popup v-model="show">
       <div class="select-luck">选择关卡</div>
       <ul>
@@ -13,10 +11,12 @@
               @click="checkPointBtn(index)"
               :class="{ highBox: index == nowindex }"
             />
-            <span :class="{ highBox: index == nowindex }">{{ index + 1 }}</span>
+            <span :class="{ highBox: index == nowindex }">{{
+              Number(index) + 1
+            }}</span>
           </li>
         </template>
-        <template v-for="(i, index) in 6 - lucklevel">
+        <template v-for="(i, index) in ( 6 - lucklevel)">
           <li :key="index + lucklevel">
             <img
               src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/7.png"
@@ -24,22 +24,34 @@
               @click="checkPointBtn(index + lucklevel)"
               :class="{ highBox: index + lucklevel == nowindex }"
             />
-            <span>{{ index + lucklevel + 1 }}</span>
+            <span>{{ Number(index) + Number(lucklevel) + 1 }}</span>
           </li>
         </template>
       </ul>
       <div class="clickBox" @click="beginGamesBtn">
-        <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/begin.png" alt="" />
+        <img
+          src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/begin.png"
+          alt=""
+        />
       </div>
     </van-popup>
     <div class="header">
-      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/header.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/header.png"
+        alt=""
+      />
     </div>
     <div class="center">
-      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/center.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/center.png"
+        alt=""
+      />
     </div>
     <div class="footer">
-      <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/begingame.png" alt="" />
+      <img
+        src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/begingame.png"
+        alt=""
+      />
       <div class="begin-icon" @click="$router.push('/checkoutpoint')"></div>
     </div>
   </div>
@@ -49,7 +61,7 @@
 export default {
   data() {
     return {
-      lucklevel: 6,
+      lucklevel: 3,
       show: true,
       nowindex: 0,
       copynowindex: 0,
@@ -64,7 +76,11 @@ export default {
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    // 获取关卡数
+    this.highestPass = window.localStorage.getItem("luckPointsNum");
+    this.lucklevel = Number(this.highestPass);
+  },
   methods: {
     beginGamesBtn() {
       console.log(this.copynowindex);
@@ -111,7 +127,7 @@ export default {
   height: 100%;
   position: fixed;
   // background: #000;
-  background-image: url('https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/homeback.jpg');
+  background-image: url("https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/homeback.jpg");
   background-size: cover;
   width: 100%;
   .header {

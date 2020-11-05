@@ -155,25 +155,9 @@ export default {
     };
   },
   created() {
+    // 初始化头像
     this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-    // 初始化头像，如果本地存储有数据的话
-    this.peractar = !(this.userInfo == "undefined" || !this.userInfo)
-      ? (this.peractar = this.userInfo.headImg)
-      : null;
-    // 如果本地没有数据重新进行请求
-    if (!this.userInfo || this.userInfo == "undefined") {
-      getUser().then((da) => {
-        if (da.data.errcode == 0) {
-          window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
-          this.peractar = da.data.data.headImg;
-        } else {
-          this.$notify({
-            type: "warning",
-            message: "获取用户信息失败！请重试",
-          });
-        }
-      });
-    }
+    this.peractar = this.userInfo.headImg;
   },
   mounted() {
     // 节流防止频繁点击
@@ -392,7 +376,7 @@ export default {
                 };
                 window.localStorage.setItem("obj", JSON.stringify(obj));
 
-                // 
+                //
                 let url = {
                   checkPoint: this.checkPointNum,
                   curScore: this.scoreNum,

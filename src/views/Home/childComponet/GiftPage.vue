@@ -6,63 +6,6 @@
       ref="img"
       alt=""
     />
-    <!-- <div class="luck-after" v-else>
-      <div v-if="isluckAlready">
-        <img
-          src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftsuccess.png"
-          alt=""
-        />
-        <div class="button-content">
-          <div class="luck-gift">一等奖</div>
-          <div class="luck-detail">
-            <van-button round type="info" @click="$router.push('/mysize')">
-              查看我的奖品
-            </van-button>
-          </div>
-          <div class="button-box">
-            <van-button
-              round
-              type="info"
-              class="ranking-list"
-              @click="$router.push('/ranklist')"
-              >排行榜</van-button
-            >
-            <van-button
-              round
-              type="info"
-              class="return-home"
-              @click="$router.push('/')"
-              >返回首页</van-button
-            >
-          </div>
-        </div>
-      </div>
-      <div v-else>
-        <img
-          src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftFail.png"
-          alt=""
-        />
-        <div class="button-content">
-          <div class="luck-details">
-            <van-button round type="info" @click="$router.push('/regularpage')">
-              再玩一次
-            </van-button>
-          </div>
-          <div class="button-box">
-            <van-button round type="info" class="ranking-list"
-              >排行榜</van-button
-            >
-            <van-button
-              round
-              type="info"
-              class="return-home"
-              @click="$router.push('/')"
-              >返回首页</van-button
-            >
-          </div>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -85,7 +28,6 @@ export default {
       that.$refs.img.addEventListener("animationend", this.showLuckAfter);
       that.$refs.img.addEventListener("webkitAnimationEnd", this.showLuckAfter);
       that.$refs.img.addEventListener("click", () => {
-        // this.beginLuck();
         that.$refs.img.classList.add("test");
       });
     }
@@ -93,12 +35,9 @@ export default {
   methods: {
     beginLuck() {},
     showLuckAfter() {
-      // // this.$router.push("/giftresult");
-      // let str = window.encodeURI(
-      //   "http://tm.lilanz.com/qywx/test/small/index.html#/zeropage"
-      // );
-      // window.location.href =
-      //   "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+      this.$router.push({ name: "giftresult", params: {checkoutPonint:this.$route.params.checkoutPonint} });
+
+     
     },
   },
   watch: {},

@@ -40,25 +40,95 @@
 </template>
 
 <script>
-import { getUserInfo, getToken, getUserState } from "network/home";
+import { getToken, getUserState, getUser } from "network/home";
 
 export default {
   data() {
-    return {};
+    return {
+      imgNum: 0,
+      imgArr: [
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/footerImg.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/footerImg.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/footerImg.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/footerImg.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/house2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/house2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/house3.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/house4.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/house5.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/house2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/house3.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/house4.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/house5.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house3.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house4.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house5.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house6.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/house7.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/house1.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/house2.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/house3.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/house4.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/house5.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/fail.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/Winningpage/success.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/homeback.png"
+      ],
+    };
   },
-  created() {},
+  created() {
+    this.$toast.loading({
+      message: "加载数据中..",
+      forbidClick: true,
+      duration: 0,
+    });
+
+    //预加载图片
+    this.preloadImg(this.imgArr);
+  },
   mounted() {
-    console.log(22222222222222);
     // 获取 tokens
     let token = window.localStorage.getItem("token");
     let tokens = window.localStorage.getItem("tokens");
     if (!tokens || tokens == "undefined") {
-      console.log(token);
       getToken(token).then((da) => {
-        console.log(da);
         if (da.data.errcode == 0) {
+          // 保存用户wxid token 关卡数
           window.localStorage.setItem("tokens", da.data.data.token);
           window.localStorage.setItem("wxid", da.data.data.wxid);
+          this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+          // 如果本地没有数据重新进行请求
+          if (!this.userInfo || this.userInfo == "undefined") {
+            getUser().then((da) => {
+              if (da.data.errcode == 0) {
+                window.localStorage.setItem(
+                  "userInfo",
+                  JSON.stringify(da.data.data)
+                );
+                window.localStorage.setItem(
+                  "luckPointsNum",
+                  da.data.data.highestPass
+                );
+              } else {
+                this.$notify({
+                  type: "warning",
+                  message: "获取用户信息失败！请重试",
+                });
+              }
+            });
+          }
         } else {
           this.$notify({
             type: "warning",
@@ -67,13 +137,33 @@ export default {
         }
       });
     }
-
-    // // 判断是否内部人员
-    // getUserState().then((da) => {
-    //   console.log(da);
-    // });
   },
-  methods: {},
+  methods: {
+    //实现图片的预加载
+    preloadImg(srcArr) {
+      let that = this;
+      if (srcArr instanceof Array) {
+        for (var i = 0; i < srcArr.length; i++) {
+          var oImg = new Image();
+          oImg.src = srcArr[i];
+          oImg.onload = function () {
+            console.log(that);
+            console.log(333333333333);
+            that.imgNum = that.imgNum + 1;
+          };
+        }
+      }
+    },
+  },
+  watch: {
+    imgNum(newVal) {
+      console.log(newVal);
+      if (newVal == this.imgArr.length) {
+        this.$toast.clear();
+        this.$toast.success("数据加载成功！");
+      }
+    },
+  },
 };
 </script>
 

@@ -1,13 +1,13 @@
 <template>
   <div class="gift-contain">
-    <div class="luck-after">
+    <div class="luck-after" v-show="contentLuck">
       <div v-if="isluckAlready">
         <img
           src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftsuccess.png"
           alt=""
         />
         <div class="button-content">
-          <div class="luck-gift">一等奖</div>
+          <div class="luck-gift">{{ prizeName }}</div>
           <div class="luck-detail">
             <van-button round type="info" @click="$router.push('/mysize')">
               查看我的奖品
@@ -65,22 +65,87 @@ import { goToPrize, getUserState } from "network/home";
 export default {
   data() {
     return {
-      isluckAlready: true,
+      isluckAlready: null,
+      checkPoint: null,
+      prizeName: null,
+      contentLuck: null,
     };
   },
   created() {},
   mounted() {
-    let href = window.location.href;
-   
+    this.checkPoint = this.$route.params.checkoutPonint;
+    this.beginLuck();
   },
 
-  //   methods: {
-  //     beginLuck() {
-  //       // goToPrize().then((da) => {
-  //       //   console.log(da);
-  //       // });
-  //     }
-  //   }
+  methods: {
+    getUserLuckResult(num) {
+      if (num == 0) {
+        let url = {
+          checkPoint: this.checkPoint,
+          userid: num,
+        };
+        goToPrize(url).then((da) => {
+          if (da.data.errcode == 0) {
+            if (da.data.data && Object.keys(da.data.data).length >= 0) {
+              // 成功的奖品
+              this.contentLuck = true;
+              this.isluckAlready = true;
+              this.prizeName = da.data.data.prizeName;
+            } else {
+              this.contentLuck = true;
+              this.isluckAlready = false;
+            }
+          } else {
+            this.$notify({
+              type: "warning",
+              message: da.data.errmsg || "抽奖失败!请重试",
+            });
+          }
+        });
+      } else {
+        // 全部不能获奖
+        console.log("不能获奖");
+        this.contentLuck = true;
+        this.isluckAlready = false;
+      }
+    },
+    showLuck(num) {
+      switch (Number(num)) {
+        case 1:
+          this.getUserLuckResult(1);
+          break;
+        case 0:
+          this.getUserLuckResult(0);
+          break;
+        case "undefined":
+          this.getUserLuckResult(1);
+          break;
+        default:
+          this.getUserLuckResult(1);
+          break;
+      }
+    },
+    beginLuck() {
+      let userstate = window.localStorage.getItem("userIndetify");
+      if (userstate == 1 || userstate == 0 || userstate == "undefined") {
+        this.showLuck(userstate);
+      } else {
+        let code = window.localStorage.getItem("userStates");
+        getUserState(code).then((da) => {
+          if (da.data.errcode == 0) {
+            let state = da.data.data.userid;
+            window.localStorage.setItem("userIndetify", state);
+            this.showLuck(state);
+          } else {
+            this.$notify({
+              type: "warning",
+              message: (da.data.errmsg || "用户鉴权异常!")+"请重试",
+            });
+          }
+        });
+      }
+    },
+  },
 };
 </script>
 

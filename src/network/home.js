@@ -1,5 +1,7 @@
 import Vue from "vue";
 import request from "./axios"
+import qs from 'qs';
+
 import {
   tokens
 } from "utils/token"
@@ -89,9 +91,6 @@ export function getUser() {
     sign,
     timestamp
   } = tokens(arr, token);
-  console.log(token);
-  console.log(sign);
-  console.log(timestamp);
 
   return request({
     url: "/game/getUser",
@@ -107,11 +106,13 @@ export function getUser() {
     },
   })
 }
-
 // 判断用户是否是内部人员
-// export function getUserState(){
-//   return request.get("/game/wxCompanyOauth?backUrl=http://tm.lilanz.com");
-// }
+export function getUserState(code) {
+  let params = {
+    code
+  }
+  return request.post("/game/getCompanyUserTag", qs.stringify(params));
+}
 
 // getUserState().then(da=>{
 //   console.log(da);
@@ -166,8 +167,7 @@ export function getGameResult(params) {
 
 
 // 开始抽奖 
-export function goToPrize() {
-  let configKey = 3;
+export function goToPrize(params) {
   let token = window.localStorage.getItem("tokens")
   let wxid = window.localStorage.getItem("wxid")
   let arr = [{
@@ -179,13 +179,10 @@ export function goToPrize() {
     }, {
       key: "checkPoint",
       value: params.checkPoint
-    }, {
-      key: "curScore",
-      value: params.curScore
     },
     {
-      key: "result",
-      value: params.result
+      key: "userid",
+      value: params.userid
     }
   ]
   // 根据接口生成token，sign，timestamp
@@ -199,7 +196,9 @@ export function goToPrize() {
     url: "/game/goToPrize",
     params: {
       wxid,
-      configKey,
+      checkPoint:params.checkPoint,
+      userid:params.userid,
+      gameId
     },
     method: "post",
     headers: {

@@ -9,7 +9,7 @@ const level = [{
         footerImage: `https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png`,
         houseImageArr: [
           "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house1.png",
-          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house2.png",
+          // "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/house2.png",
         ]
       }
     }

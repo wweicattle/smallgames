@@ -71,7 +71,30 @@ export default {
       },
     },
   },
-  created() {},
+  created() {
+    // 关卡加1，游戏 挑战成功！
+    this.highestPass = window.localStorage.getItem("luckPointsNum");
+    // 当前关数
+    let nowIndex = this.loadUser.checkPoint;
+    if (this.highestPass == nowIndex) {
+      if (this.highestPass == 6) {
+        return;
+      } else {
+        window.localStorage.setItem(
+          "luckPointsNum",
+          Number(this.highestPass)+1
+        );
+      }
+    }
+    // if (
+    //   this.highestPass < this.loadUser.checkPoint ||
+    //   this.highestPass == 6
+    // ) {
+    //   return;
+    // } else {
+    //   window.localStorage.setItem("luckPointsNum", ++Number(this.highestPass));
+    // }
+  },
   mounted() {
     this.getGameResult(this.loadUser);
   },
@@ -96,7 +119,10 @@ export default {
       this.$router.push("/ranklist");
     },
     goLuckDrawBtn() {
-      this.$router.push({ name: "gift", params: { canLuck: true } });
+      this.$router.push({
+        name: "gift",
+        params: { canLuck: true, checkoutPonint: this.loadUser.checkPoint },
+      });
     },
   },
   components: {
