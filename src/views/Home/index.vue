@@ -308,33 +308,35 @@ export default {
         this.bigbox = this.$refs.bigbox;
 
         this.$nextTick(() => {
-          let top = box.getBoundingClientRect().top;
-          let w = box.getBoundingClientRect().width;
-          let h = box.getBoundingClientRect().height;
+          let top = box.getBoundingClientRect().top.toFixed(0);
+          let w = box.getBoundingClientRect().width.toFixed(2);
+          let h = box.getBoundingClientRect().height.toFixed(2);
           let houseH = getComputedStyle(this.house).height;
           let bodyH = getComputedStyle(document.querySelector(".home-contain"))
             .height;
+            console.log(bodyH,houseH,top,this.bottom);
           //该判断是要减去下面房子的高度所偏移的bottom。这样才可以进行滑道啊正确的房子底部
           if (this.bottom) {
             this.totalH =
-              bodyH.split("p")[0] -
-              houseH.split("p")[0] -
+              Number(bodyH.split("p")[0]).toFixed(0) -
+              Number(houseH.split("p")[0]).toFixed(0) -
               top -
               h -
               this.bottom.split("p")[0];
           } else {
-            this.totalH = bodyH.split("p")[0] - houseH.split("p")[0] - top - h;
+            this.totalH = Number(bodyH.split("p")[0]).toFixed(0) - Number(houseH.split("p")[0]).toFixed(0) - top - h;
           }
-          box.addEventListener("transitionend", () => {
-            console.log(22222222222222222222);
-          });
+
           // 下滑的top值
-          box.style.top = this.totalH + "px";
+          box.style.top = (this.totalH.toFixed(0))+ "px";
 
           // 克隆一个房子，递归到顶部
           this.cloneBox = box.cloneNode(true);
 
           setTimeout(() => {
+            // 重新获取房子尺寸，避免之后房子大小变化
+            let w = box.getBoundingClientRect().width.toFixed(2);
+            let h = box.getBoundingClientRect().height.toFixed(2);
             // 将下落的房子append到底部房子上，之后顶部房子会下移
             box.style.top = 0;
             box.style.left = 0;
@@ -344,6 +346,10 @@ export default {
             box.style.margin = "auto";
             // 设置img白边
             box.children[0].style.display = "block";
+            box.children[0].style.width = w+"px";
+            box.children[0].style.height = h+"px";
+
+
 
             // box.style.background = "#f40";
             //每次插入新的房子前，把原来的第一个房子dom获取
@@ -351,7 +357,7 @@ export default {
             this.house.insertBefore(box, oldFirstNode);
 
             //是否有出现碰撞，之后进行比较线条
-            if (w > getComputedStyle(oldFirstNode).width.split("p")[0]) {
+            if (Number(w) > (getComputedStyle(oldFirstNode).width.split("p")[0])) {
               // 比较两个房子的时候，出现线条时的动态宽高
               this.linefailwidth = getComputedStyle(oldFirstNode).width;
               this.linefailheihgt = h + 40 + "px";

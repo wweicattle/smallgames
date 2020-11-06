@@ -10,7 +10,9 @@ import {
   Tag,
   NoticeBar,
   Icon ,
-  Divider 
+  Divider ,
+  Lazyload,
+  Image
 
 } from 'vant';
 Vue.use(Button);
@@ -24,3 +26,9 @@ Vue.use(Notify);
 Vue.use(NoticeBar);
 Vue.use(Icon);
 Vue.use(Divider);
+Vue.use(Image);
+
+// 注册时可以配置额外的选项
+Vue.use(Lazyload, {
+  lazyComponent: true,
+})

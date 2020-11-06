@@ -16,7 +16,7 @@
             }}</span>
           </li>
         </template>
-        <template v-for="(i, index) in ( 6 - lucklevel)">
+        <template v-for="(i, index) in 6 - lucklevel">
           <li :key="index + lucklevel">
             <img
               src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/7.png"
@@ -61,7 +61,7 @@
 export default {
   data() {
     return {
-      lucklevel: 3,
+      lucklevel: null,
       show: true,
       nowindex: 0,
       copynowindex: 0,
@@ -78,8 +78,13 @@ export default {
   created() {},
   mounted() {
     // 获取关卡数
-    this.highestPass = window.localStorage.getItem("luckPointsNum");
-    this.lucklevel = Number(this.highestPass);
+    let lucknum = window.localStorage.getItem("luckPointsNum");
+    if (lucknum == "undefined" || !lucknum) {
+      this.lucklevel = 1;
+    } else {
+      this.highestPass = window.localStorage.getItem("luckPointsNum");
+      this.lucklevel = Number(this.highestPass);
+    }
   },
   methods: {
     beginGamesBtn() {
@@ -126,7 +131,6 @@ export default {
 .check-point-contain {
   height: 100%;
   position: fixed;
-  // background: #000;
   background-image: url("https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/homeback.jpg");
   background-size: cover;
   width: 100%;
@@ -175,7 +179,6 @@ export default {
   .highBox {
     transform: scale(1.3);
     color: #fff !important;
-    // box-shadow: 0 0 1px 1px #000;
   }
 
   .van-popup {
@@ -206,7 +209,7 @@ export default {
         rgb(255, 87, 74)
       );
       border-radius: 8px;
-      padding: 15px 10px;
+      padding: 18px 10px;
       position: absolute;
       top: 150px;
       left: 0;
@@ -230,7 +233,7 @@ export default {
           height: 46px;
         }
         span {
-          padding: 5px 0 8px 0;
+          padding: 8px 0 8px 0;
           color: #9c806c;
           font-size: 18px;
           font-weight: 600;

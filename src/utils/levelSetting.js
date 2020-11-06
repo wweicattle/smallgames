@@ -1,7 +1,7 @@
 // 进行关卡设置
 const level = [{
     0: {
-      scoreNums: 10,
+      scoreNums: 40,
       stepsScore: 10,
       timeSet: "1.0s",
       photos: {

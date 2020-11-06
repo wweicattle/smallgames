@@ -9,7 +9,7 @@
         <div class="score-num">
           你的成绩为： <span class="detail-num">{{ loadUser.curScore }}分</span>
         </div>
-        <div class="success-defeat">成功击败了{{ defeatsPercen }}%的玩家</div>
+        <div class="success-defeat">成功击败了{{ defeatsPercen}}.00%的玩家</div>
         <div class="score-content">
           <ul>
             <li>
@@ -22,7 +22,7 @@
             </li>
           </ul>
         </div>
-        <div class="luck-draw">今天还有三次机会抽奖</div>
+        <div class="luck-draw">挑战成功即可解锁下一关</div>
         <van-button round type="info" size="large" @click="goLuckDrawBtn">
           赶紧去抽奖
         </van-button>
@@ -35,12 +35,8 @@
           @click="jumpMysizeBtn"
           >排行榜</van-button
         >
-        <van-button
-          round
-          type="info"
-          class="return-home"
-          @click="$router.push('/')"
-          >返回首页</van-button
+        <van-button round type="info" class="return-home" @click="nextPointBtn"
+          >下一关</van-button
         >
       </div>
     </van-popup>
@@ -82,23 +78,40 @@ export default {
       } else {
         window.localStorage.setItem(
           "luckPointsNum",
-          Number(this.highestPass)+1
+          Number(this.highestPass) + 1
         );
       }
     }
-    // if (
-    //   this.highestPass < this.loadUser.checkPoint ||
-    //   this.highestPass == 6
-    // ) {
-    //   return;
-    // } else {
-    //   window.localStorage.setItem("luckPointsNum", ++Number(this.highestPass));
-    // }
   },
   mounted() {
     this.getGameResult(this.loadUser);
   },
   methods: {
+    // 下一关 
+    nextPointBtn() {
+      switch (this.loadUser.checkPoint) {
+        case 0:
+          this.$router.push("/zeropage");
+          break;
+        case 1:
+          this.$router.push("/firstpage");
+          break;
+        case 2:
+          this.$router.push("/twopage");
+          break;
+        case 3:
+          this.$router.push("/threepage");
+          break;
+        case 4:
+          this.$router.push("/fourpage");
+          break;
+        case 5:
+          this.$router.push("/fivepage");
+          break;
+        default:
+         break;
+      }
+    },
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
@@ -106,7 +119,7 @@ export default {
         if (da.data.errcode == 0) {
           this.bestRank = da.data.data.bestRank;
           this.maxScore = da.data.data.maxScore;
-          this.defeatsPercen = da.data.data.defeatsPercen;
+          this.defeatsPercen = (da.data.data.winPercent*100).toFixed(0)||0;
         } else {
           this.$notify({
             type: "warning",

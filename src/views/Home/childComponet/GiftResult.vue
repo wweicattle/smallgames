@@ -43,7 +43,11 @@
             </van-button>
           </div>
           <div class="button-box">
-            <van-button round type="info" class="ranking-list"
+            <van-button
+              round
+              type="info"
+              class="ranking-list"
+              @click="$router.push('/ranklist')"
               >排行榜</van-button
             >
             <van-button
@@ -139,7 +143,7 @@ export default {
           } else {
             this.$notify({
               type: "warning",
-              message: (da.data.errmsg || "用户鉴权异常!")+"请重试",
+              message: (da.data.errmsg || "用户鉴权异常!") + "请重试",
             });
           }
         });

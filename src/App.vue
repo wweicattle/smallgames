@@ -10,7 +10,6 @@ export default {
     return {};
   },
   mounted() {
-  
     console.log(2222);
   },
   components: {},
@@ -35,7 +34,5 @@ html,
   width: 100%;
   background-size: contain;
 }
-img {
-  // pointer-events: none;
-}
+
 </style>

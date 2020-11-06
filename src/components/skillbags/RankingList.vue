@@ -1,40 +1,74 @@
 <template>
-  <div
-    class="rank-contain"
-    style="backgroundImage: url('https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg')"
-  >
+  <div class="rank-contain">
     <van-divider style="color: #fff">只展示前100名</van-divider>
     <div class="rank-title">排行榜</div>
     <div class="header-per">
       <ul>
         <li>
           <div class="actar">
-            <img src="~assets/avator.png" alt="" class="actar-header" />
-            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/2.png" alt="" />
+            <img
+              :src="headerrank ? headerrank[1].headImg : ''"
+              alt=""
+              class="actar-header"
+            />
+            <img
+              class="icon"
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/2.png"
+              alt=""
+            />
           </div>
           <div class="name-num">
-            <span class="rank-name"> 小李 </span>
-            <span class="rank-score"> 900分 </span>
+            <span class="rank-name">
+              {{ headerrank ? headerrank[1].nickName : "" }}
+            </span>
+            <span class="rank-score">
+              {{ headerrank ? headerrank[1].totalScore : "" }}分
+            </span>
           </div>
         </li>
         <li>
           <div class="actar number-one">
-            <img class="actar-header" src="~assets/avator.png" alt="" />
-            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/1.png" alt="" />
+            <img
+              class="actar-header"
+              :src="headerrank ? headerrank[0].headImg : ''"
+              alt=""
+            />
+            <img
+              class="icon"
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/1.png"
+              alt=""
+            />
           </div>
           <div class="name-num">
-            <span class="rank-name"> 小李 </span>
-            <span class="rank-score"> 1600分 </span>
+            <span class="rank-name">
+              {{ headerrank ? headerrank[0].nickName : "" }}
+            </span>
+            <span class="rank-score">
+              {{ headerrank ? headerrank[0].totalScore : "" }}分
+            </span>
           </div>
         </li>
+
         <li>
           <div class="actar">
-            <img class="actar-header" src="~assets/avator.png" alt="" />
-            <img class="icon" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/3.png" alt="" />
+            <img
+              class="actar-header"
+              :src="headerrank ? headerrank[2].headImg : ''"
+              alt=""
+            />
+            <img
+              class="icon"
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/3.png"
+              alt=""
+            />
           </div>
           <div class="name-num">
-            <span class="rank-name"> 小李 </span>
-            <span class="rank-score"> 900分 </span>
+            <span class="rank-name">
+              {{ headerrank ? headerrank[2].nickName : "" }}
+            </span>
+            <span class="rank-score">
+              {{ headerrank ? headerrank[2].totalScore : "" }}分
+            </span>
           </div>
         </li>
       </ul>
@@ -42,213 +76,30 @@
     <div class="line"></div>
     <div class="person-detail">
       <ul>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <li>
-          <span class="per-num"> NO.4 </span>
-          <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
-          </div>
-          <span class="per-score"> 380分 </span>
-        </li>
-        <!-- <div>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-          repellendus fugit recusandae harum atque animi! Distinctio nesciunt
-          sint excepturi ad!
-        </div> -->
-        <van-divider style="color: #fff">只展示前100名</van-divider>
+        <template v-for="(i, index) in allrank">
+          <li :key="index">
+            <span class="per-num"> NO.{{ index + 4 }}</span>
+            <div class="per-avator">
+              <!-- <img :src="allrank[index].headImg" alt="" /> -->
+              <van-image lazy-load :src="allrank[index].headImg" />
+              <span class="per-name">{{ allrank[index].nickName }}</span>
+            </div>
+            <span class="per-score">{{ allrank[index].totalScore }}分 </span>
+          </li>
+        </template>
+        <van-divider style="color: #fff">{{
+          pernums > 100 ? "只展示前100名" : "当前用户只有" + pernums + "人"
+        }}</van-divider>
 
         <li class="my-rank">
           <div class="tag"><van-tag type="danger">我的排名</van-tag></div>
-          <span class="per-num"> NO.502 </span>
+          <span class="per-num"> NO.{{ myrank ? myrank[0].rank : "" }} </span>
           <div class="per-avator">
-            <img src="~assets/avator.png" alt="" />
-            <span class="per-name">狸猫之夜</span>
+            <!-- <img :src="perAcatar" alt="" /> -->
+            <van-image lazy-load :src="perAcatar" />
+            <span class="per-name">{{ perName }}</span>
           </div>
-          <span class="per-score"> 380分 </span>
+          <span class="per-score"> {{ myrank ? myrank[0].score : "" }}分 </span>
         </li>
       </ul>
     </div>
@@ -256,27 +107,59 @@
 </template>
 
 <script>
+import { getRankList } from "network/home";
 export default {
   data() {
-    return {};
+    return {
+      myrank: null,
+      allrank: null,
+      headerrank: null,
+      pernums: 100,
+    };
   },
   created() {},
-  mounted() {},
-  methods: {},
+  mounted() {
+    getRankList().then((da) => {
+      console.log(da);
+      if (da.data.errcode == 0) {
+        let data = da.data.data;
+
+        this.pernum = data.allRank.length;
+        // 如果人数小于10人显示当前人数
+        if (this.pernum < 100) {
+          this.pernums = this.pernum;
+        }
+        this.headerrank = data.allRank.slice(0, 3);
+        this.allrank = data.allRank.slice(3);
+        this.myrank = data.myRank;
+      } else {
+        this.$notify({
+          type: "warning",
+          message: "获取排行榜失败！请重试",
+        });
+      }
+    });
+  },
+  computed: {
+    perAcatar() {
+      let actar = JSON.parse(window.localStorage.getItem("userInfo"));
+      return actar ? actar.headImg : "";
+    },
+    perName() {
+      let name = JSON.parse(window.localStorage.getItem("userInfo"));
+      return name ? name.nickName : "";
+    },
+  },
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .rank-contain {
   padding: 0 30px;
   height: 100%;
   overflow-y: scroll;
-  // background: url("/https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg");
+  background: url("https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/mysizeindex.jpg");
   background-size: cover;
-  // img{
-  //     width: 100%;
-  //     display: block;
-  // }
   .rank-title {
     text-align: center;
     margin: 22px 0;
@@ -300,7 +183,7 @@ export default {
           display: flex;
           justify-content: center;
           align-items: center;
-          background: url("/https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/circle.png");
+          background: url("https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/RankList/circle.png");
           background-size: 100%;
           .actar-header {
             width: 86%;
@@ -351,47 +234,71 @@ export default {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        padding-top: 10px;
+        padding-top: 15px;
         align-items: center;
         .per-num {
           color: #fff;
           font-size: 16px;
+          width: 56px;
         }
         .per-avator {
-          margin-left: -32px;
+          margin-left: -12px;
           height: 35px;
           display: flex;
           align-items: center;
           color: #fff;
           font-size: 15px;
-          img {
+          // width: 100px;
+          .van-image {
+            margin-right: 5px;
             width: 35px;
             height: 35px;
-            border-radius: 50%;
+            img {
+              border-radius: 50%;
+            }
+          }
+          .per-name {
+            width: 60px;
+            display: inline-block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
           }
         }
         .per-score {
           color: #fff;
           font-size: 15px;
+          width: 60px;
+          text-align: center;
         }
       }
       .my-rank {
         border: 2px solid #f2d3dd;
         border-radius: 14px;
         position: relative;
-        .tag{
+        margin-bottom: 60px;
+        padding-bottom: 10px;
+        .tag {
           position: absolute;
           top: 0;
-          left:0;
+          left: 0;
         }
-        .per-num{
-        color: #000;
+        .van-image {
+          margin-right: 5px;
+          width: 35px;
+          height: 35px;
+          img {
+            border-radius: 50%;
+          }
         }
-        .per-avator{
-        color: #000;
+        .per-num {
+          color: #fff;
         }
-        .per-score{
-        color: #000;
+        .per-avator {
+          color: #fff;
+        }
+        .per-score {
+          color: #fff;
         }
       }
     }

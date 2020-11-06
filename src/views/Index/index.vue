@@ -84,25 +84,24 @@ export default {
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel3/homeback.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/homeback.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/homeback.png",
-        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/homeback.png"
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/homeback.png",
       ],
     };
   },
-  created() {
-    this.$toast.loading({
-      message: "加载数据中..",
-      forbidClick: true,
-      duration: 0,
-    });
-
-    //预加载图片
-    this.preloadImg(this.imgArr);
-  },
+  created() {},
   mounted() {
     // 获取 tokens
     let token = window.localStorage.getItem("token");
     let tokens = window.localStorage.getItem("tokens");
     if (!tokens || tokens == "undefined") {
+      // 加载图片数据中
+      this.$toast.loading({
+        message: "加载数据中..",
+        forbidClick: true,
+        duration: 0,
+      });
+      //预加载图片
+      this.preloadImg(this.imgArr);
       getToken(token).then((da) => {
         if (da.data.errcode == 0) {
           // 保存用户wxid token 关卡数

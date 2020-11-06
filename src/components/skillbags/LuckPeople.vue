@@ -15,11 +15,11 @@
           <span>中奖礼品 </span>
         </div>
         <ul class="luck-per">
-          <template v-for="(i, index) in 40">
+          <template v-for="(i, index) in luckpersonArr">
             <li :key="index">
-              <span>猪的想象</span>
-              <span>152****9200</span>
-              <span>保温杯500ML</span>
+              <span class="nick-name">{{ i.nickName }}</span>
+              <span class="tel">{{ i.tel }}</span>
+              <span class="prize-name">{{ i.prizeName }}</span>
             </li>
           </template>
         </ul>
@@ -29,12 +29,29 @@
 </template>
 
 <script>
+import { getPrizeList } from "network/home";
+
 export default {
   data() {
-    return {};
+    return {
+      luckpersonArr: null,
+    };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    getPrizeList().then((da) => {
+      if (da.data.errcode == 0) {
+        let data = da.data.data;
+        console.log(data);
+        this.luckpersonArr = data;
+      } else {
+        this.$notify({
+          type: "warning",
+          message: "获取中奖名单失败！请重试",
+        });
+      }
+    });
+  },
   methods: {},
 };
 </script>
@@ -71,12 +88,15 @@ export default {
       height: 100%;
       overflow-y: scroll;
       .title-content {
-        margin: 20px 0 10px 0;
+        top: 0;
+        position: -webkit-sticky;
+        position: sticky;
         font-weight: 600;
         font-size: 17px;
         display: flex;
         justify-content: space-around;
-        padding: 10px 0;
+        padding: 30px 0 10px 0;
+        background: #fff;
       }
       ul {
         li {
@@ -88,6 +108,19 @@ export default {
           }
           &:nth-of-type(even) {
             background: rgb(234, 234, 234);
+          }
+          .nick-name {
+            width: 40px;
+          }
+          .tel {
+            width: 60px;
+          }
+          .prize-name {
+            display: inline-block;
+            width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }

@@ -7,7 +7,7 @@ import {
 } from "utils/token"
 // 用户授权会返回token
 let token = window.localStorage.getItem("token");
-
+// 小游戏编号
 let gameId = 15;
 console.log(token);
 // 获取用户基本信息
@@ -114,9 +114,7 @@ export function getUserState(code) {
   return request.post("/game/getCompanyUserTag", qs.stringify(params));
 }
 
-// getUserState().then(da=>{
-//   console.log(da);
-// })
+
 // 游戏结束进行上传分数 
 export function getGameResult(params) {
   let wxid = window.localStorage.getItem("wxid")
@@ -196,8 +194,8 @@ export function goToPrize(params) {
     url: "/game/goToPrize",
     params: {
       wxid,
-      checkPoint:params.checkPoint,
-      userid:params.userid,
+      checkPoint: params.checkPoint,
+      userid: params.userid,
       gameId
     },
     method: "post",
@@ -208,258 +206,73 @@ export function goToPrize(params) {
     },
   })
 }
-// export function getPrizeList(url) {
-//   let arr = [{
-//     key: "gameId",
-//     value: 14
-//   }, {
-//     key: "size",
-//     value: 3
 
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
 
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//       token,
-//       sign,
-//       timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
+// 排行榜获取
+export function getRankList() {
+  let token = window.localStorage.getItem("tokens")
+  let wxid = window.localStorage.getItem("wxid")
+  let arr = [{
+    key: "wxId",
+    value: wxid
+  }, {
+    key: "gameId",
+    value: gameId
+  }, {
+    key: "limit",
+    value: 100
+  }, ]
+  // 根据接口生成token，sign，timestamp
+  let {
+    sign,
+    timestamp
+  } = tokens(arr, token);
 
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
 
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
+  return request({
+    url: "/game/getRankList",
+    params: {
+      wxid,
+      gameId,
+      limit: 100
+    },
+    method: "post",
+    headers: {
+      token,
+      sign,
+      timestamp
+    },
+  })
+}
 
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//       token,
-//       sign,
-//       timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
+// 获取中奖名单
+export function getPrizeList() {
+  let token = window.localStorage.getItem("tokens")
+  let arr = [{
+    key: "gameId",
+    value: gameId
+  }, {
+    key: "size",
+    value: 100
+  }, ]
+  // 根据接口生成token，sign，timestamp
+  let {
+    sign,
+    timestamp
+  } = tokens(arr, token);
 
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
 
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
-
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
-
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
-
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
-
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
-
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
-
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
-
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
-
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-// export function getMyPrize(url) {
-//   let arr = [{
-//     key: "wxid",
-//     value: 42164
-//   }, {
-//     key: "gameId",
-//     value: 15
-
-//   }]
-//   // 根据接口生成token，sign，timestamp
-//   let {
-//     token,
-//     sign,
-//     timestamp
-//   } = tokens(arr);
-//   console.log(token);
-//   console.log(sign);
-//   console.log(timestamp);
-
-//   return request({
-//     url: "/game/getUser?wxid=42164&gameId=15",
-//     method: "post",
-//     headers: {
-//      token,
-//      sign,
-//      timestamp
-//     },
-//   }).then(da => {
-//     console.log(da);
-//   })
-// }
-
-// reauest();
-// export function reauest(url) {
-//   return request(url)
-// }
+  return request({
+    url: "/game/getPrizeList",
+    params: {
+      gameId,
+      size: 100
+    },
+    method: "post",
+    headers: {
+      token,
+      sign,
+      timestamp
+    },
+  })
+}
