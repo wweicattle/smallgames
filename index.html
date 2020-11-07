@@ -8,7 +8,8 @@
 </head>
 
 <body>
-    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid rem repellat vero sint consectetur suscipit
+    <div id="div">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid rem repellat vero sint consectetur
+        suscipit
         at aut excepturi officiis saepe modi eum, tempore soluta tempora illum omnis id quam nostrum quia iusto porro
         voluptas ex, doloremque voluptatem. Fugit corporis vel autem odio a culpa dolor, illum adipisci similique
         nostrum consequuntur eligendi ratione accusantium ipsam repellat laudantium, mollitia veritatis suscipit veniam
@@ -16,20 +17,20 @@
         iusto officiis reiciendis temporibus nihil necessitatibus quo doloribus? Nemo in molestias recusandae voluptatum
         exercitationem ipsam, eaque, odit officiis totam fugit consequuntur expedita aliquid impedit?</div>
     <script>
-        // let name = window.localStorage.getItem("name")
-        // console.log();
-        // if (!name) {
-        //     window.localStorage.setItem("name", "wuwei");
-        //     // window.location.href = "https://www.baidu.com"
-            window.location.href = "http://127.0.0.1:5500/idnexs.html";
-        // }
+        let  d=Number(window.localStorage.getItem("userStatesd"))
+        console.log(d);
+        Promise.resolve(1000).then(da => {
+            div.style.color = "yellow"
+            console.log(da);
+        })
+        Promise.resolve(1000).then(da => {
+            div.style.color = "red"
+            console.log(da);
+        })
+        setTimeout(() => {
+            div.style.color = "#ccc"
 
-
-        // console.log("you can shoaow");
-        window.location.href = "https://www.baidu.com"
-        // window.location.href = "http://127.0.0.1:5500/idnexs.html";
-        // }
-
+        },2000)
     </script>
 </body>
 

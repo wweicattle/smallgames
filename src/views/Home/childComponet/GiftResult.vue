@@ -77,6 +77,7 @@ export default {
   },
   created() {},
   mounted() {
+    // 获取当前关卡数
     this.checkPoint = this.$route.params.checkoutPonint;
     this.beginLuck();
   },
@@ -90,7 +91,7 @@ export default {
         };
         goToPrize(url).then((da) => {
           if (da.data.errcode == 0) {
-            if (da.data.data && Object.keys(da.data.data).length >= 0) {
+            if (da.data.data && (typeof da.data.data =="object")) {
               // 成功的奖品
               this.contentLuck = true;
               this.isluckAlready = true;
@@ -143,7 +144,7 @@ export default {
           } else {
             this.$notify({
               type: "warning",
-              message: (da.data.errmsg || "用户鉴权异常!") + "请重试",
+              message: (da.data.errmsg || "用户身份鉴权异常!") + "请重试",
             });
           }
         });

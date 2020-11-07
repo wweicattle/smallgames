@@ -88,50 +88,35 @@ export default {
       ],
     };
   },
-  created() {},
+  created() {
+    //预加载图片
+    this.preloadImg(this.imgArr);
+  },
   mounted() {
-    // 获取 tokens
+    // 获取 token
     let token = window.localStorage.getItem("token");
-    let tokens = window.localStorage.getItem("tokens");
-    if (!tokens || tokens == "undefined") {
-      // 加载图片数据中
+    if (!token || token == "undefined") {
       this.$toast.loading({
         message: "加载数据中..",
         forbidClick: true,
         duration: 0,
       });
-      //预加载图片
-      this.preloadImg(this.imgArr);
-      getToken(token).then((da) => {
+    }
+
+    this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+    // 如果本地没有数据重新进行请求
+    if (!this.userInfo || this.userInfo == "undefined") {
+      getUser().then((da) => {
         if (da.data.errcode == 0) {
-          // 保存用户wxid token 关卡数
-          window.localStorage.setItem("tokens", da.data.data.token);
-          window.localStorage.setItem("wxid", da.data.data.wxid);
-          this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-          // 如果本地没有数据重新进行请求
-          if (!this.userInfo || this.userInfo == "undefined") {
-            getUser().then((da) => {
-              if (da.data.errcode == 0) {
-                window.localStorage.setItem(
-                  "userInfo",
-                  JSON.stringify(da.data.data)
-                );
-                window.localStorage.setItem(
-                  "luckPointsNum",
-                  da.data.data.highestPass
-                );
-              } else {
-                this.$notify({
-                  type: "warning",
-                  message: "获取用户信息失败！请重试",
-                });
-              }
-            });
-          }
+          window.localStorage.setItbuildem("userInfo", JSON.stringify(da.data.data));
+          window.localStorage.setItem(
+            "luckPointsNum",
+            da.data.data.highestPass
+          );
         } else {
           this.$notify({
             type: "warning",
-            message: "获取用户Token失败！请重试",
+            message: "获取用户信息失败！请重试",
           });
         }
       });

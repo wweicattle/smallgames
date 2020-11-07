@@ -17,9 +17,7 @@ export default {
   },
   created() {},
   mounted() {
-    // getUserState().then(da=>{
-    //   console.log(da);
-    // })
+   
     if (!this.$route.params.canLuck) {
       this.$toast.fail("不能抽奖！");
     } else {

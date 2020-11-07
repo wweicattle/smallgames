@@ -34,5 +34,4 @@ html,
   width: 100%;
   background-size: contain;
 }
-
 </style>

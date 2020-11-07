@@ -67,6 +67,18 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
   if (name == "token") {
     let token = window.location.search.slice(1).split("=")[1];
     window.localStorage.setItem("token", token);
+    // 获取 tokens
+    getToken(token).then((da) => {
+      if (da.data.errcode == 0) {
+        // 保存用户wxid, 关卡数
+        window.localStorage.setItem("wxid", da.data.data.wxid);
+        var d = new Date();
+        d.setTime(d.getTime() + 2.8 * 24 * 60 * 60 * 1000);
+        var expires = "expires=" + d.toGMTString();
+        document.cookie =
+          "tokens=" + da.data.data.token + ";expires=" + expires;
+      }
+    });
   } else {
     console.log("token is defeat!");
   }

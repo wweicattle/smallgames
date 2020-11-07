@@ -273,7 +273,7 @@ export default {
         }
       }
       .my-rank {
-        border: 2px solid #f2d3dd;
+        border: 1px dotted #fff;
         border-radius: 14px;
         position: relative;
         margin-bottom: 60px;
