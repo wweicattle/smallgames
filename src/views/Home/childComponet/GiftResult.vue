@@ -67,6 +67,7 @@
 <script>
 import { goToPrize, getUserState } from "network/home";
 export default {
+  name: "giftresult",
   data() {
     return {
       isluckAlready: null,
@@ -76,11 +77,7 @@ export default {
     };
   },
   created() {},
-  mounted() {
-    // 获取当前关卡数
-    this.checkPoint = this.$route.params.checkoutPonint;
-    this.beginLuck();
-  },
+  mounted() {},
 
   methods: {
     getUserLuckResult(num) {
@@ -89,15 +86,14 @@ export default {
           checkPoint: this.checkPoint,
           userid: num,
         };
+        this.contentLuck = true;
         goToPrize(url).then((da) => {
           if (da.data.errcode == 0) {
-            if (da.data.data && (typeof da.data.data =="object")) {
+            if (da.data.data && typeof da.data.data == "object") {
               // 成功的奖品
-              this.contentLuck = true;
               this.isluckAlready = true;
               this.prizeName = da.data.data.prizeName;
             } else {
-              this.contentLuck = true;
               this.isluckAlready = false;
             }
           } else {
@@ -150,6 +146,16 @@ export default {
         });
       }
     },
+  },
+  activated() {
+    // 获取当前关卡数
+    this.checkPoint = this.$route.params.checkoutPonint;
+    if (this.checkPoint) {
+      // 重新抽奖
+      this.beginLuck();
+    } else {
+      this.contentLuck = true;
+    }
   },
 };
 </script>

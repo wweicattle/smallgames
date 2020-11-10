@@ -103,24 +103,7 @@ export default {
       });
     }
 
-    this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
-    // 如果本地没有数据重新进行请求
-    if (!this.userInfo || this.userInfo == "undefined") {
-      getUser().then((da) => {
-        if (da.data.errcode == 0) {
-          window.localStorage.setItbuildem("userInfo", JSON.stringify(da.data.data));
-          window.localStorage.setItem(
-            "luckPointsNum",
-            da.data.data.highestPass
-          );
-        } else {
-          this.$notify({
-            type: "warning",
-            message: "获取用户信息失败！请重试",
-          });
-        }
-      });
-    }
+   
   },
   methods: {
     //实现图片的预加载
@@ -144,7 +127,7 @@ export default {
       console.log(newVal);
       if (newVal == this.imgArr.length) {
         this.$toast.clear();
-        this.$toast.success("数据加载成功！");
+        // this.$toast.success("数据加载成功！");
       }
     },
   },

@@ -16,7 +16,6 @@ let gameId = 15;
 
 // 获取用户token
 export function getToken(token) {
-
   return request.post(`/game/getWXUser?token=${token}`);
 }
 
@@ -75,17 +74,18 @@ export function getToken(token) {
 
 
 // 获取用户信息
-export function getUser() {
-  let wxid = window.localStorage.getItem("wxid")
-  let token;
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      token = val.split("=")[1];
-    }
-  })
+export function getUser(obj) {
+  // let wxid = window.localStorage.getItem("wxid")
+  // let token;
+  // document.cookie.split(";").forEach(val => {
+  //   if (val.split("=")[0] == "tokens") {
+  //     token = val.split("=")[1];
+  //   }
+  // })
+  let token = obj.token;
   let arr = [{
     key: "wxid",
-    value: wxid
+    value: obj.wxid
   }, {
     key: "gameId",
     value: gameId
@@ -100,7 +100,7 @@ export function getUser() {
   return request({
     url: "/game/getUser",
     params: {
-      wxid,
+      wxid: obj.wxid,
       gameId: 15
     },
     method: "post",

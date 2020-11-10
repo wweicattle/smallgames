@@ -1,5 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import {
   getUserInfo
 } from "network/home";
@@ -132,7 +135,6 @@ const router = new VueRouter({
 })
 router.beforeEach((to, from, next) => {
   console.log(to);
-  // console.log(typeof window.localStorage.getItem("token"));
   let tokens;
   // 判断是否tokens过期
   document.cookie.split(";").forEach(val => {
@@ -140,13 +142,16 @@ router.beforeEach((to, from, next) => {
       tokens = val.split("=")[1];
     }
   })
-  if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined"||(typeof tokens=="undefined")) {
+  if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.replace("http://tm.lilanz.com/game/wxOauth?backUrl=http://tm.lilanz.com/qywx/test/small/index.html&configKey=3")
-
+    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=http://tm.lilanz.com/qywx/test/small/index.html&configKey=3";
   } else {
     next();
   }
+})
+
+router.afterEach(() => {
+  NProgress.done()
 })
 // })const routerPush = VueRouter.prototype.push
 const routerPush = VueRouter.prototype.push

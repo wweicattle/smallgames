@@ -92,7 +92,7 @@
         }}</van-divider>
 
         <li class="my-rank">
-          <div class="tag"><van-tag type="danger">我的排名</van-tag></div>
+          <div class="tag"  ><van-tag round type="danger">我的排名</van-tag></div>
           <span class="per-num"> NO.{{ myrank ? myrank[0].rank : "" }} </span>
           <div class="per-avator">
             <!-- <img :src="perAcatar" alt="" /> -->
@@ -211,6 +211,9 @@ export default {
             color: #fff;
             font-size: 16px;
             padding: 14px 0 2px 0;
+            overflow:hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
           .rank-score {
             color: yellow;
@@ -273,11 +276,12 @@ export default {
         }
       }
       .my-rank {
-        border: 1px dotted #fff;
+        border: 1px solid #e2bcc1;
         border-radius: 14px;
         position: relative;
         margin-bottom: 60px;
-        padding-bottom: 10px;
+        padding-bottom: 7px;
+        background: #ff6f62;
         .tag {
           position: absolute;
           top: 0;

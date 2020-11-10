@@ -7,6 +7,10 @@ import "./plugins/vant.js"
 import "./network/axios"
 import 'lib-flexible'
 
+import {
+  getToken,
+  getUser
+} from "network/home";
 
 
 // 进行判断屏幕竖直操作
@@ -59,7 +63,13 @@ import 'lib-flexible'
 })();
 
 
-
+let tokens;
+// 判断是否tokens过期
+document.cookie.split(";").forEach(val => {
+  if (val.split("=")[0] == "tokens") {
+    tokens = val.split("=")[1];
+  }
+})
 
 // 没有token则进行，保存本地
 if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
@@ -77,36 +87,58 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
         var expires = "expires=" + d.toGMTString();
         document.cookie =
           "tokens=" + da.data.data.token + ";expires=" + expires;
+        let obj = {
+          wxid: da.data.data.wxid,
+          token: da.data.data.token
+        }
+        getUser(obj).then((da) => {
+          if (da.data.errcode == 0) {
+            window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
+            window.localStorage.setItem(
+              "luckPointsNum",
+              da.data.data.highestPass
+            );
+
+            // 判断企业用户
+            let userStates = window.localStorage.getItem("userStates");
+            if (userStates == "undefined" || (!userStates)) {
+              let str = window.encodeURI(
+                "http://tm.lilanz.com/qywx/test/small/index.html"
+              );
+              window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+            } 
+            // else {
+            //   // 进行重新 
+            //   window.location.href = "http://tm.lilanz.com/qywx/test/small/index.html#/index"
+            // }
+
+          } else {}
+        });
       }
     });
-  } else {
-    console.log("token is defeat!");
-  }
+
+  } else {}
 }
+
+
 
 
 // 判断企业用户
 let userStates = window.localStorage.getItem("userStates");
-if ((userStates == "undefined" || !userStates)) {
-  let str = window.encodeURI(
-    "http://tm.lilanz.com/qywx/test/small/index.html"
-  );
-  window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+if (userStates == "undefined" || (!userStates)) {
   let code = window.location.search.slice(1).split("&")[0].split("=")[0];
-  let userStates = window.location.search
+  let userState = window.location.search
     .slice(1)
     .split("&")[0]
     .split("=")[1];
   if (code == "code") {
-    window.localStorage.setItem("userStates", userStates);
+    window.localStorage.setItem("userStates", userState);
+    // 进行重新 
+    window.location.href = "http://tm.lilanz.com/qywx/test/small/index.html#/index"
+  } else {
+
   }
-  // // 重新跳转
-  // window.location.replace(
-  //   "http://tm.lilanz.com/qywx/test/small/index.html"
-  // );
 }
-
-
 
 
 

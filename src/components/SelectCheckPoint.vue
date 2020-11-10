@@ -78,12 +78,12 @@ export default {
   created() {},
   mounted() {
     // 获取关卡数
-    let lucknum = window.localStorage.getItem("luckPointsNum");
+    let lucknum = Number(window.localStorage.getItem("luckPointsNum"));
     if (lucknum == "undefined" || !lucknum) {
       this.lucklevel = 1;
     } else {
-      this.highestPass = window.localStorage.getItem("luckPointsNum");
-      this.lucklevel = Number(this.highestPass);
+      this.highestPass = Number(lucknum)==7?6:Number(lucknum);
+      this.lucklevel = this.highestPass;
     }
   },
   methods: {

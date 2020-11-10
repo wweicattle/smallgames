@@ -34,7 +34,6 @@ export default {
     beginLuck() {},
     showLuckAfter() {
       this.$router.push({ name: "giftresult", params: {checkoutPonint:this.$route.params.checkoutPonint} });
-
      
     },
   },

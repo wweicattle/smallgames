@@ -9,7 +9,9 @@
         <div class="score-num">
           你的成绩为： <span class="detail-num">{{ loadUser.curScore }}分</span>
         </div>
-        <div class="success-defeat">成功击败了{{ defeatsPercen}}.00%的玩家</div>
+        <div class="success-defeat">
+          成功击败了{{ defeatsPercen }}.00%的玩家
+        </div>
         <div class="score-content">
           <ul>
             <li>
@@ -35,8 +37,13 @@
           @click="jumpMysizeBtn"
           >排行榜</van-button
         >
-        <van-button round type="info" class="return-home" @click="nextPointBtn"
-          >下一关</van-button
+        <van-button
+          round
+          type="info"
+          class="return-home"
+          :class="{ final: loadUser.checkPoint == 6 }"
+          @click="nextPointBtn"
+          >{{ loadUser.checkPoint == 6 ? "最后一关" : "下一关" }}</van-button
         >
       </div>
     </van-popup>
@@ -57,6 +64,7 @@ export default {
       maxScore: null,
       bestRank: null,
       defeatsPercen: null,
+      highestPass: null,
     };
   },
   props: {
@@ -69,17 +77,14 @@ export default {
   },
   created() {
     // 关卡加1，游戏 挑战成功！
-    this.highestPass = window.localStorage.getItem("luckPointsNum");
+    this.highestPass = Number(window.localStorage.getItem("luckPointsNum"));
     // 当前关数
     let nowIndex = this.loadUser.checkPoint;
     if (this.highestPass == nowIndex) {
       if (this.highestPass == 6) {
         return;
       } else {
-        window.localStorage.setItem(
-          "luckPointsNum",
-          Number(this.highestPass) + 1
-        );
+        window.localStorage.setItem("luckPointsNum", this.highestPass + 1);
       }
     }
   },
@@ -87,7 +92,7 @@ export default {
     this.getGameResult(this.loadUser);
   },
   methods: {
-    // 下一关 
+    // 下一关
     nextPointBtn() {
       switch (this.loadUser.checkPoint) {
         case 0:
@@ -109,7 +114,7 @@ export default {
           this.$router.push("/fivepage");
           break;
         default:
-         break;
+          break;
       }
     },
     // 游戏关卡结束
@@ -119,7 +124,7 @@ export default {
         if (da.data.errcode == 0) {
           this.bestRank = da.data.data.bestRank;
           this.maxScore = da.data.data.maxScore;
-          this.defeatsPercen = (da.data.data.winPercent*100).toFixed(0)||0;
+          this.defeatsPercen = (da.data.data.winPercent * 100).toFixed(0) || 0;
         } else {
           this.$notify({
             type: "warning",
@@ -257,8 +262,11 @@ export default {
     }
     .return-home {
       margin-left: 20px;
-
       background: rgb(88, 202, 235);
+    }
+    .final {
+      color: #4c4747;
+      opacity: .6;
     }
     //   bottom: 40px;
   }

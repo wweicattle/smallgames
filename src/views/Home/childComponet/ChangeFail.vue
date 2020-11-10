@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getGameResult, getToken } from "network/home";
+import { getGameResult } from "network/home";
 
 export default {
   props: {
