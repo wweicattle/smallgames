@@ -12,7 +12,8 @@ import {
   Icon ,
   Divider ,
   Lazyload,
-  Image
+  Image,
+  Loading 
 
 } from 'vant';
 Vue.use(Button);
@@ -27,6 +28,7 @@ Vue.use(NoticeBar);
 Vue.use(Icon);
 Vue.use(Divider);
 Vue.use(Image);
+Vue.use(Loading);
 
 // 注册时可以配置额外的选项
 Vue.use(Lazyload, {

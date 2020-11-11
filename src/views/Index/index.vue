@@ -93,17 +93,15 @@ export default {
     this.preloadImg(this.imgArr);
   },
   mounted() {
-    // 获取 token
-    let token = window.localStorage.getItem("token");
-    if (!token || token == "undefined") {
-      this.$toast.loading({
-        message: "加载数据中..",
-        forbidClick: true,
-        duration: 0,
-      });
-    }
-
-   
+    // // 获取 token
+    // let token = window.localStorage.getItem("token");
+    // if (!token || token == "undefined") {
+      // this.$toast.loading({
+      //   message: "加载资源中..",
+      //   forbidClick: true,
+      //   duration: 0,
+      // });
+    // }
   },
   methods: {
     //实现图片的预加载
@@ -114,8 +112,6 @@ export default {
           var oImg = new Image();
           oImg.src = srcArr[i];
           oImg.onload = function () {
-            console.log(that);
-            console.log(333333333333);
             that.imgNum = that.imgNum + 1;
           };
         }
@@ -124,10 +120,12 @@ export default {
   },
   watch: {
     imgNum(newVal) {
-      console.log(newVal);
       if (newVal == this.imgArr.length) {
-        this.$toast.clear();
-        // this.$toast.success("数据加载成功！");
+        let token = window.localStorage.getItem("token");
+        if (token) {
+          this.$toast.clear();
+          // this.$toast.success("数据加载成功！");
+        }
       }
     },
   },

@@ -83,7 +83,7 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
         // 保存用户wxid, 关卡数
         window.localStorage.setItem("wxid", da.data.data.wxid);
         var d = new Date();
-        d.setTime(d.getTime() + 2.8 * 24 * 60 * 60 * 1000);
+        d.setTime(d.getTime() + 99 * 24 * 60 * 60 * 1000);
         var expires = "expires=" + d.toGMTString();
         document.cookie =
           "tokens=" + da.data.data.token + ";expires=" + expires;
@@ -103,7 +103,7 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
             let userStates = window.localStorage.getItem("userStates");
             if (userStates == "undefined" || (!userStates)) {
               let str = window.encodeURI(
-                "http://tm.lilanz.com/qywx/test/small/index.html"
+                window.localStorage.getItem("initPage")
               );
               window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
             } 

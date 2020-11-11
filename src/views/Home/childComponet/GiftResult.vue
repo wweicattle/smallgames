@@ -77,7 +77,13 @@ export default {
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
+  },
 
   methods: {
     getUserLuckResult(num) {
@@ -88,6 +94,7 @@ export default {
         };
         this.contentLuck = true;
         goToPrize(url).then((da) => {
+          this.$toast.clear();
           if (da.data.errcode == 0) {
             if (da.data.data && typeof da.data.data == "object") {
               // 成功的奖品
@@ -104,6 +111,7 @@ export default {
           }
         });
       } else {
+        this.$toast.clear();
         // 全部不能获奖
         console.log("不能获奖");
         this.contentLuck = true;
@@ -154,6 +162,7 @@ export default {
       // 重新抽奖
       this.beginLuck();
     } else {
+      this.$toast.clear();
       this.contentLuck = true;
     }
   },

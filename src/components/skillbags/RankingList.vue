@@ -92,7 +92,7 @@
         }}</van-divider>
 
         <li class="my-rank">
-          <div class="tag"  ><van-tag round type="danger">我的排名</van-tag></div>
+          <div class="tag"><van-tag round type="danger">我的排名</van-tag></div>
           <span class="per-num"> NO.{{ myrank ? myrank[0].rank : "" }} </span>
           <div class="per-avator">
             <!-- <img :src="perAcatar" alt="" /> -->
@@ -119,11 +119,16 @@ export default {
   },
   created() {},
   mounted() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
     getRankList().then((da) => {
+      this.$toast.clear();
       console.log(da);
       if (da.data.errcode == 0) {
         let data = da.data.data;
-
         this.pernum = data.allRank.length;
         // 如果人数小于10人显示当前人数
         if (this.pernum < 100) {
@@ -211,7 +216,7 @@ export default {
             color: #fff;
             font-size: 16px;
             padding: 14px 0 2px 0;
-            overflow:hidden;
+            overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
           }
@@ -219,6 +224,9 @@ export default {
             color: yellow;
             font-size: 19px;
             font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }

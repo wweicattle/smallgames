@@ -76,6 +76,11 @@ export default {
     },
   },
   created() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
     // 关卡加1，游戏 挑战成功！
     this.highestPass = Number(window.localStorage.getItem("luckPointsNum"));
     // 当前关数
@@ -120,12 +125,13 @@ export default {
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
-        console.log(da);
         if (da.data.errcode == 0) {
+          this.$toast.clear();
           this.bestRank = da.data.data.bestRank;
           this.maxScore = da.data.data.maxScore;
           this.defeatsPercen = (da.data.data.winPercent * 100).toFixed(0) || 0;
         } else {
+          this.$toast.clear();
           this.$notify({
             type: "warning",
             message: "上传结果失败！请刷新重试",
@@ -266,7 +272,7 @@ export default {
     }
     .final {
       color: #4c4747;
-      opacity: .6;
+      opacity: 0.6;
     }
     //   bottom: 40px;
   }

@@ -76,18 +76,25 @@ export default {
   },
   created() {},
   mounted() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
+
     this.getGameResult(this.loadUser);
   },
   methods: {
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
-        console.log(da);
         if (da.data.errcode == 0) {
+          this.$toast.clear();
           this.bestRank = da.data.data.bestRank;
           this.maxScore = da.data.data.maxScore;
           this.defeatsPercen = da.data.data.defeatsPercen;
         } else {
+          this.$toast.clear();
           this.$notify({
             type: "warning",
             message: "上传结果失败！请刷新重试",

@@ -8,6 +8,7 @@
     <img
       src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/confirm.png"
       alt=""
+      @load="imgload"
     />
   </div>
 </template>
@@ -19,9 +20,17 @@ export default {
   },
   created() {},
   mounted() {
-    
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
   },
-  methods: {},
+  methods: {
+    imgload() {
+      this.$toast.clear();
+    },
+  },
 };
 </script>
 
