@@ -15,13 +15,18 @@
           <span>中奖礼品 </span>
         </div>
         <ul class="luck-per">
-          <template v-for="(i, index) in luckpersonArr">
-            <li :key="index">
-              <span class="nick-name">{{ i.nickName }}</span>
-              <span class="tel">{{ i.tel }}</span>
-              <span class="prize-name">{{ i.prizeName }}</span>
-            </li>
-          </template>
+          <div v-if="isshowPer">
+            <template v-for="(i, index) in luckpersonArr">
+              <li :key="index">
+                <span class="nick-name">{{ i.nickName }}</span>
+                <span class="tel">{{ i.tel }}</span>
+                <span class="prize-name">{{ i.prizeName }}</span>
+              </li>
+            </template>
+          </div>
+          <div v-else>
+            <van-empty image="error" description="无中奖用户！" />
+          </div>
         </ul>
       </div>
     </div>
@@ -34,7 +39,8 @@ import { getPrizeList } from "network/home";
 export default {
   data() {
     return {
-      luckpersonArr: null,
+      luckpersonArr: [],
+      isshowPer: null,
     };
   },
   created() {},
@@ -42,8 +48,8 @@ export default {
     getPrizeList().then((da) => {
       if (da.data.errcode == 0) {
         let data = da.data.data;
-        console.log(data);
         this.luckpersonArr = data;
+        this.isshowPer = data.length >0 ? true : false;
       } else {
         this.$notify({
           type: "warning",

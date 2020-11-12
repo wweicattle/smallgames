@@ -10,7 +10,6 @@ export default {
     return {};
   },
   mounted() {
-    console.log(2222);
   },
   components: {},
   methods: {},

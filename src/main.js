@@ -77,6 +77,7 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
   if (name == "token") {
     let token = window.location.search.slice(1).split("=")[1];
     window.localStorage.setItem("token", token);
+    window.localStorage.setItem("timeOver", Date.now());
     // 获取 tokens
     getToken(token).then((da) => {
       if (da.data.errcode == 0) {
@@ -93,25 +94,23 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
         }
         getUser(obj).then((da) => {
           if (da.data.errcode == 0) {
-            window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
-            window.localStorage.setItem(
-              "luckPointsNum",
-              da.data.data.highestPass
-            );
-
-            // 判断企业用户
-            let userStates = window.localStorage.getItem("userStates");
-            if (userStates == "undefined" || (!userStates)) {
-              let str = window.encodeURI(
-                window.localStorage.getItem("initPage")
+            new Promise(val => {
+              da.data.data.headImg=da.data.data.headImg!="undefined"?da.data.data.headImg:'http://oos-fj2.ctyunapi.cn/lilanz/mall_public/img/smthumb.jpg';
+              window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
+              window.localStorage.setItem(
+                "luckPointsNum",
+                da.data.data.highestPass
               );
-              window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
-            } 
-            // else {
-            //   // 进行重新 
-            //   window.location.href = "http://tm.lilanz.com/qywx/test/small/index.html#/index"
-            // }
-
+              val(1)
+            }).then(da => {
+              if (da == 1) {
+                // 判断企业用户，进行鉴权
+                let str = window.encodeURI(
+                  window.localStorage.getItem("initPage")
+                );
+                window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+              }
+            })
           } else {}
         });
       }
@@ -121,11 +120,6 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
 }
 
 
-
-
-// 判断企业用户
-let userStates = window.localStorage.getItem("userStates");
-if (userStates == "undefined" || (!userStates)) {
   let code = window.location.search.slice(1).split("&")[0].split("=")[0];
   let userState = window.location.search
     .slice(1)
@@ -134,15 +128,10 @@ if (userStates == "undefined" || (!userStates)) {
   if (code == "code") {
     window.localStorage.setItem("userStates", userState);
     // 进行重新 
-    window.location.href = "http://tm.lilanz.com/qywx/test/small/index.html#/index"
+    window.location.href = window.localStorage.getItem("initPage");
   } else {
 
   }
-}
-
-
-
-
 
 
 import myTouch from './myTouch.js'

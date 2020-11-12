@@ -102,6 +102,7 @@
           <span class="per-score"> {{ myrank ? myrank[0].score : "" }}分 </span>
         </li>
       </ul>
+      
     </div>
   </div>
 </template>
@@ -284,7 +285,7 @@ export default {
         }
       }
       .my-rank {
-        border: 1px solid #e2bcc1;
+        border: 1px solid #d86d7b;
         border-radius: 14px;
         position: relative;
         margin-bottom: 60px;

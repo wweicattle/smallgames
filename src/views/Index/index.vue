@@ -2,9 +2,17 @@
   <div class="home-contain">
     <div class="com-icon">
       <img
+        @click="watchUserInfo"
         src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/lilanz.png"
         alt=""
       />
+      <van-popup
+        v-model="showUserInfo"
+        position="top"
+        :style="{ height: '30%' }"
+      >
+        {{ userInfo }}
+      </van-popup>
     </div>
     <div class="header">
       <img
@@ -23,18 +31,11 @@
         src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/begingame.png"
         alt=""
       />
-      <div class="begin-icon" @click="$router.push('/checkoutpoint')"></div>
-      <div class="active" @click="$router.push('active')"></div>
-      <div class="mysize" @click="$router.push('mysize')"></div>
-      <div class="ranklist" @click="$router.push('ranklist')"></div>
-      <div class="luck" @click="$router.push('luckpeople')"></div>
-
-      <!-- <van-button type="primary" @click="$router.push('/checkoutpoint')"
-        >开始游戏
-      </van-button> -->
-      <!-- <van-button type="primary" @click="$router.push('/skillbag')"
-        >锦囊</van-button
-      > -->
+      <div class="begin-icon" @click="beginGameBtn"></div>
+      <div class="active" @click="clickBack('active')"></div>
+      <div class="mysize" @click="clickBack('mysize')"></div>
+      <div class="ranklist" @click="clickBack('ranklist')"></div>
+      <div class="luck" @click="clickBack('luckpeople')"></div>
     </div>
   </div>
 </template>
@@ -45,7 +46,10 @@ import { getToken, getUserState, getUser } from "network/home";
 export default {
   data() {
     return {
+      useInfo: JSON.parse(window.localStorage.getItem("userInfo")),
       imgNum: 0,
+      showUserInfo: false,
+      userInfo: window.localStorage.getItem("userInfo"),
       imgArr: [
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/footerImg.png",
@@ -89,6 +93,13 @@ export default {
     };
   },
   created() {
+    // 判断过期时间是否重新
+    if (
+      Date.now() - Number(window.localStorage.getItem("timeOver")) >=
+      2.5 * 24 * 3600 * 1000
+    ) {
+      window.localStorage.removeItem("token");
+    }
     //预加载图片
     this.preloadImg(this.imgArr);
   },
@@ -96,14 +107,59 @@ export default {
     // // 获取 token
     // let token = window.localStorage.getItem("token");
     // if (!token || token == "undefined") {
-      // this.$toast.loading({
-      //   message: "加载资源中..",
-      //   forbidClick: true,
-      //   duration: 0,
-      // });
+    // this.$toast.loading({
+    //   message: "加载资源中..",
+    //   forbidClick: true,
+    //   duration: 0,
+    // });
     // }
   },
   methods: {
+    clickBack(url){
+       if (!window.localStorage.getItem("token") && this.useInfo) {
+        this.$toast.loading({
+          message: "身份过期，重新登录中",
+          forbidClick: true,
+          duration: 1500,
+        });
+        setTimeout(()=>{
+          window.location.reload();
+        },1000)
+      } else {
+        this.$router.push(url);
+      }
+    },
+    
+    watchUserInfo() {
+      this.showUserInfo = true;
+    },
+    beginGameBtn() {
+      let useInfo = JSON.parse(window.localStorage.getItem("userInfo"));
+      let userStates = window.localStorage.getItem("userStates");
+      if (!useInfo || !userStates) {
+        this.$dialog
+          .confirm({
+            title: "警告",
+            message: "获取用户信息错误，重新获取？",
+          })
+          .then(() => {
+            window.localStorage.removeItem("token");
+            window.location.reload();
+          })
+          .catch(() => {
+            // on cancel
+          });
+      } else {
+        this.$router.push("/checkoutpoint");
+      }
+      if (!window.localStorage.getItem("token") && useInfo&&userStates) {
+        this.$toast.loading({
+          message: "身份过期，重新登录中",
+          forbidClick: true,
+          duration: 1500,
+        });
+      }
+    },
     //实现图片的预加载
     preloadImg(srcArr) {
       let that = this;

@@ -16,13 +16,13 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
-      <div class="notice-bar">
+      <!-- <div class="notice-bar">
         <van-notice-bar
           left-icon="volume-o"
           text="该版本为测试版本，请勿对外开放！"
           scrollable
         />
-      </div>
+      </div> -->
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img :src="peractar" alt="" />
@@ -528,16 +528,16 @@ export default {
   .test {
     // border: 1px solid #eee;
     height: 180px;
-    padding-top: 100px;
+    padding-top: 80px;
     position: relative;
-    .notice-bar {
-      width: 100%;
-      top: 0;
-      left: 0;
-      position: absolute;
-    }
+    // .notice-bar {
+    //   width: 100%;
+    //   top: 0;
+    //   left: 0;
+    //   position: absolute;
+    // }
     .actar-contain {
-      top: 43px;
+      top: 23px;
       left: 10px;
       position: absolute;
       img {
@@ -557,7 +557,7 @@ export default {
     }
     .music-content {
       // top: 20px;
-      top: 50px;
+      top: 25px;
       right: 20px;
       width: 40px;
       height: 40px;
@@ -615,7 +615,7 @@ export default {
       }
     }
     .line {
-      top: 90px;
+      top: 75px;
       height: 100px;
       position: absolute;
       left: 0;

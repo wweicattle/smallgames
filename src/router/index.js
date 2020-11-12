@@ -134,21 +134,13 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  console.log(to);
-  let tokens;
-  // 判断是否tokens过期
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      tokens = val.split("=")[1];
-    }
-  })
+  // 判断过期 
   if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
     // 保存主页地址
-    let src=window.location.origin+window.location.pathname;
-    window.localStorage.setItem("initPage",src)
-    console.log("http://tm.lilanz.com/game/wxOauth?backUrl="+src+"&configKey=3");
+    let src = window.location.origin + window.location.pathname;
+    window.localStorage.setItem("initPage", src)
     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl="+src+"&configKey=3";
+    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=" + src + "&configKey=3";
   } else {
     next();
   }
