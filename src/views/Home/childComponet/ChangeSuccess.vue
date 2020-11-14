@@ -25,7 +25,13 @@
           </ul>
         </div>
         <div class="luck-draw">挑战成功即可解锁下一关</div>
-        <van-button round type="info" size="large" @click="goLuckDrawBtn">
+        <van-button
+          round
+          type="info"
+          size="large"
+          @click="goLuckDrawBtn"
+          class="go-luck"
+        >
           赶紧去抽奖
         </van-button>
       </div>
@@ -125,6 +131,7 @@ export default {
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
+        console.log(da);
         if (da.data.errcode == 0) {
           this.$toast.clear();
           this.bestRank = da.data.data.bestRank;
@@ -136,6 +143,20 @@ export default {
             type: "warning",
             message: "上传结果失败！请刷新重试",
           });
+          setTimeout(() => {
+            this.$dialog
+              .confirm({
+                title: "警告",
+                message: "获取信息错误，重新加载？",
+              })
+              .then(() => {
+                window.localStorage.removeItem("token");
+                window.location.reload();
+              })
+              .catch(() => {
+                // on cancel
+              });
+          }, 1500);
         }
       });
     },
@@ -243,6 +264,27 @@ export default {
       outline: none;
       letter-spacing: 2px;
       font-size: 17px;
+    }
+    .go-luck {
+      animation: throlle 2s ease 0s 1 normal;
+    }
+    @keyframes throlle {
+      0% {
+        scale: (1.1);
+      }
+      25% {
+        scale: (1.15);
+      }
+
+      50% {
+        scale: (1.2);
+      }
+      75% {
+        scale: (1.15);
+      }
+      100% {
+        scale: (1.1);
+      }
     }
   }
   .button-content {

@@ -7,7 +7,7 @@
         <li>
           <div class="actar">
             <img
-              :src="headerrank ? headerrank[1].headImg : ''"
+              :src="headerrank[1] ? headerrank[1].headImg : ''"
               alt=""
               class="actar-header"
             />
@@ -19,10 +19,14 @@
           </div>
           <div class="name-num">
             <span class="rank-name">
-              {{ headerrank ? headerrank[1].nickName : "" }}
+              {{
+                headerrank[1]
+                  ? headerrank[1].nickName.slice(0, 1).padEnd(5, ".")
+                  : ""
+              }}
             </span>
             <span class="rank-score">
-              {{ headerrank ? headerrank[1].totalScore : "" }}分
+              {{ headerrank[1] ? headerrank[1].totalScore : "" }}分
             </span>
           </div>
         </li>
@@ -30,7 +34,7 @@
           <div class="actar number-one">
             <img
               class="actar-header"
-              :src="headerrank ? headerrank[0].headImg : ''"
+              :src="headerrank[0] ? headerrank[0].headImg : ''"
               alt=""
             />
             <img
@@ -41,10 +45,14 @@
           </div>
           <div class="name-num">
             <span class="rank-name">
-              {{ headerrank ? headerrank[0].nickName : "" }}
+              {{
+                headerrank[0]
+                  ? headerrank[0].nickName.slice(0, 1).padEnd(5, ".")
+                  : ""
+              }}
             </span>
             <span class="rank-score">
-              {{ headerrank ? headerrank[0].totalScore : "" }}分
+              {{ headerrank[0] ? headerrank[0].totalScore : "" }}分
             </span>
           </div>
         </li>
@@ -53,7 +61,7 @@
           <div class="actar">
             <img
               class="actar-header"
-              :src="headerrank ? headerrank[2].headImg : ''"
+              :src="headerrank[2] ? headerrank[2].headImg : ''"
               alt=""
             />
             <img
@@ -64,10 +72,14 @@
           </div>
           <div class="name-num">
             <span class="rank-name">
-              {{ headerrank ? headerrank[2].nickName : "" }}
+              {{
+                headerrank[2]
+                  ? headerrank[2].nickName.slice(0, 1).padEnd(5, ".")
+                  : ""
+              }}
             </span>
             <span class="rank-score">
-              {{ headerrank ? headerrank[2].totalScore : "" }}分
+              {{ headerrank[2] ? headerrank[2].totalScore : "" }}分
             </span>
           </div>
         </li>
@@ -80,7 +92,6 @@
           <li :key="index">
             <span class="per-num"> NO.{{ index + 4 }}</span>
             <div class="per-avator">
-              <!-- <img :src="allrank[index].headImg" alt="" /> -->
               <van-image lazy-load :src="allrank[index].headImg" />
               <span class="per-name">{{ allrank[index].nickName }}</span>
             </div>
@@ -93,16 +104,19 @@
 
         <li class="my-rank">
           <div class="tag"><van-tag round type="danger">我的排名</van-tag></div>
-          <span class="per-num"> NO.{{ myrank ? myrank[0].rank : "" }} </span>
+          <span class="per-num">
+            NO.{{ myrank[0] ? myrank[0].rank : "" }}
+          </span>
           <div class="per-avator">
             <!-- <img :src="perAcatar" alt="" /> -->
             <van-image lazy-load :src="perAcatar" />
             <span class="per-name">{{ perName }}</span>
           </div>
-          <span class="per-score"> {{ myrank ? myrank[0].score : "" }}分 </span>
+          <span class="per-score">
+            {{ myrank[0] ? myrank[0].score : "" }}分
+          </span>
         </li>
       </ul>
-      
     </div>
   </div>
 </template>
@@ -112,9 +126,9 @@ import { getRankList } from "network/home";
 export default {
   data() {
     return {
-      myrank: null,
-      allrank: null,
-      headerrank: null,
+      myrank: [],
+      allrank: [],
+      headerrank: [],
       pernums: 100,
     };
   },
@@ -127,7 +141,7 @@ export default {
     });
     getRankList().then((da) => {
       this.$toast.clear();
-      console.log(da);
+
       if (da.data.errcode == 0) {
         let data = da.data.data;
         this.pernum = data.allRank.length;
@@ -143,6 +157,20 @@ export default {
           type: "warning",
           message: "获取排行榜失败！请重试",
         });
+        setTimeout(() => {
+          this.$dialog
+            .confirm({
+              title: "警告",
+              message: "获取信息错误，重新加载？",
+            })
+            .then(() => {
+              window.localStorage.removeItem("token");
+              window.location.reload();
+            })
+            .catch(() => {
+              // on cancel
+            });
+        }, 1500);
       }
     });
   },
@@ -270,7 +298,7 @@ export default {
             }
           }
           .per-name {
-            width: 60px;
+            width: 40px;
             display: inline-block;
             white-space: nowrap;
             text-overflow: ellipsis;

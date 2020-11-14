@@ -126,12 +126,13 @@ export function getUserState(code) {
 // 游戏结束进行上传分数 
 export function getGameResult(params) {
   let wxid = window.localStorage.getItem("wxid")
-  let token;
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      token = val.split("=")[1];
-    }
-  })
+  let token=window.localStorage.getItem("newToken");
+  // document.cookie.split(";").forEach(val => {
+  //   if (val.split("=")[0] == "tokens") {
+  //     token = val.split("=")[1];
+  //   }
+  // })
+  // console.log("token------------",token);
   let arr = [{
       key: "wxid",
       value: wxid
@@ -179,13 +180,7 @@ export function getGameResult(params) {
 
 // 开始抽奖 
 export function goToPrize(params) {
-  let token;
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      token = val.split("=")[1];
-    }
-
-  })
+  let token=window.localStorage.getItem("newToken");
   let wxid = window.localStorage.getItem("wxid")
   let arr = [{
       key: "wxid",
@@ -229,13 +224,10 @@ export function goToPrize(params) {
 
 // 排行榜获取
 export function getRankList() {
-  let token;
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      token = val.split("=")[1];
-    }
+ 
 
-  })
+  let token=window.localStorage.getItem("newToken");
+
   let wxid = window.localStorage.getItem("wxid")
   let arr = [{
     key: "wxId",
@@ -272,13 +264,8 @@ export function getRankList() {
 
 // 获取中奖名单
 export function getPrizeList() {
-  let token;
-  document.cookie.split(";").forEach(val => {
-    if (val.split("=")[0] == "tokens") {
-      token = val.split("=")[1];
-    }
+  let token=window.localStorage.getItem("newToken");
 
-  })
   let arr = [{
     key: "gameId",
     value: gameId

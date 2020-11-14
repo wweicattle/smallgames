@@ -74,14 +74,14 @@ export default {
       bestRank: null,
     };
   },
-  created() {},
-  mounted() {
+  created() {
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
       duration: 0,
     });
-
+  },
+  mounted() {
     this.getGameResult(this.loadUser);
   },
   methods: {
@@ -99,6 +99,20 @@ export default {
             type: "warning",
             message: "上传结果失败！请刷新重试",
           });
+          setTimeout(() => {
+            this.$dialog
+              .confirm({
+                title: "警告",
+                message: "获取信息错误，重新加载？",
+              })
+              .then(() => {
+                window.localStorage.removeItem("token");
+                window.location.reload();
+              })
+              .catch(() => {
+                // on cancel
+              });
+          }, 1500);
         }
       });
     },

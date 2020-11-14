@@ -17,7 +17,27 @@
         iusto officiis reiciendis temporibus nihil necessitatibus quo doloribus? Nemo in molestias recusandae voluptatum
         exercitationem ipsam, eaque, odit officiis totam fugit consequuntur expedita aliquid impedit?</div>
     <script>
-        let  d=Number(window.localStorage.getItem("userStatesd"))
+        let sum = 0;
+        setInterval(() => {
+            console.log(++sum);
+            S();
+
+        }, 1000)
+        window.localStorage.setItem("time", Date.now())
+
+        function S() {
+            var t = window.localStorage.getItem("time");
+            if (Date.now() - t > (30*60 * 1000)) {
+                console.log(54545);
+            } else {
+                console.log(24000000000000)
+            }
+
+        }
+
+
+
+        let d = Number(window.localStorage.getItem("userStatesd"))
         console.log(d);
         Promise.resolve(1000).then(da => {
             div.style.color = "yellow"
@@ -30,7 +50,7 @@
         setTimeout(() => {
             div.style.color = "#ccc"
 
-        },2000)
+        }, 2000)
     </script>
 </body>
 

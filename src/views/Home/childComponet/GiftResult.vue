@@ -5,11 +5,12 @@
         <img
           src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftsuccess.png"
           alt=""
+          @load="imgload"
         />
         <div class="button-content">
           <div class="luck-gift">{{ prizeName }}</div>
           <div class="luck-detail">
-            <van-button round type="info" @click="$router.push('/mysize')">
+            <van-button round type="info" @click="watchluckBtn">
               查看我的奖品
             </van-button>
           </div>
@@ -35,6 +36,7 @@
         <img
           src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/gift/giftFail.png"
           alt=""
+          @load="imgload"
         />
         <div class="button-content">
           <div class="luck-details">
@@ -73,50 +75,82 @@ export default {
       isluckAlready: null,
       checkPoint: null,
       prizeName: null,
-      contentLuck: null,
+      contentLuck: false,
     };
   },
-  created() {},
-  mounted() {
+  created() {
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
       duration: 0,
     });
   },
+  mounted() {},
 
   methods: {
+    // 查看奖品
+    watchluckBtn() {
+      window.location.href = "http://flh.lilanz.com/myprize/index.html";
+    },
+    imgload() {
+      // this.$toast.clear();
+    },
     getUserLuckResult(num) {
-      if (num == 0) {
-        let url = {
-          checkPoint: this.checkPoint,
-          userid: num,
-        };
-        this.contentLuck = true;
-        goToPrize(url).then((da) => {
-          this.$toast.clear();
+      let url = {
+        checkPoint: this.checkPoint,
+        userid: num,
+      };
+      // 开始抽奖
+      goToPrize(url)
+        .then((da) => {
           if (da.data.errcode == 0) {
+            this.$toast.clear();
             if (da.data.data && typeof da.data.data == "object") {
+              this.contentLuck = true;
               // 成功的奖品
               this.isluckAlready = true;
               this.prizeName = da.data.data.prizeName;
+              window.localStorage.setItem(
+                "cluckState",
+                JSON.stringify({ state: 1, mes: da.data.data.prizeName })
+              );
             } else {
+              this.contentLuck = true;
               this.isluckAlready = false;
+              window.localStorage.setItem(
+                "cluckState",
+                JSON.stringify({ state: 2 })
+              );
             }
           } else {
+            this.$toast.clear();
+            this.contentLuck = true;
             this.$notify({
               type: "warning",
               message: da.data.errmsg || "抽奖失败!请重试",
             });
+            setTimeout(() => {
+              this.$dialog
+                .confirm({
+                  title: "警告",
+                  message: "获取信息错误，重新加载？",
+                })
+                .then(() => {
+                  window.localStorage.removeItem("token");
+                  window.location.reload();
+                })
+                .catch(() => {
+                  // on cancel
+                });
+            }, 1500);
           }
+        })
+        .catch((da) => {
+          this.$notify({
+            type: "warning",
+            message: "错误信息" + da,
+          });
         });
-      } else {
-        this.$toast.clear();
-        // 全部不能获奖
-        console.log("不能获奖");
-        this.contentLuck = true;
-        this.isluckAlready = false;
-      }
     },
     showLuck(num) {
       switch (Number(num)) {
@@ -125,9 +159,6 @@ export default {
           break;
         case 0:
           this.getUserLuckResult(0);
-          break;
-        case "undefined":
-          this.getUserLuckResult(1);
           break;
         default:
           this.getUserLuckResult(1);
@@ -156,14 +187,24 @@ export default {
     },
   },
   activated() {
+    // 进入该页面隐藏
+    this.contentLuck = false;
     // 获取当前关卡数
     this.checkPoint = this.$route.params.checkoutPonint;
     if (this.checkPoint) {
-      // 重新抽奖
+      // 开始抽奖
       this.beginLuck();
     } else {
       this.$toast.clear();
-      this.contentLuck = true;
+      let obj = JSON.parse(window.localStorage.getItem("cluckState"));
+      if (obj.state == 1) {
+        this.prizeName = obj.mes;
+        this.contentLuck = true;
+        this.isluckAlready = true;
+      } else {
+        this.contentLuck = true;
+        this.isluckAlready = false;
+      }
     }
   },
 };

@@ -92,7 +92,7 @@ const level = [{
   },
   {
     5: {
-      scoreNums: 100,
+      scoreNums: 50,
       stepsScore: 50,
       timeSet: "0.5s",
       photos: {

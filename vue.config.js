@@ -15,15 +15,15 @@ module.exports = {
   },
   devServer: {
     port:3333,
-    proxy: {
-      '/api': {
-        target: 'http://tm.lilanz.com',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': ''
-        }
-      },
-    }
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://tm.lilanz.com',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/api': ''
+    //     }
+    //   },
+    // }
       
     },
   configureWebpack: {

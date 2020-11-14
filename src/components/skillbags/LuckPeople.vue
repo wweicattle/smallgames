@@ -4,6 +4,7 @@
       <img
         src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/icon/lucktitle.png"
         alt=""
+        @load="imgload"
       />
     </div>
     <div class="per-content">
@@ -43,22 +44,47 @@ export default {
       isshowPer: null,
     };
   },
-  created() {},
+  created() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
+  },
+
   mounted() {
     getPrizeList().then((da) => {
       if (da.data.errcode == 0) {
         let data = da.data.data;
         this.luckpersonArr = data;
-        this.isshowPer = data.length >0 ? true : false;
+        this.isshowPer = data.length > 0 ? true : false;
       } else {
         this.$notify({
           type: "warning",
           message: "获取中奖名单失败！请重试",
         });
+        setTimeout(() => {
+          this.$dialog
+            .confirm({
+              title: "警告",
+              message: "获取信息错误，重新加载？",
+            })
+            .then(() => {
+              window.localStorage.removeItem("token");
+              window.location.reload();
+            })
+            .catch(() => {
+              // on cancel
+            });
+        }, 1500);
       }
     });
   },
-  methods: {},
+  methods: {
+    imgload() {
+      this.$toast.clear();
+    },
+  },
 };
 </script>
 
@@ -123,7 +149,7 @@ export default {
           }
           .prize-name {
             display: inline-block;
-            width: 80px;
+            width: 70px;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;

@@ -63,75 +63,66 @@ import {
 })();
 
 
-let tokens;
-// 判断是否tokens过期
-document.cookie.split(";").forEach(val => {
-  if (val.split("=")[0] == "tokens") {
-    tokens = val.split("=")[1];
-  }
-})
+// // 没有token则进行，保存本地
+// if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
+//   let name = window.location.search.slice(1).split("=")[0];
+//   if (name == "token") {
+//     let token = window.location.search.slice(1).split("=")[1];
+//     window.localStorage.setItem("token", token);
+//     window.localStorage.setItem("timeOver", Date.now());
+//     // 获取 tokens
+//     getToken(token).then((da) => {
+//       if (da.data.errcode == 0) {
+//         // 保存用户wxid, 关卡数
+//         window.localStorage.setItem("wxid", da.data.data.wxid);
+//         var d = new Date();
+//         d.setTime(d.getTime() + 99 * 24 * 60 * 60 * 1000);
+//         var expires = "expires=" + d.toGMTString();
+//         window.localStorage.setItem("newToken",da.data.data.token)
+//         // document.cookie =
+//         //   "tokens=" + da.data.data.token + ";expires=" + expires;
+//         let obj = {
+//           wxid: da.data.data.wxid,
+//           token: da.data.data.token
+//         }
+//         getUser(obj).then((da) => {
+//           if (da.data.errcode == 0) {
+//             new Promise(val => {
+//               da.data.data.headImg = da.data.data.headImg != "undefined" ? da.data.data.headImg : 'http://oos-fj2.ctyunapi.cn/lilanz/mall_public/img/smthumb.jpg';
+//               window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
+//               window.localStorage.setItem(
+//                 "luckPointsNum",
+//                 da.data.data.highestPass
+//               );
+//               val(1)
+//             }).then(da => {
+//               if (da == 1) {
+//                 // 判断企业用户，进行鉴权
+//                 let str = window.encodeURI(
+//                   window.localStorage.getItem("initPage")
+//                 );
+//                 window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+//               }
+//             })
+//           } 
+//         });
+//       }
+//     });
 
-// 没有token则进行，保存本地
-if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
-  let name = window.location.search.slice(1).split("=")[0];
-  if (name == "token") {
-    let token = window.location.search.slice(1).split("=")[1];
-    window.localStorage.setItem("token", token);
-    window.localStorage.setItem("timeOver", Date.now());
-    // 获取 tokens
-    getToken(token).then((da) => {
-      if (da.data.errcode == 0) {
-        // 保存用户wxid, 关卡数
-        window.localStorage.setItem("wxid", da.data.data.wxid);
-        var d = new Date();
-        d.setTime(d.getTime() + 99 * 24 * 60 * 60 * 1000);
-        var expires = "expires=" + d.toGMTString();
-        document.cookie =
-          "tokens=" + da.data.data.token + ";expires=" + expires;
-        let obj = {
-          wxid: da.data.data.wxid,
-          token: da.data.data.token
-        }
-        getUser(obj).then((da) => {
-          if (da.data.errcode == 0) {
-            new Promise(val => {
-              da.data.data.headImg=da.data.data.headImg!="undefined"?da.data.data.headImg:'http://oos-fj2.ctyunapi.cn/lilanz/mall_public/img/smthumb.jpg';
-              window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
-              window.localStorage.setItem(
-                "luckPointsNum",
-                da.data.data.highestPass
-              );
-              val(1)
-            }).then(da => {
-              if (da == 1) {
-                // 判断企业用户，进行鉴权
-                let str = window.encodeURI(
-                  window.localStorage.getItem("initPage")
-                );
-                window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
-              }
-            })
-          } else {}
-        });
-      }
-    });
-
-  } else {}
-}
+//   } 
+// }
 
 
-  let code = window.location.search.slice(1).split("&")[0].split("=")[0];
-  let userState = window.location.search
-    .slice(1)
-    .split("&")[0]
-    .split("=")[1];
-  if (code == "code") {
-    window.localStorage.setItem("userStates", userState);
-    // 进行重新 
-    window.location.href = window.localStorage.getItem("initPage");
-  } else {
-
-  }
+// let code = window.location.search.slice(1).split("&")[0].split("=")[0];
+// let userState = window.location.search
+//   .slice(1)
+//   .split("&")[0]
+//   .split("=")[1];
+// if (code == "code") {
+//   window.localStorage.setItem("userStates", userState);
+//   // 进行重新 
+//   window.location.href = window.localStorage.getItem("initPage");
+// } 
 
 
 import myTouch from './myTouch.js'

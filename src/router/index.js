@@ -8,11 +8,6 @@ import {
 } from "network/home";
 Vue.use(VueRouter)
 
-// const active = () => import("views/SkillBag/ChildComponents/ActiveItem");
-// const mysize = () => import("views/SkillBag/ChildComponents/MySize");
-// const rankinglist = () => import("views/SkillBag/ChildComponents/RankingList");
-
-
 const active = () => import("components/skillbags/ActiveConfirm")
 const mysize = () => import("components/skillbags/MySizes")
 const ranklist = () => import("components/skillbags/RankingList")
@@ -133,18 +128,18 @@ const router = new VueRouter({
   // base: "/web_tlerp/QYWX/Test/wwcattle/",
   routes
 })
-router.beforeEach((to, from, next) => {
-  // 判断过期 
-  if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
-    // 保存主页地址
-    let src = window.location.origin + window.location.pathname;
-    window.localStorage.setItem("initPage", src)
-    // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=" + src + "&configKey=3";
-  } else {
-    next();
-  }
-})
+// router.beforeEach((to, from, next) => {
+//   // 判断过期 
+//   if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
+//     // 保存主页地址
+//     let src = window.location.origin + window.location.pathname;
+//     window.localStorage.setItem("initPage", src)
+//     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
+//     window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=" + src + "&configKey=3";
+//   } else {
+//     next();
+//   }
+// })
 
 router.afterEach(() => {
   NProgress.done()

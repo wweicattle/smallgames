@@ -13,6 +13,7 @@
       >
         {{ userInfo }}
       </van-popup>
+      <div class="game-name">2020利郎岁末福利会</div>
     </div>
     <div class="header">
       <img
@@ -33,7 +34,7 @@
       />
       <div class="begin-icon" @click="beginGameBtn"></div>
       <div class="active" @click="clickBack('active')"></div>
-      <div class="mysize" @click="clickBack('mysize')"></div>
+      <div class="mysize" @click="mysizeBtn"></div>
       <div class="ranklist" @click="clickBack('ranklist')"></div>
       <div class="luck" @click="clickBack('luckpeople')"></div>
     </div>
@@ -50,6 +51,7 @@ export default {
       imgNum: 0,
       showUserInfo: false,
       userInfo: window.localStorage.getItem("userInfo"),
+      // usestate:window.localStorage.getItem("userInfo"),
       imgArr: [
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel2/footerImg.png",
@@ -93,43 +95,45 @@ export default {
     };
   },
   created() {
+    // 首页进行加载数据资源中
+    let userIndetify = window.localStorage.getItem("userIndetify");
+    if (!userIndetify) {
+      this.$toast.loading({
+        message: "加载资源中..",
+        forbidClick: true,
+        duration: 0,
+      });
+    }
     // 判断过期时间是否重新
     if (
       Date.now() - Number(window.localStorage.getItem("timeOver")) >=
-      2.5 * 24 * 3600 * 1000
+      12 * 3600 * 1000
     ) {
       window.localStorage.removeItem("token");
     }
     //预加载图片
     this.preloadImg(this.imgArr);
   },
-  mounted() {
-    // // 获取 token
-    // let token = window.localStorage.getItem("token");
-    // if (!token || token == "undefined") {
-    // this.$toast.loading({
-    //   message: "加载资源中..",
-    //   forbidClick: true,
-    //   duration: 0,
-    // });
-    // }
-  },
+  mounted() {},
   methods: {
-    clickBack(url){
-       if (!window.localStorage.getItem("token") && this.useInfo) {
+    mysizeBtn() {
+      window.location.href = "http://flh.lilanz.com/myprize/index.html";
+    },
+    clickBack(url) {
+      if (!window.localStorage.getItem("token") && this.useInfo) {
         this.$toast.loading({
           message: "身份过期，重新登录中",
           forbidClick: true,
           duration: 1500,
         });
-        setTimeout(()=>{
+        setTimeout(() => {
           window.location.reload();
-        },1000)
+        }, 1000);
       } else {
         this.$router.push(url);
       }
     },
-    
+
     watchUserInfo() {
       this.showUserInfo = true;
     },
@@ -152,7 +156,7 @@ export default {
       } else {
         this.$router.push("/checkoutpoint");
       }
-      if (!window.localStorage.getItem("token") && useInfo&&userStates) {
+      if (!window.localStorage.getItem("token") && useInfo && userStates) {
         this.$toast.loading({
           message: "身份过期，重新登录中",
           forbidClick: true,
@@ -177,11 +181,10 @@ export default {
   watch: {
     imgNum(newVal) {
       if (newVal == this.imgArr.length) {
-        let token = window.localStorage.getItem("token");
-        if (token) {
-          this.$toast.clear();
-          // this.$toast.success("数据加载成功！");
-        }
+        // let token = window.localStorage.getItem("token");
+        // if (token) {
+        this.$toast.clear();
+        // }
       }
     },
   },
@@ -202,6 +205,14 @@ export default {
     img {
       margin-top: 20px;
       width: 24%;
+    }
+    .game-name {
+      letter-spacing: 2.5px;
+      font-size: 19px;
+      color: #fff;
+      font-weight: 600;
+      position: relative;
+      z-index: 1000;
     }
   }
   .header {

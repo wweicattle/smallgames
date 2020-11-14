@@ -16,13 +16,6 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
-      <!-- <div class="notice-bar">
-        <van-notice-bar
-          left-icon="volume-o"
-          text="该版本为测试版本，请勿对外开放！"
-          scrollable
-        />
-      </div> -->
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img :src="peractar" alt="" />
@@ -61,7 +54,7 @@
     <!-- 挑战失败组件 -->
     <change-fail
       v-if="isshowFail"
-      @refreshHome="failBtn"
+      @refreshHome="$router.push('/regularpage')"
       :scoreNums="scoreNums"
       :loadUser="loadUser"
     ></change-fail>
@@ -136,7 +129,6 @@ export default {
       bigbox: null,
       bottom: null,
       totalH: null,
-      //   isshowfailline:false,
       num: false,
       isshowline: false,
       lineClass: null,
@@ -232,21 +224,12 @@ export default {
       this.num = true;
     },
     imgload() {
-      var that = this;
-      document.querySelector(
-        ".box-content"
-      ).childNodes[0].onload = function () {
-        // 进行可以可以点击
-        that.num = true;
-        // 出现参照线条
-        that.isshowline = true;
-      };
+      this.num = true;
+      // 出现参照线条
+      this.isshowline = true;
     },
-    failBtn() {
-      this.$router.push("/regularpage");
-    },
+    // 房子下移
     marginedit() {
-      console.log(this.isSecond);
       // 进行房子的高度进行替换
       this.newimgindex = ++this.newimgindex;
       console.log(this.newimgindex);
@@ -291,22 +274,21 @@ export default {
         this.imgload();
       }
     },
+    // 点击房子事件
     homeBtn() {
       // 出现上部房子才可点击下落的事件
       if (this.num) {
         // 点击后房子下落之后不能再次点击,除重新出现新的房子可再次点击
         this.num = false;
+        // 点击 线条进行隐藏
+        this.isshowline = false;
         // 获取每一次新的房子dom，用该方法可以每次获取第一个box-content。
         let box = document.querySelector(".box-content");
         // 停止顶部房子变化，要开始下落
         box.style.animationPlayState = "paused";
-        // 点击 线条进行隐藏
-        this.isshowline = false;
-
         this.house = this.$refs.house;
         this.footH = this.$refs.footH;
         this.bigbox = this.$refs.bigbox;
-
         this.$nextTick(() => {
           let top = box.getBoundingClientRect().top.toFixed(0);
           let w = box.getBoundingClientRect().width.toFixed(2);
@@ -314,7 +296,6 @@ export default {
           let houseH = getComputedStyle(this.house).height;
           let bodyH = getComputedStyle(document.querySelector(".home-contain"))
             .height;
-            console.log(bodyH,houseH,top,this.bottom);
           //该判断是要减去下面房子的高度所偏移的bottom。这样才可以进行滑道啊正确的房子底部
           if (this.bottom) {
             this.totalH =
@@ -324,12 +305,15 @@ export default {
               h -
               this.bottom.split("p")[0];
           } else {
-            this.totalH = Number(bodyH.split("p")[0]).toFixed(0) - Number(houseH.split("p")[0]).toFixed(0) - top - h;
+            this.totalH =
+              Number(bodyH.split("p")[0]).toFixed(0) -
+              Number(houseH.split("p")[0]).toFixed(0) -
+              top -
+              h;
           }
 
           // 下滑的top值
-          box.style.top = (this.totalH.toFixed(0))+ "px";
-
+          box.style.top = this.totalH.toFixed(0) + "px";
           // 克隆一个房子，递归到顶部
           this.cloneBox = box.cloneNode(true);
 
@@ -346,10 +330,8 @@ export default {
             box.style.margin = "auto";
             // 设置img白边
             box.children[0].style.display = "block";
-            box.children[0].style.width = w+"px";
-            box.children[0].style.height = h+"px";
-
-
+            box.children[0].style.width = w + "px";
+            box.children[0].style.height = h + "px";
 
             // box.style.background = "#f40";
             //每次插入新的房子前，把原来的第一个房子dom获取
@@ -357,10 +339,12 @@ export default {
             this.house.insertBefore(box, oldFirstNode);
 
             //是否有出现碰撞，之后进行比较线条
-            if (Number(w) > (getComputedStyle(oldFirstNode).width.split("p")[0])) {
+            if (
+              Number(w) > getComputedStyle(oldFirstNode).width.split("p")[0]
+            ) {
               // 比较两个房子的时候，出现线条时的动态宽高
               this.linefailwidth = getComputedStyle(oldFirstNode).width;
-              this.linefailheihgt = h + 40 + "px";
+              this.linefailheihgt = h + 60 + "px";
               this.$refs.lineref.style.display = "block";
               box.appendChild(this.$refs.lineref);
 
@@ -382,7 +366,6 @@ export default {
                 };
                 window.localStorage.setItem("obj", JSON.stringify(obj));
 
-                //
                 let url = {
                   checkPoint: this.checkPointNum,
                   curScore: this.scoreNum,
