@@ -164,7 +164,7 @@ export default {
     margin-top: -20px;
   }
   .text-cotnain {
-    left: 0;
+    left: 9px;
     right: 0;
     margin: auto;
     width: 200px;

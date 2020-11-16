@@ -10,6 +10,7 @@
               alt=""
               @click="checkPointBtn(index)"
               :class="{ highBox: index == nowindex }"
+              @load="imgload"
             />
             <span :class="{ highBox: index == nowindex }">{{
               Number(index) + 1
@@ -61,6 +62,7 @@
 export default {
   data() {
     return {
+      watchLoadNums: 0,
       lucklevel: null,
       show: true,
       nowindex: 0,
@@ -75,18 +77,27 @@ export default {
       ],
     };
   },
-  created() {},
+  created() {
+    this.$toast.loading({
+      message: "加载中..",
+      forbidClick: true,
+      duration: 0,
+    });
+  },
   mounted() {
     // 获取关卡数
     let lucknum = Number(window.localStorage.getItem("luckPointsNum"));
     if (lucknum == "undefined" || !lucknum) {
       this.lucklevel = 1;
     } else {
-      this.highestPass = Number(lucknum)==7?6:Number(lucknum);
+      this.highestPass = Number(lucknum) == 7 ? 6 : Number(lucknum);
       this.lucklevel = this.highestPass;
     }
   },
   methods: {
+    imgload() {
+      this.watchLoadNums = ++this.watchLoadNums;
+    },
     beginGamesBtn() {
       console.log(this.copynowindex);
       switch (this.copynowindex) {
@@ -122,6 +133,13 @@ export default {
       // 进行判断是否 该关卡 没有解锁
       if (index + 1 > this.lucklevel) return (this.copynowindex = 7);
       this.copynowindex = index;
+    },
+  },
+  watch: {
+    watchLoadNums(newVal) {
+      if (newVal == this.lucklevel) {
+        this.$toast.clear();
+      }
     },
   },
 };

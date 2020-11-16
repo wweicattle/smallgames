@@ -173,6 +173,9 @@ export default {
   components: {
     GiftPage,
   },
+  watch:{
+    
+  }
 };
 </script>
 
@@ -196,7 +199,7 @@ export default {
     width: 100%;
   }
   .text-cotnain {
-    left: 0;
+    left: 9px;
     right: 0;
     margin: auto;
     width: 200px;
@@ -266,24 +269,27 @@ export default {
       font-size: 17px;
     }
     .go-luck {
-      animation: throlle 2s ease 0s 1 normal;
+      animation: throlle 1s ease 0s 1 normal;
     }
     @keyframes throlle {
       0% {
-        scale: (1.1);
+        transform: scale(1);
       }
+
       25% {
-        scale: (1.15);
+        transform: scale(1.15);
       }
 
       50% {
-        scale: (1.2);
+        transform: scale(1.2);
       }
+
       75% {
-        scale: (1.15);
+        transform: scale(1.15);
       }
+
       100% {
-        scale: (1.1);
+        transform: scale(1);
       }
     }
   }

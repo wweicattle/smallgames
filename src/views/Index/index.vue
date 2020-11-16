@@ -120,7 +120,7 @@ export default {
       window.location.href = "http://flh.lilanz.com/myprize/index.html";
     },
     clickBack(url) {
-      if (!window.localStorage.getItem("token") && this.useInfo) {
+      if (!window.localStorage.getItem("token")) {
         this.$toast.loading({
           message: "身份过期，重新登录中",
           forbidClick: true,
@@ -140,7 +140,7 @@ export default {
     beginGameBtn() {
       let useInfo = JSON.parse(window.localStorage.getItem("userInfo"));
       let userStates = window.localStorage.getItem("userStates");
-      if (!useInfo || !userStates) {
+      if (!useInfo || !userStates||!window.localStorage.getItem("token")) {
         this.$dialog
           .confirm({
             title: "警告",
@@ -156,13 +156,7 @@ export default {
       } else {
         this.$router.push("/checkoutpoint");
       }
-      if (!window.localStorage.getItem("token") && useInfo && userStates) {
-        this.$toast.loading({
-          message: "身份过期，重新登录中",
-          forbidClick: true,
-          duration: 1500,
-        });
-      }
+     
     },
     //实现图片的预加载
     preloadImg(srcArr) {
@@ -207,6 +201,7 @@ export default {
       width: 24%;
     }
     .game-name {
+      padding-top: 2px;
       letter-spacing: 2.5px;
       font-size: 19px;
       color: #fff;
