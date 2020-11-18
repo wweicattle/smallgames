@@ -19,7 +19,7 @@ export function getToken(token) {
   return request.post(`/game/getWXUser?token=${token}`);
 }
 
-// // 关卡结束上传分数
+// 关卡结束上传分数
 // export function getGameResult(param) {
 //   let {
 //     wxid,
@@ -294,3 +294,16 @@ export function getPrizeList() {
     },
   })
 }
+
+
+// 判断用户是否是内部人员
+export function getShareContent() {
+  let wxid = window.localStorage.getItem("wxid");
+  let {origin,pathname}=window.location;;
+  let params = {
+    wxid,
+    url: `${origin}${pathname}`
+  }
+  return request.post("/game/getWXSign", qs.stringify(params));
+}
+

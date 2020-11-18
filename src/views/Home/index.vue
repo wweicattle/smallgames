@@ -155,7 +155,7 @@ export default {
     // 节流防止频繁点击
     this.throttle();
     // 进行添加游戏音乐
-    this.initMusic(["static/music/bg.mp3", "static/music/bling.mp3"], true);
+    this.initMusic(["https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bg.mp3", "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bling.mp3"], true);
 
     if (window.localStorage.getItem("musicState") == "pause") {
       this.musicState = 1;

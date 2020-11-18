@@ -2,16 +2,16 @@
   <div class="active-contain">
     <van-notice-bar
       left-icon="volume-o"
-      text="请仔细阅读活动说明查看规则等。"
+      text="请仔细阅读活动说明查看规则。"
       scrollable
     />
     <div class="active-mysize">
       <img src="~assets/IMG/mysize.png" alt="" />
       <div class="active-regular">
         <ul>
-          <li>1.搭建房子，建的房屋层数越高分数越高。</li>
-          <li>2.用户通过规定的分数即可解锁下一关，共6关。</li>
-          <li>3.不限制用户游戏次数，每关挑战成功，即可抽奖一次。</li>
+          <li>1.搭建房子，建的房屋层数越高分数越高</li>
+          <li>2.用户通过规定的分数即可解锁下一关,共6关。</li>
+          <li>3.不限制用户游戏次数,每关挑战成功,即可抽奖一次。</li>
           <li>4.本次的活动最终解释权归利郎所有。</li>
           <li></li>
         </ul>

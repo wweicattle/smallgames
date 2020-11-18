@@ -1,7 +1,6 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 Vue.config.productionTip = false
 import "./plugins/vant.js"
 import "./network/axios"
@@ -121,14 +120,8 @@ if (code == "code") {
 } 
 
 
-import myTouch from './myTouch.js'
-import {
-  createLogger
-} from 'vuex'
-import vueConfig from '../vue.config'
-myTouch(Vue)
+
 new Vue({
   router,
-  store,
   render: h => h(App)
 }).$mount('#app')

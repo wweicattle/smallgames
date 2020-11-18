@@ -36,6 +36,10 @@ module.exports = {
         "views": "@/views",
         "utils": "@/utils",
       }
+    },
+    externals:{
+      "vue":"Vue",
+      // "lodash":"Lodash"
     }
   }
 }
