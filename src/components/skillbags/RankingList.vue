@@ -93,13 +93,13 @@
             <span class="per-num"> NO.{{ index + 4 }}</span>
             <div class="per-avator">
               <van-image lazy-load :src="allrank[index].headImg" />
-              <span class="per-name">{{ allrank[index].nickName }}</span>
+              <span class="per-name">{{ allrank[index].nickName.slice(0,1).padEnd(3,".") }}</span>
             </div>
             <span class="per-score">{{ allrank[index].totalScore }}分 </span>
           </li>
         </template>
         <van-divider style="color: #fff">{{
-          pernums > 100 ? "只展示前100名" : "当前用户只有" + pernums + "人"
+          pernums >=100 ? "只展示前100名" : "当前用户只有" + pernums + "人"
         }}</van-divider>
 
         <li class="my-rank">
@@ -132,7 +132,12 @@ export default {
       pernums: 100,
     };
   },
-  created() {},
+  created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
+  },
   mounted() {
     this.$toast.loading({
       message: "加载中..",
@@ -141,7 +146,6 @@ export default {
     });
     getRankList().then((da) => {
       this.$toast.clear();
-
       if (da.data.errcode == 0) {
         let data = da.data.data;
         this.pernum = data.allRank.length;
@@ -298,11 +302,8 @@ export default {
             }
           }
           .per-name {
-            width: 40px;
+            width: 50px;
             display: inline-block;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow: hidden;
           }
         }
         .per-score {

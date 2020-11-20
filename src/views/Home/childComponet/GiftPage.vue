@@ -19,7 +19,7 @@ export default {
   mounted() {
    
     if (!this.$route.params.canLuck) {
-      this.$toast.fail("不能抽奖！");
+      window.location.href=window.localStorage.getItem("initPage");
     } else {
       let that = this;
       // 礼物开奖动画结束后
@@ -33,9 +33,7 @@ export default {
   methods: {
     beginLuck() {},
     showLuckAfter() {
-      console.log(this.$route.params.checkoutPonint);
-      this.$router.push({ name: "giftresult", params: {checkoutPonint:this.$route.params.checkoutPonint} });
-     
+      this.$router.push({ name: "giftresult", params: {checkoutPonint:this.$route.params.checkoutPonint,canplay:true} });
     },
   },
   watch: {},

@@ -28,7 +28,12 @@ export default {
       houseImageArr: levelSetting[2][2].photos.houseImageArr,
     };
   },
-  created() {},
+  created() {
+     let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
+  },
   mounted() {},
   methods: {},
   components: {

@@ -49,7 +49,9 @@
               round
               type="info"
               class="ranking-list"
-              @click="$router.push('/ranklist')"
+              @click="
+                $router.push({ name: 'ranklist', params: { canplay: true } })
+              "
               >排行榜</van-button
             >
             <van-button
@@ -79,6 +81,10 @@ export default {
     };
   },
   created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,

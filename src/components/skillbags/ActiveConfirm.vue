@@ -89,7 +89,12 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
+  },
   mounted() {
     this.$toast.loading({
       message: "加载中..",

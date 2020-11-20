@@ -45,6 +45,10 @@ export default {
     };
   },
   created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,

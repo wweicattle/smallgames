@@ -107,22 +107,22 @@ export default {
     nextPointBtn() {
       switch (this.loadUser.checkPoint) {
         case 0:
-          this.$router.push("/zeropage");
+          this.$router.push({ name: "zeropage", params: { canplay: true } });
           break;
         case 1:
-          this.$router.push("/firstpage");
+          this.$router.push({ name: "firstpage", params: { canplay: true } });
           break;
         case 2:
-          this.$router.push("/twopage");
+          this.$router.push({ name: "twopage", params: { canplay: true } });
           break;
         case 3:
-          this.$router.push("/threepage");
+          this.$router.push({ name: "threepage", params: { canplay: true } });
           break;
         case 4:
-          this.$router.push("/fourpage");
+          this.$router.push({ name: "fourpage", params: { canplay: true } });
           break;
         case 5:
-          this.$router.push("/fivepage");
+          this.$router.push({ name: "fivepage", params: { canplay: true } });
           break;
         default:
           break;
@@ -161,7 +161,7 @@ export default {
       });
     },
     jumpMysizeBtn() {
-      this.$router.push("/ranklist");
+      this.$router.push({ name: "ranklist", params: { canplay: true } });
     },
     goLuckDrawBtn() {
       this.$router.push({
@@ -173,9 +173,7 @@ export default {
   components: {
     GiftPage,
   },
-  watch:{
-    
-  }
+  watch: {},
 };
 </script>
 

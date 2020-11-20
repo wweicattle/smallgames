@@ -14,7 +14,11 @@
       consequatur? -->
     </div>
     <img :src="footerImage" alt="" />
-    <img class="regular-remind" src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/gameRegular.png" alt="" />
+    <img
+      class="regular-remind"
+      src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/homes/gameRegular.png"
+      alt=""
+    />
   </div>
 </template>
 
@@ -39,7 +43,7 @@ export default {
       backImage: null,
       footerImage: null,
       regularImg: null,
-      newRoute:null
+      newRoute: null,
     };
   },
   created() {},
@@ -54,9 +58,7 @@ export default {
   },
   methods: {
     clickBtn() {
-      console.log(this.$route);
-      this.$router.push(this.newRoute)
-
+      this.$router.push({ name: this.newRoute.slice(1), params: { canplay: true } });
     },
   },
   computed: {},

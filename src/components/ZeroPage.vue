@@ -27,14 +27,17 @@ export default {
     };
   },
   created() {},
-  mounted() {},
+  mounted() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
+  },
   methods: {},
   components: {
     LuckDraw,
   },
-  watch: {
-   
-  },
+  watch: {},
 };
 </script>
 

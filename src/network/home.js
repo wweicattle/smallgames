@@ -224,11 +224,8 @@ export function goToPrize(params) {
 
 // 排行榜获取
 export function getRankList() {
- 
-
   let token=window.localStorage.getItem("newToken");
-
-  let wxid = window.localStorage.getItem("wxid")
+  let wxid = window.localStorage.getItem("wxid");
   let arr = [{
     key: "wxId",
     value: wxid
@@ -299,7 +296,7 @@ export function getPrizeList() {
 // 判断用户是否是内部人员
 export function getShareContent() {
   let wxid = window.localStorage.getItem("wxid");
-  let {origin,pathname}=window.location;;
+  let {origin,pathname}=window.location;
   let params = {
     wxid,
     url: `${origin}${pathname}`

@@ -78,6 +78,10 @@ export default {
     };
   },
   created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
@@ -102,22 +106,34 @@ export default {
       console.log(this.copynowindex);
       switch (this.copynowindex) {
         case 0:
-          this.$router.push("/zeropage");
+          // this.$router.push("/zeropage");
+          this.$router.push({ name: "zeropage", params: { canplay: true } });
+
           break;
         case 1:
-          this.$router.push("/firstpage");
+          // this.$router.push("/firstpage");
+          this.$router.push({ name: "firstpage", params: { canplay: true } });
+
           break;
         case 2:
-          this.$router.push("/twopage");
+          // this.$router.push("/twopage");
+          this.$router.push({ name: "twopage", params: { canplay: true } });
+
           break;
         case 3:
-          this.$router.push("/threepage");
+          // this.$router.push("/threepage");
+          this.$router.push({ name: "threepage", params: { canplay: true } });
+
           break;
         case 4:
-          this.$router.push("/fourpage");
+          // this.$router.push("/fourpage");
+          this.$router.push({ name: "fourpage", params: { canplay: true } });
+
           break;
         case 5:
-          this.$router.push("/fivepage");
+          // this.$router.push("/fivepage");
+          this.$router.push({ name: "fivepage", params: { canplay: true } });
+
           break;
         default:
           this.$notify({

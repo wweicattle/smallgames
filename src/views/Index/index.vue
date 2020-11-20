@@ -126,11 +126,12 @@ export default {
           forbidClick: true,
           duration: 1500,
         });
+
         setTimeout(() => {
           window.location.reload();
         }, 1000);
       } else {
-        this.$router.push(url);
+        this.$router.push({ name: url, params: { canplay: true } });
       }
     },
 
@@ -140,23 +141,20 @@ export default {
     beginGameBtn() {
       let useInfo = JSON.parse(window.localStorage.getItem("userInfo"));
       let userStates = window.localStorage.getItem("userStates");
-      if (!useInfo || !userStates||!window.localStorage.getItem("token")) {
-        this.$dialog
-          .confirm({
-            title: "警告",
-            message: "获取用户信息错误，重新获取？",
-          })
-          .then(() => {
-            window.localStorage.removeItem("token");
-            window.location.reload();
-          })
-          .catch(() => {
-            // on cancel
-          });
+      if (!useInfo || !userStates || !window.localStorage.getItem("token")) {
+        this.$toast.loading({
+          message: "身份过期，重新登录中",
+          forbidClick: true,
+          duration: 1500,
+        });
+        window.localStorage.removeItem("token")
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
       } else {
-        this.$router.push("/checkoutpoint");
+        // this.$router.push("/checkoutpoint");
+        this.$router.push({ name: "checkoutpoint", params: { canplay: true } });
       }
-     
     },
     //实现图片的预加载
     preloadImg(srcArr) {

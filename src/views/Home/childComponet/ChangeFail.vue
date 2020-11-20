@@ -117,7 +117,7 @@ export default {
       });
     },
     jumpMysizeBtn() {
-      this.$router.push("/ranklist");
+      this.$router.push({ name: "ranklist", params: { canplay: true } });
     },
     clickOnceBtn() {
       // 进行重新加载主页

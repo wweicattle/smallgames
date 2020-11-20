@@ -8,7 +8,6 @@
       :scoreNums="scoreNums"
       :stepsScore="stepsScore"
       :checkPointNum="6"
-
     ></luck-draw>
   </div>
 </template>
@@ -27,7 +26,12 @@ export default {
       houseImageArr: levelSetting[5][5].photos.houseImageArr,
     };
   },
-  created() {},
+  created() {
+    let state = this.$route.params.canplay;
+    if (!state) {
+      window.location.href = window.localStorage.getItem("initPage");
+    }
+  },
   mounted() {},
   methods: {},
   components: {

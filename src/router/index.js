@@ -28,6 +28,9 @@ const routes = [{
   {
     path: '/index',
     name: 'index',
+    meta:{
+      sd:3434
+    },
     component: () => import( /* webpackChunkName: "about" */ '../views/Index')
   },
   {
@@ -129,6 +132,7 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
+  console.log(to,from);
   // 判断过期 
   if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
     // 保存主页地址
@@ -144,7 +148,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
   NProgress.done()
 })
-// })const routerPush = VueRouter.prototype.push
 const routerPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return routerPush.call(this, location).catch(error => error)
