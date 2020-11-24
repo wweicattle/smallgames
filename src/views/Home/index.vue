@@ -16,6 +16,7 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
+     
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img :src="peractar" alt="" />
@@ -155,7 +156,13 @@ export default {
     // 节流防止频繁点击
     this.throttle();
     // 进行添加游戏音乐
-    this.initMusic(["https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bg.mp3", "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bling.mp3"], true);
+    this.initMusic(
+      [
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bg.mp3",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/sound/bling.mp3",
+      ],
+      true
+    );
 
     if (window.localStorage.getItem("musicState") == "pause") {
       this.musicState = 1;
@@ -513,12 +520,14 @@ export default {
     height: 180px;
     padding-top: 80px;
     position: relative;
-    // .notice-bar {
-    //   width: 100%;
-    //   top: 0;
-    //   left: 0;
-    //   position: absolute;
-    // }
+    // 显示notice样式
+    .van-notice-bar {
+      opcity: 0.8;
+      width: 100%;
+      top: 0;
+      left: 0;
+      position: absolute;
+    }
     .actar-contain {
       top: 23px;
       left: 10px;

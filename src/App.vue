@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <keep-alive include="giftresult"> <router-view /></keep-alive>
+    <van-notice-bar
+      left-icon="volume-o"
+      text="此版本为测试版本，禁止对外公布，且所有中奖奖品为虚拟奖品"
+      scrollable
+    />
+    <keep-alive include="giftresult"> <router-view> </router-view></keep-alive>
   </div>
 </template>
 <script>
@@ -97,5 +102,13 @@ html,
   left: 0;
   width: 100%;
   background-size: contain;
+  .van-notice-bar {
+    opacity: 0.9;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    position: absolute;
+  }
 }
 </style>

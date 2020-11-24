@@ -1,10 +1,10 @@
 <template>
   <div class="active-contain">
-    <van-notice-bar
+    <!-- <van-notice-bar
       left-icon="volume-o"
       text="请仔细阅读活动说明查看规则。"
       scrollable
-    />
+    /> -->
     <div class="active-mysize">
       <img src="~assets/IMG/mysize.png" alt="" />
       <div class="active-regular">
@@ -122,7 +122,7 @@ export default {
     z-index: 1009;
   }
   .active-mysize {
-    margin-top: 30px;
+    margin-top: 50px;
     text-align: center;
     position: relative;
     img {

@@ -11,7 +11,7 @@
         position="top"
         :style="{ height: '30%' }"
       >
-        {{ userInfo }}
+        {{ userInfo }}{{userWxis}}
       </van-popup>
       <div class="game-name">2020利郎岁末福利会</div>
     </div>
@@ -51,6 +51,7 @@ export default {
       imgNum: 0,
       showUserInfo: false,
       userInfo: window.localStorage.getItem("userInfo"),
+      userWxis:window.localStorage.getItem("wxid")+window.localStorage.getItem("newToken"),
       // usestate:window.localStorage.getItem("userInfo"),
       imgArr: [
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png",

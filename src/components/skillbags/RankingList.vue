@@ -20,8 +20,8 @@
           <div class="name-num">
             <span class="rank-name">
               {{
-                headerrank[1]
-                  ? headerrank[1].nickName.slice(0, 1).padEnd(5, ".")
+                Boolean(headerrank[1])
+                  ? headerrank[1].nickName
                   : ""
               }}
             </span>
@@ -46,8 +46,8 @@
           <div class="name-num">
             <span class="rank-name">
               {{
-                headerrank[0]
-                  ? headerrank[0].nickName.slice(0, 1).padEnd(5, ".")
+                Boolean(headerrank[0])
+                  ? headerrank[0].nickName
                   : ""
               }}
             </span>
@@ -73,8 +73,8 @@
           <div class="name-num">
             <span class="rank-name">
               {{
-                headerrank[2]
-                  ? headerrank[2].nickName.slice(0, 1).padEnd(5, ".")
+                Boolean(headerrank[2])
+                  ? headerrank[2].nickName
                   : ""
               }}
             </span>
@@ -93,13 +93,15 @@
             <span class="per-num"> NO.{{ index + 4 }}</span>
             <div class="per-avator">
               <van-image lazy-load :src="allrank[index].headImg" />
-              <span class="per-name">{{ allrank[index].nickName.slice(0,1).padEnd(3,".") }}</span>
+              <span class="per-name">{{
+                allrank[index].nickName
+              }}</span>
             </div>
             <span class="per-score">{{ allrank[index].totalScore }}分 </span>
           </li>
         </template>
         <van-divider style="color: #fff">{{
-          pernums >=100 ? "只展示前100名" : "当前用户只有" + pernums + "人"
+          pernums >= 100 ? "只展示前100名" : "当前用户只有" + pernums + "人"
         }}</van-divider>
 
         <li class="my-rank">
@@ -137,8 +139,7 @@ export default {
     if (!state) {
       window.location.href = window.localStorage.getItem("initPage");
     }
-  },
-  mounted() {
+    console.log("begin---------------------c");
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
@@ -153,10 +154,18 @@ export default {
         if (this.pernum < 100) {
           this.pernums = this.pernum;
         }
-        this.headerrank = data.allRank.slice(0, 3);
-        this.allrank = data.allRank.slice(3);
-        this.myrank = data.myRank;
+        // 遍历数组填充
+        data.allRank.forEach((val) => {
+          if (!typeof val.nickName) {
+            val.nickName = ".";
+          }
+          val.nickName=val.nickName.slice(0,1).padEnd(4,".");
+        });
+        this.headerrank = data.allRank.slice(0, 3) || [];
+        this.allrank = data.allRank.slice(3) || [];
+        this.myrank = data.myRank || [];
       } else {
+        window.localStorage.removeItem("token");
         this.$notify({
           type: "warning",
           message: "获取排行榜失败！请重试",
@@ -172,12 +181,12 @@ export default {
               window.location.reload();
             })
             .catch(() => {
-              // on cancel
             });
         }, 1500);
       }
     });
   },
+  mounted() {},
   computed: {
     perAcatar() {
       let actar = JSON.parse(window.localStorage.getItem("userInfo"));
@@ -303,6 +312,9 @@ export default {
           }
           .per-name {
             width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             display: inline-block;
           }
         }
