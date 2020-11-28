@@ -58,6 +58,7 @@ export default {
 
   mounted() {
     getPrizeList().then((da) => {
+      this.$toast.clear();
       if (da.data.errcode == 0) {
         let data = da.data.data;
         this.luckpersonArr = data;

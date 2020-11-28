@@ -85,10 +85,10 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
             new Promise(val => {
               da.data.data.headImg = da.data.data.headImg != "undefined" ? da.data.data.headImg : 'http://oos-fj2.ctyunapi.cn/lilanz/mall_public/img/smthumb.jpg';
               window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
-              window.localStorage.setItem(
-                "luckPointsNum",
-                da.data.data.highestPass
-              );
+              // window.localStorage.setItem(
+              //   "luckPointsNum",
+              //   da.data.data.highestPass
+              // );
               val(1)
             }).then(da => {
               if (da == 1) {
@@ -96,7 +96,7 @@ if (!window.localStorage.getItem("token") || window.localStorage.getItem("token"
                 let str = window.encodeURI(
                   window.localStorage.getItem("initPage")
                 );
-                window.location.href = "http://tm.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
+                window.location.href = "http://flh.lilanz.com/game/wxCompanyOauth?backUrl=" + str;
               }
             })
           } 

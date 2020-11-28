@@ -11,9 +11,9 @@
         position="top"
         :style="{ height: '30%' }"
       >
-        {{ userInfo }}{{userWxis}}
+        {{ userInfo }}{{ userWxis }}
       </van-popup>
-      <div class="game-name">2020利郎岁末福利会</div>
+      <div class="game-name" @click="removeTokenBtn">2020利郎岁末福利会</div>
     </div>
     <div class="header">
       <img
@@ -51,7 +51,9 @@ export default {
       imgNum: 0,
       showUserInfo: false,
       userInfo: window.localStorage.getItem("userInfo"),
-      userWxis:window.localStorage.getItem("wxid")+window.localStorage.getItem("newToken"),
+      userWxis:
+        window.localStorage.getItem("wxid") +
+        window.localStorage.getItem("newToken"),
       // usestate:window.localStorage.getItem("userInfo"),
       imgArr: [
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/footerImg.png",
@@ -117,6 +119,9 @@ export default {
   },
   mounted() {},
   methods: {
+    removeTokenBtn() {
+      window.localStorage.clear();
+    },
     mysizeBtn() {
       window.location.href = "http://flh.lilanz.com/myprize/index.html";
     },
@@ -142,13 +147,13 @@ export default {
     beginGameBtn() {
       let useInfo = JSON.parse(window.localStorage.getItem("userInfo"));
       let userStates = window.localStorage.getItem("userStates");
-      if (!useInfo || !userStates || !window.localStorage.getItem("token")) {
+      if (!window.localStorage.getItem("token")) {
         this.$toast.loading({
           message: "身份过期，重新登录中",
           forbidClick: true,
           duration: 1500,
         });
-        window.localStorage.removeItem("token")
+        window.localStorage.removeItem("token");
         setTimeout(() => {
           window.location.reload();
         }, 1000);

@@ -9,9 +9,6 @@
       <img :src="regularImg" />
     </div>
     <div class="detail-content">
-      <!-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam accusamus
-      eius velit expedita libero dignissimos possimus officiis autem sint
-      consequatur? -->
     </div>
     <img :src="footerImage" alt="" />
     <img
@@ -40,10 +37,10 @@ export default {
   data() {
     return {
       show: true,
-      backImage: null,
-      footerImage: null,
-      regularImg: null,
-      newRoute: null,
+      backImage: "",
+      footerImage: "",
+      regularImg: "",
+      newRoute: "",
     };
   },
   created() {},
@@ -53,8 +50,6 @@ export default {
     this.footerImage = obj.footerImage;
     this.regularImg = obj.regularImg;
     this.newRoute = obj.newRoute;
-
-    // })
   },
   methods: {
     clickBtn() {

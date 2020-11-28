@@ -12,7 +12,7 @@ let config = {
   // baseURL: "/api",
   timeout: 60 * 1000,
   withCredentials: true,
-  baseURL:"http://tm.lilanz.com"
+  baseURL:"http://flh.lilanz.com"
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
 };

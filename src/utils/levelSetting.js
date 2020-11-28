@@ -70,7 +70,7 @@ const level = [{
   {
     4: {
       scoreNums: 300,
-      stepsScore: 40,
+      stepsScore: 50,
       timeSet: "0.6s",
       photos: {
         backImage: "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/homeback.png",

@@ -1,10 +1,10 @@
 <template>
   <div class="active-contain">
-    <!-- <van-notice-bar
+    <van-notice-bar
       left-icon="volume-o"
       text="请仔细阅读活动说明查看规则。"
       scrollable
-    /> -->
+    />
     <div class="active-mysize">
       <img src="~assets/IMG/mysize.png" alt="" />
       <div class="active-regular">
@@ -64,8 +64,8 @@
           </table>
         </div>
         <ul class="remind-content">
-          <li>*根据关卡的级别逐渐调整方块变大变小的速度 适当增加游戏难度</li>
-          <li>*每个用户所有关卡的最高分的总和列入总排行榜</li>
+          <!-- <li>*根据关卡的级别逐渐调整方块变大变小的速度 适当增加游戏难度</li>
+          <li>*每个用户所有关卡的最高分的总和列入总排行榜</li> -->
         </ul>
         <div class="active-time">
           <span> 活动时间 </span>
@@ -152,7 +152,7 @@ export default {
         line-height: 24px;
         font-weight: 600;
         font-size: 17px;
-        padding: 40px 0 50px 0;
+        padding: 25px 0 35px 0;
       }
       .table-score {
         margin: 20px 0;

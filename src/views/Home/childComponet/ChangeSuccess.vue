@@ -131,7 +131,6 @@ export default {
     // 游戏关卡结束
     getGameResult(param) {
       getGameResult(param).then((da) => {
-        console.log(da);
         if (da.data.errcode == 0) {
           this.$toast.clear();
           this.bestRank = da.data.data.bestRank;

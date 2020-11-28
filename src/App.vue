@@ -1,10 +1,11 @@
 <template>
   <div id="app">
-    <van-notice-bar
+    <!-- <van-notice-bar
       left-icon="volume-o"
-      text="此版本为测试版本，禁止对外公布，且所有中奖奖品为虚拟奖品"
-      scrollable
-    />
+      text="该为测试版本,禁止对外公布,中奖奖品不发货"
+      ref="ss"
+      :scrollable="false"
+    /> -->
     <keep-alive include="giftresult"> <router-view> </router-view></keep-alive>
   </div>
 </template>
@@ -22,6 +23,9 @@ export default {
       nonceStrNum: null,
       signature: null,
     };
+  },
+  created() {
+    this.$nextTick(() => {});
   },
   mounted() {
     if (window.localStorage.getItem("newToken")) {
@@ -102,13 +106,5 @@ html,
   left: 0;
   width: 100%;
   background-size: contain;
-  .van-notice-bar {
-    opacity: 0.9;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 100;
-    position: absolute;
-  }
 }
 </style>

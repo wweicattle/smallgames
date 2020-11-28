@@ -3,13 +3,9 @@ import VueRouter from 'vue-router'
 
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import {
-  getUserInfo
-} from "network/home";
 Vue.use(VueRouter)
 
 const active = () => import("components/skillbags/ActiveConfirm")
-const mysize = () => import("components/skillbags/MySizes")
 const ranklist = () => import("components/skillbags/RankingList")
 const luckpeople = () => import("components/skillbags/LuckPeople")
 
@@ -38,22 +34,7 @@ const routes = [{
     name: 'home',
     component: () => import( /* webpackChunkName: "about" */ '../views/Home')
   },
-  // {
-  //   path: '/skillbag',
-  //   name: 'skillbag',
-  //   redirect: "/active",
-  //   component: () => import( /* webpackChunkName: "about" */ '../views/SkillBag'),
-  //   children: [{
-  //     path: "/active",
-  //     component: active,
-  //   }, {
-  //     path: "/mysize",
-  //     component: mysize,
-  //   }, {
-  //     path: "/rankinglist",
-  //     component: rankinglist,
-  //   }]
-  // },
+
   {
     path: '/gift',
     name: 'gift',
@@ -110,11 +91,6 @@ const routes = [{
     component: active
   },
   {
-    path: '/mysize',
-    name: 'mysize',
-    component: mysize
-  },
-  {
     path: '/ranklist',
     name: 'ranklist',
     component: ranklist
@@ -132,14 +108,14 @@ const router = new VueRouter({
   routes
 })
 router.beforeEach((to, from, next) => {
-  console.log(to,from);
+  // console.log(to,from);
   // 判断过期 
   if (!window.localStorage.getItem("token") || window.localStorage.getItem("token") == "undefined") {
     // 保存主页地址
     let src = window.location.origin + window.location.pathname;
     window.localStorage.setItem("initPage", src)
     // 判断用户分享给好友情况下，没有登陆跳到首页登录 
-    window.location.href = "http://tm.lilanz.com/game/wxOauth?backUrl=" + src + "&configKey=3";
+    window.location.href = "http://flh.lilanz.com/game/wxOauth?backUrl=" + src + "&configKey=3";
   } else {
     next();
   }

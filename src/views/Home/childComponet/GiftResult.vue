@@ -111,6 +111,7 @@ export default {
         .then((da) => {
           if (da.data.errcode == 0) {
             this.$toast.clear();
+
             if (da.data.data && typeof da.data.data == "object") {
               this.contentLuck = true;
               // 成功的奖品
@@ -139,7 +140,7 @@ export default {
               this.$dialog
                 .confirm({
                   title: "警告",
-                  message: "获取信息错误，重新加载？",
+                  message: da.data.errmsg +"重新加载？",
                 })
                 .then(() => {
                   window.localStorage.removeItem("token");

@@ -120,8 +120,10 @@ export default {
       this.$router.push({ name: "ranklist", params: { canplay: true } });
     },
     clickOnceBtn() {
+      this.$router.push("/regularpage");
+
       // 进行重新加载主页
-      this.$emit("refreshHome");
+      // this.$emit("refreshHome");
     },
   },
 };

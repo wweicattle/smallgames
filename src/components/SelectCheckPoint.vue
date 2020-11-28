@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { getUser } from "network/home";
 export default {
   data() {
     return {
@@ -87,17 +88,45 @@ export default {
       forbidClick: true,
       duration: 0,
     });
+    let obj = {
+      wxid: Number(window.localStorage.getItem("wxid")),
+      token: window.localStorage.getItem("newToken"),
+    };
+    getUser(obj).then((da) => {
+      console.log(obj);
+      console.log(da)
+      this.$toast.clear();
+      if (da.data.errcode == 0) {
+        da.data.data.headImg =
+          da.data.data.headImg != "undefined"
+            ? da.data.data.headImg
+            : "http://oos-fj2.ctyunapi.cn/lilanz/mall_public/img/smthumb.jpg";
+        // window.localStorage.setItem("userInfo", JSON.stringify(da.data.data));
+        // 获取关卡数
+        let lucknum = da.data.data.highestPass;
+        // if (lucknum == "undefined" || !lucknum) {
+        //   this.lucklevel = 1;
+        // } else {
+        this.highestPass = Number(lucknum) == 7 ? 6 : Number(lucknum);
+        this.lucklevel = this.highestPass;
+        // }
+      } else {
+          this.$dialog
+            .confirm({
+              title: "警告",
+              message: "获取关卡信息失败，重新加载？",
+            })
+            .then(() => {
+              window.localStorage.removeItem("token");
+              window.location.reload();
+            })
+            .catch(() => {
+              // on cancel
+            });
+      }
+    });
   },
-  mounted() {
-    // 获取关卡数
-    let lucknum = Number(window.localStorage.getItem("luckPointsNum"));
-    if (lucknum == "undefined" || !lucknum) {
-      this.lucklevel = 1;
-    } else {
-      this.highestPass = Number(lucknum) == 7 ? 6 : Number(lucknum);
-      this.lucklevel = this.highestPass;
-    }
-  },
+  mounted() {},
   methods: {
     imgload() {
       this.watchLoadNums = ++this.watchLoadNums;

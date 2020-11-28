@@ -55,7 +55,6 @@
     <!-- 挑战失败组件 -->
     <change-fail
       v-if="isshowFail"
-      @refreshHome="$router.push('/regularpage')"
       :scoreNums="scoreNums"
       :loadUser="loadUser"
     ></change-fail>
