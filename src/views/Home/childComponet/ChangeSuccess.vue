@@ -62,6 +62,7 @@
 <script>
 import { getGameResult, getToken } from "network/home";
 import GiftPage from "./GiftPage";
+import { eventBus } from "utils/eventbus";
 export default {
   data() {
     return {
@@ -101,6 +102,7 @@ export default {
   },
   mounted() {
     this.getGameResult(this.loadUser);
+    window.localStorage.setItem("pointsNum", this.loadUser.checkPoint);
   },
   methods: {
     // 下一关

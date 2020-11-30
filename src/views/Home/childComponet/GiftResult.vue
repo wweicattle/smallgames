@@ -54,12 +54,20 @@
               "
               >排行榜</van-button
             >
-            <van-button
+            <!-- <van-button
               round
               type="info"
               class="return-home"
               @click="$router.push('/')"
               >返回首页</van-button
+            > -->
+            <van-button
+              round
+              type="info"
+              class="return-home"
+              :class="{ final: checkPoints == 6 }"
+              @click="nextPointBtn"
+              >{{ checkPoints == 6 ? "最后一关" : "下一关" }}</van-button
             >
           </div>
         </div>
@@ -70,6 +78,8 @@
 
 <script>
 import { goToPrize, getUserState } from "network/home";
+import { eventBus } from "utils/eventbus";
+
 export default {
   name: "giftresult",
   data() {
@@ -78,6 +88,7 @@ export default {
       checkPoint: null,
       prizeName: null,
       contentLuck: false,
+      checkPoints: null,
     };
   },
   created() {
@@ -94,6 +105,32 @@ export default {
   mounted() {},
 
   methods: {
+    // 下一关
+    nextPointBtn() {
+      console.log(this.checkPoints);
+      switch (this.checkPoints) {
+        case 0:
+          this.$router.push({ name: "zeropage", params: { canplay: true } });
+          break;
+        case 1:
+          this.$router.push({ name: "firstpage", params: { canplay: true } });
+          break;
+        case 2:
+          this.$router.push({ name: "twopage", params: { canplay: true } });
+          break;
+        case 3:
+          this.$router.push({ name: "threepage", params: { canplay: true } });
+          break;
+        case 4:
+          this.$router.push({ name: "fourpage", params: { canplay: true } });
+          break;
+        case 5:
+          this.$router.push({ name: "fivepage", params: { canplay: true } });
+          break;
+        default:
+          break;
+      }
+    },
     // 查看奖品
     watchluckBtn() {
       window.location.href = "http://flh.lilanz.com/myprize/index.html";
@@ -140,7 +177,7 @@ export default {
               this.$dialog
                 .confirm({
                   title: "警告",
-                  message: da.data.errmsg +"重新加载？",
+                  message: da.data.errmsg + "重新加载？",
                 })
                 .then(() => {
                   window.localStorage.removeItem("token");
@@ -194,6 +231,10 @@ export default {
     },
   },
   activated() {
+    let num = Number(window.localStorage.getItem("pointsNum"));
+    // 收藏下一关的关卡数
+    this.checkPoints = num;
+
     // 进入该页面隐藏
     this.contentLuck = false;
     // 获取当前关卡数
@@ -309,6 +350,10 @@ export default {
         margin-left: 20px;
 
         background: rgb(88, 202, 235);
+      }
+      .final {
+        color: #4c4747;
+        opacity: 0.6;
       }
     }
 
