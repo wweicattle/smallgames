@@ -304,3 +304,47 @@ export function getShareContent() {
   return request.post("/game/getWXSign", qs.stringify(params));
 }
 
+
+export function goToPrizeTest() {
+  let token=window.localStorage.getItem("newToken");
+  let wxid = 690470;
+  let arr = [{
+      key: "wxid",
+      value: wxid
+    }, {
+      key: "gameId",
+      value: 15
+    }, {
+      key: "checkPoint",
+      value: 6
+    },
+    {
+      key: "userid",
+      value: 0
+    }
+  ]
+  // 根据接口生成token，sign，timestamp
+  let {
+    sign,
+    timestamp
+  } = tokens(arr, token);
+
+
+  return request({
+    url: "/game/goToPrize",
+    params: {
+      wxid,
+      checkPoint: 5,
+      userid: 0,
+      gameId
+    },
+    method: "post",
+    headers: {
+      token,
+      sign,
+      timestamp
+    },
+  })
+}
+
+

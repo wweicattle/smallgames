@@ -12,7 +12,7 @@
 <script>
 import { getShareContent } from "network/home.js";
 
-// // 确保已有wxid,进行用户分享标题设计
+// 确保已有wxid,进行用户分享标题设计
 // import "utils/shareContent.js"
 export default {
   name: "App",

@@ -6,6 +6,8 @@
     v-if="isrepeatRender"
     ref="homeContainRef"
   >
+    <canvas id="canvas" ref="canvas"></canvas>
+
     <!-- 盒子发生碰撞时进行 -->
     <div
       class="shineCopy"
@@ -16,7 +18,6 @@
 
     <!--  -->
     <div class="test" ref="bigbox">
-     
       <!-- 头像区域 -->
       <div class="actar-contain">
         <img :src="peractar" alt="" />
@@ -76,6 +77,7 @@ import ChangeFail from "./childComponet/ChangeFail";
 import RegularPage from "./childComponet/RegularPage";
 import { eventBus } from "utils/eventbus";
 import { getUser, getToken } from "network/home";
+import snow from "utils/snow.js";
 export default {
   name: "homePage",
   props: {
@@ -146,10 +148,16 @@ export default {
       userInfo: null,
     };
   },
+  beforeCreate() {
+    // 执行动画 雪花
+  },
   created() {
     // 初始化头像
     this.userInfo = JSON.parse(window.localStorage.getItem("userInfo"));
     this.peractar = this.userInfo.headImg;
+    this.$nextTick(() => {
+      snow(this.$refs.canvas);
+    });
   },
   mounted() {
     // 节流防止频繁点击
@@ -431,6 +439,12 @@ export default {
   height: 100%;
   position: relative;
   background-size: cover;
+  #canvas {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
   .shineCopy {
     position: absolute;
     left: 0;
@@ -547,6 +561,7 @@ export default {
       }
     }
     .music-content {
+      z-index: 1001;
       // top: 20px;
       top: 25px;
       right: 20px;
@@ -643,7 +658,7 @@ export default {
     transition: all 1s;
     width: 100vw;
     bottom: 0;
-    z-index: 1000;
+    z-index: 666;
     .house {
       bottom: 0;
       img {

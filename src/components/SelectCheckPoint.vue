@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { getUser } from "network/home";
+import { getUser, goToPrizeTest } from "network/home";
 export default {
   data() {
     return {
@@ -79,6 +79,17 @@ export default {
     };
   },
   created() {
+    // setInterval(() => {
+    //   goToPrizeTest().then((da) => {
+    //     if (da.data.errcode == 0) {
+    //       if (da.data.data && typeof da.data.data == "object") {
+    //         alert("success")
+    //       } else {
+    //         console.log(da.data.data);
+    //       }
+    //     }
+    //   });
+    // }, 1000);
     let state = this.$route.params.canplay;
     if (!state) {
       window.location.href = window.localStorage.getItem("initPage");
@@ -94,7 +105,7 @@ export default {
     };
     getUser(obj).then((da) => {
       console.log(obj);
-      console.log(da)
+      console.log(da);
       this.$toast.clear();
       if (da.data.errcode == 0) {
         da.data.data.headImg =
@@ -111,18 +122,18 @@ export default {
         this.lucklevel = this.highestPass;
         // }
       } else {
-          this.$dialog
-            .confirm({
-              title: "警告",
-              message: "获取关卡信息失败，重新加载？",
-            })
-            .then(() => {
-              window.localStorage.removeItem("token");
-              window.location.reload();
-            })
-            .catch(() => {
-              // on cancel
-            });
+        this.$dialog
+          .confirm({
+            title: "警告",
+            message: "获取关卡信息失败，重新加载？",
+          })
+          .then(() => {
+            window.localStorage.removeItem("token");
+            window.location.reload();
+          })
+          .catch(() => {
+            // on cancel
+          });
       }
     });
   },
