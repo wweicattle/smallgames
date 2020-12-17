@@ -70,11 +70,13 @@ export default {
   data() {
     return {
       show: true,
-      maxScore: null,
-      bestRank: null,
+      maxScore: 1000,
+      bestRank: 1,
     };
   },
   created() {
+    console.log(this.loadUser);
+
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
@@ -82,7 +84,14 @@ export default {
     });
   },
   mounted() {
-    this.getGameResult(this.loadUser);
+    let { isAddYear } = this.loadUser;
+    delete this.loadUser.isAddYear;
+    if (!isAddYear) {
+      this.getGameResult(this.loadUser);
+    } else {
+      this.$toast.clear();
+      return;
+    }
   },
   methods: {
     // 游戏关卡结束

@@ -94,6 +94,19 @@ export default {
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel4/homeback.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/homeback.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel6/homeback.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-one.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-two.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-three.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-four.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-back.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-one.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-two.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-three.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-four.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-back.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointOne.png",
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png"
+        
       ],
     };
   },

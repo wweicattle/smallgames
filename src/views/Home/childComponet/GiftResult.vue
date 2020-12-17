@@ -65,9 +65,8 @@
               round
               type="info"
               class="return-home"
-              :class="{ final: checkPoints == 6 }"
               @click="nextPointBtn"
-              >{{ checkPoints == 6 ? "最后一关" : "下一关" }}</van-button
+              >{{ checkPoints == 6 ? "返回首页" : "下一关" }}</van-button
             >
           </div>
         </div>
@@ -128,6 +127,7 @@ export default {
           this.$router.push({ name: "fivepage", params: { canplay: true } });
           break;
         default:
+          this.$router.push({ name: "index" });
           break;
       }
     },

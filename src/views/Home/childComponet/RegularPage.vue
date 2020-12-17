@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     clickBtn() {
+      console.log(324343434);
       this.$router.push({ name: this.newRoute.slice(1), params: { canplay: true } });
     },
   },

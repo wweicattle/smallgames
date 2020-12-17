@@ -76,6 +76,16 @@ const routes = [{
     component: () => import( /* webpackChunkName: "about" */ '../components/FivePage')
   },
   {
+    path: '/addYearPage',
+    name: 'addYearPage',
+    component: () => import( /* webpackChunkName: "about" */ '../components/AddYearPoint')
+  },
+  {
+    path: '/addYearPageTwo',
+    name: 'addYearPageTwo',
+    component: () => import( /* webpackChunkName: "about" */ '../components/AddYearPointTwo')
+  },
+  {
     path: '/checkoutpoint',
     name: 'checkoutpoint',
     component: () => import( /* webpackChunkName: "about" */ '../components/SelectCheckPoint')

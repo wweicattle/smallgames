@@ -28,7 +28,16 @@
             <span>{{ Number(index) + Number(lucklevel) + 1 }}</span>
           </li>
         </template>
+        <div class="new-point">
+          <li @click="indexState = 7;copynowindex=6" :class="{ highBox: indexState == 7 }">
+            <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointOne.png" />
+          </li>
+          <li @click="indexState = 8;copynowindex=7" :class="{ highBox: indexState == 8 }">
+            <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png" />
+          </li>
+        </div>
       </ul>
+
       <div class="clickBox" @click="beginGamesBtn">
         <img
           src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/unluck/begin.png"
@@ -63,6 +72,7 @@ import { getUser, goToPrizeTest } from "network/home";
 export default {
   data() {
     return {
+      indexState: null,
       watchLoadNums: 0,
       lucklevel: null,
       show: true,
@@ -90,19 +100,21 @@ export default {
     //     }
     //   });
     // }, 1000);
+    // wwcattle
     let state = this.$route.params.canplay;
     if (!state) {
       window.location.href = window.localStorage.getItem("initPage");
     }
-    this.$toast.loading({
-      message: "加载中..",
-      forbidClick: true,
-      duration: 0,
-    });
+    // this.$toast.loading({
+    //   message: "加载中..",
+    //   forbidClick: true,
+    //   duration: 0,
+    // });
     let obj = {
       wxid: Number(window.localStorage.getItem("wxid")),
       token: window.localStorage.getItem("newToken"),
     };
+    // wwcattle
     getUser(obj).then((da) => {
       console.log(obj);
       console.log(da);
@@ -173,7 +185,14 @@ export default {
         case 5:
           // this.$router.push("/fivepage");
           this.$router.push({ name: "fivepage", params: { canplay: true } });
-
+          break;
+        case 6:
+          // this.$router.push("/fivepage");
+          this.$router.push({ name: "addYearPage", params: { canplay: true }});
+          break;
+        case 7:
+          // this.$router.push("/fivepage");
+          this.$router.push({ name: "addYearPageTwo", params: { canplay: true } });
           break;
         default:
           this.$notify({
@@ -184,14 +203,22 @@ export default {
       }
     },
     checkPointBtn(index) {
+      // 当点击关卡时，下面关卡不高亮
+      this.indexState = null;
       // 进行点击的关卡进行高亮
       this.nowindex = index;
-      // 进行判断是否 该关卡 没有解锁
-      if (index + 1 > this.lucklevel) return (this.copynowindex = 7);
+      // 进行判断是否 该关卡 没有解锁，没有 解锁直接就100让他不可能
+      if (index + 1 > this.lucklevel) return (this.copynowindex = 100);
       this.copynowindex = index;
     },
   },
   watch: {
+    // nowindex(newVal) {
+    //   if (newVal>=0) this.indexState = null;
+    // },
+    indexState(newVal) {
+      if (newVal) this.nowindex = null;
+    },
     watchLoadNums(newVal) {
       if (newVal == this.lucklevel) {
         this.$toast.clear();
@@ -264,7 +291,7 @@ export default {
     .clickBox {
       color: #fff;
       position: absolute;
-      top: 440px;
+      top: 445px;
       left: 0;
       right: 0;
       margin: auto;
@@ -285,7 +312,7 @@ export default {
       border-radius: 8px;
       padding: 18px 10px;
       position: absolute;
-      top: 150px;
+      top: 100px;
       left: 0;
       right: 0;
       margin: auto;
@@ -314,6 +341,13 @@ export default {
           font-family: Georgia, "Times New Roman", Times, serif;
         }
       }
+      .new-point {
+        display: flex;
+        width: 90%;
+        justify-content: space-evenly;
+        border-top: 1px dotted #fff;
+        padding-top: 5px;
+      }
     }
     .select-luck {
       text-align: center;
@@ -322,7 +356,7 @@ export default {
       font-weight: 600;
       width: 240px;
       color: #fff;
-      margin-top: 70px;
+      margin-top: 40px;
     }
   }
 }

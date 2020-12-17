@@ -81,6 +81,10 @@ import snow from "utils/snow.js";
 export default {
   name: "homePage",
   props: {
+    isExistYear: {
+      type: Boolean,
+      default: false,
+    },
     checkPointNum: {
       type: Number,
       default: null,
@@ -246,8 +250,6 @@ export default {
     marginedit() {
       // 进行房子的高度进行替换
       this.newimgindex = ++this.newimgindex;
-      console.log(this.newimgindex);
-      console.log(this.isSecond);
 
       // 这是判断 第三关，因为这一关的图片有问题，让他一直处于最上面的一张图片
       if (this.newimgindex == this.houseImageArr.length && this.isSecond) {
@@ -384,6 +386,7 @@ export default {
                   checkPoint: this.checkPointNum,
                   curScore: this.scoreNum,
                   result: this.scoreNum >= this.scoreNums ? "win" : "fai",
+                  isAddYear: this.isExistYear,
                 };
 
                 this.loadUser = url;
@@ -557,7 +560,8 @@ export default {
         font-size: 18px;
         padding-left: 5px;
         vertical-align: 5px;
-        color: #fff;
+        color: #5d4343;
+        font-family: Georgia, "Times New Roman", Times, serif;
       }
     }
     .music-content {

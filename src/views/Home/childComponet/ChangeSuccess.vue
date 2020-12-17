@@ -24,7 +24,9 @@
             </li>
           </ul>
         </div>
-        <div class="luck-draw">挑战成功即可解锁下一关</div>
+        <div class="luck-draw">
+          {{ !hiddenNextText ? "挑战成功即可解锁下一关" : "" }}
+        </div>
         <van-button
           round
           type="info"
@@ -47,9 +49,8 @@
           round
           type="info"
           class="return-home"
-          :class="{ final: loadUser.checkPoint == 6 }"
           @click="nextPointBtn"
-          >{{ loadUser.checkPoint == 6 ? "最后一关" : "下一关" }}</van-button
+          >{{ loadUser.checkPoint == 6 ? "返回首页" : "下一关" }}</van-button
         >
       </div>
     </van-popup>
@@ -66,11 +67,12 @@ import { eventBus } from "utils/eventbus";
 export default {
   data() {
     return {
+      hiddenNextText: false,
       show: true,
       isshowGift: false,
-      maxScore: null,
-      bestRank: null,
-      defeatsPercen: null,
+      maxScore: 1000,
+      bestRank: 1,
+      defeatsPercen: 100,
       highestPass: null,
     };
   },
@@ -83,26 +85,43 @@ export default {
     },
   },
   created() {
+    console.log(this.loadUser);
     this.$toast.loading({
       message: "加载中..",
       forbidClick: true,
       duration: 0,
     });
-    // 关卡加1，游戏 挑战成功！
-    this.highestPass = Number(window.localStorage.getItem("luckPointsNum"));
-    // 当前关数
-    let nowIndex = this.loadUser.checkPoint;
-    if (this.highestPass == nowIndex) {
-      if (this.highestPass == 6) {
-        return;
-      } else {
-        window.localStorage.setItem("luckPointsNum", this.highestPass + 1);
-      }
-    }
+    // // 关卡加1，游戏 挑战成功！
+    // this.highestPass = Number(window.localStorage.getItem("luckPointsNum"));
+    // // 当前关数
+    // let nowIndex = this.loadUser.checkPoint;
+    // if (this.highestPass == nowIndex) {
+    //   if (this.highestPass == 6) {
+    //     return;
+    //   } else {
+    //     window.localStorage.setItem("luckPointsNum", this.highestPass + 1);
+    //   }
+    // }
   },
   mounted() {
-    this.getGameResult(this.loadUser);
+    // console.log(this.loadUser);
+
+    // 保存关卡数，之后会判断是否 返回首页
     window.localStorage.setItem("pointsNum", this.loadUser.checkPoint);
+    // 上传分数
+    let { isAddYear } = this.loadUser;
+    delete this.loadUser.isAddYear;
+    if (!isAddYear) {
+      this.getGameResult(this.loadUser);
+    } else {
+      // this.bestRank = 1;
+      // this.maxScore = 1000;
+      // this.defeatsPercen =100;
+      // 隐藏解锁下一关文字
+      this.hiddenNextText = true;
+      this.$toast.clear();
+      return;
+    }
   },
   methods: {
     // 下一关
@@ -127,6 +146,7 @@ export default {
           this.$router.push({ name: "fivepage", params: { canplay: true } });
           break;
         default:
+          this.$router.push({ name: "index" });
           break;
       }
     },
@@ -257,6 +277,7 @@ export default {
       font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
       font-weight: 700;
     }
+
     .van-button {
       font-weight: 700;
       background: rgb(255, 87, 107);
