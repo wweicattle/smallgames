@@ -222,6 +222,47 @@ export function goToPrize(params) {
 }
 
 
+// 开始抽奖 
+export function goToGame(params) {
+  let token=window.localStorage.getItem("newToken");
+  let wxid = window.localStorage.getItem("wxid")
+  let arr = [{
+      key: "wxid",
+      value: wxid
+    }, {
+      key: "gameId",
+      value: gameId
+    }, {
+      key: "checkPoint",
+      value: params.checkPoint
+    }
+  ]
+  // 根据接口生成token，sign，timestamp
+  let {
+    sign,
+    timestamp
+  } = tokens(arr, token);
+
+
+  return request({
+    url: "/game/goToGame",
+    params: {
+      wxid,
+      checkPoint: params.checkPoint,
+      gameId
+    },
+    method: "post",
+    headers: {
+      token,
+      sign,
+      timestamp
+    },
+  })
+}
+
+
+
+
 // 排行榜获取
 export function getRankList() {
   let token=window.localStorage.getItem("newToken");

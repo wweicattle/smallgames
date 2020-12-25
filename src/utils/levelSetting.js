@@ -115,23 +115,6 @@ const level = [{
       stepsScore: 20,
       timeSet: "0.85s",
       photos: {
-        backImage: "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/homeback.png",
-        footerImage: `https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-back.png`,
-        houseImageArr: [
-          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-one.png",
-          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-two.png",
-          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-three.png",
-          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-four.png",
-        ]
-      }
-    }
-  },
-  {
-    7: {
-      scoreNums: 100,
-      stepsScore: 20,
-      timeSet: "0.85s",
-      photos: {
         backImage: "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel5/homeback.png",
         footerImage: `https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-back.png`,
         houseImageArr: [
@@ -143,6 +126,24 @@ const level = [{
       }
     }
   },
+  {
+    7: {
+      scoreNums: 100,
+      stepsScore: 20,
+      timeSet: "0.85s",
+      photos: {
+        backImage: "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/firstLevel/homeback.png",
+        footerImage: `https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-back.png`,
+        houseImageArr: [
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-one.png",
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-two.png",
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-three.png",
+          "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearOne/year-four.png",
+        ]
+      }
+    }
+  },
+
 
 
 ]

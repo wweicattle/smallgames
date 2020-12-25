@@ -1,5 +1,6 @@
 <template>
   <div class="home-contain">
+    <canvas id="canvas" ref="canvas"></canvas>
     <div class="com-icon">
       <img
         @click="watchUserInfo"
@@ -43,7 +44,7 @@
 
 <script>
 import { getToken, getUserState, getUser } from "network/home";
-
+import snow from "utils/snow.js";
 export default {
   data() {
     return {
@@ -105,12 +106,14 @@ export default {
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-four.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/yearTwo/year-back.png",
         "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointOne.png",
-        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png"
-        
+        "https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png",
       ],
     };
   },
   created() {
+    this.$nextTick(() => {
+      snow(this.$refs.canvas);
+    });
     // 首页进行加载数据资源中
     let userIndetify = window.localStorage.getItem("userIndetify");
     if (!userIndetify) {
@@ -213,6 +216,8 @@ export default {
   background-size: cover;
   .com-icon {
     text-align: center;
+    position: relative;
+    z-index: 1001;
     img {
       margin-top: 20px;
       width: 24%;
@@ -255,7 +260,7 @@ export default {
     right: 0;
     margin: auto;
     bottom: calc((100% - 521px) / 2);
-    // bottom: 0;
+    z-index: 1001;
     img {
       width: 100%;
     }

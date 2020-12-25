@@ -29,11 +29,27 @@
           </li>
         </template>
         <div class="new-point">
-          <li @click="indexState = 7;copynowindex=6" :class="{ highBox: indexState == 7 }">
-            <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointOne.png" />
+          <li
+            @click="
+              indexState = 7;
+              copynowindex = 6;
+            "
+            :class="{ highBox: indexState == 7 }"
+          >
+            <img
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointOne.png"
+            />
           </li>
-          <li @click="indexState = 8;copynowindex=7" :class="{ highBox: indexState == 8 }">
-            <img src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png" />
+          <li
+            @click="
+              indexState = 8;
+              copynowindex = 7;
+            "
+            :class="{ highBox: indexState == 8 }"
+          >
+            <img
+              src="https://oos-fj2.ctyunapi.cn/lilanz/2020flh/game/img/pointTwo.png"
+            />
           </li>
         </div>
       </ul>
@@ -68,7 +84,7 @@
 </template>
 
 <script>
-import { getUser, goToPrizeTest } from "network/home";
+import { getUser, goToPrizeTest, goToGame } from "network/home";
 export default {
   data() {
     return {
@@ -151,11 +167,27 @@ export default {
   },
   mounted() {},
   methods: {
+    // 上传关卡次数
+    beginToGame(params) {
+      goToGame(params)
+        .then((da) => {
+          if (da.data.errcode == 0) {
+            console.log(da);
+            console.log("用户上传当前关卡成功！");
+          } else {
+            console.log(da);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
     imgload() {
       this.watchLoadNums = ++this.watchLoadNums;
     },
     beginGamesBtn() {
-      console.log(this.copynowindex);
+      // 上传点击关卡数，统计关卡次数
+      this.beginToGame({ checkPoint: this.copynowindex + 1 });
       switch (this.copynowindex) {
         case 0:
           // this.$router.push("/zeropage");
@@ -170,17 +202,14 @@ export default {
         case 2:
           // this.$router.push("/twopage");
           this.$router.push({ name: "twopage", params: { canplay: true } });
-
           break;
         case 3:
           // this.$router.push("/threepage");
           this.$router.push({ name: "threepage", params: { canplay: true } });
-
           break;
         case 4:
           // this.$router.push("/fourpage");
           this.$router.push({ name: "fourpage", params: { canplay: true } });
-
           break;
         case 5:
           // this.$router.push("/fivepage");
@@ -188,11 +217,14 @@ export default {
           break;
         case 6:
           // this.$router.push("/fivepage");
-          this.$router.push({ name: "addYearPage", params: { canplay: true }});
+          this.$router.push({ name: "addYearPage", params: { canplay: true } });
           break;
         case 7:
           // this.$router.push("/fivepage");
-          this.$router.push({ name: "addYearPageTwo", params: { canplay: true } });
+          this.$router.push({
+            name: "addYearPageTwo",
+            params: { canplay: true },
+          });
           break;
         default:
           this.$notify({
